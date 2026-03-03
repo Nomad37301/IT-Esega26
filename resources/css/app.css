@@ -1,0 +1,430 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+@import 'tailwindcss';
+
+@plugin 'tailwindcss-animate';
+
+@source '../views';
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+
+@custom-variant dark (&:is(.dark *));
+
+body {
+    scroll-behavior: smooth;
+}
+
+@theme {
+    --font-sans:
+        'Poppins', 'Akira', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --radius-lg: var(--radius);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-sm: calc(var(--radius) - 4px);
+
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+
+    --color-chart-1: var(--chart-1);
+    --color-chart-2: var(--chart-2);
+    --color-chart-3: var(--chart-3);
+    --color-chart-4: var(--chart-4);
+    --color-chart-5: var(--chart-5);
+
+    --color-sidebar: var(--sidebar);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-ring: var(--sidebar-ring);
+}
+
+/*
+  The default border color has changed to currentColor in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+    *,
+    ::after,
+    ::before,
+    ::backdrop,
+    ::file-selector-button {
+        border-color: var(--color-gray-200, currentColor);
+    }
+}
+
+:root {
+    --background: #ffffff;
+    --foreground: #252525;
+    --card: #ffffff;
+    --card: #ffffff;
+    --card-foreground: #252525;
+    --popover: #ffffff;
+    --popover: #ffffff;
+    --popover-foreground: #252525;
+    --primary: #ef4444;
+    --primary-foreground: #ffffff;
+    --secondary: #fef2f2;
+    --primary: #ef4444;
+    --primary-foreground: #ffffff;
+    --secondary: #fef2f2;
+    --secondary-foreground: #252525;
+    --muted: #fef2f2;
+    --muted: #fef2f2;
+    --muted-foreground: #252525;
+    --accent: #ef4444;
+    --accent-foreground: #ffffff;
+    --destructive: #dc2626;
+    --destructive-foreground: #ffffff;
+    --border: #ef4444;
+    --input: #ef4444;
+    --ring: #ef4444;
+    --chart-1: #ef4444;
+    --chart-2: #dc2626;
+    --accent: #ef4444;
+    --accent-foreground: #ffffff;
+    --destructive: #dc2626;
+    --destructive-foreground: #ffffff;
+    --border: #ef4444;
+    --input: #ef4444;
+    --ring: #ef4444;
+    --chart-1: #ef4444;
+    --chart-2: #dc2626;
+    --chart-3: #252525;
+    --chart-4: #fef2f2;
+    --chart-5: #ef4444;
+    --chart-4: #fef2f2;
+    --chart-5: #ef4444;
+    --radius: 0.625rem;
+    --sidebar: #252525;
+    --sidebar-foreground: #ffffff;
+    --sidebar-primary: #ef4444;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #dc2626;
+    --sidebar-accent-foreground: #ffffff;
+    --sidebar-border: #ef4444;
+    --sidebar-ring: #ef4444;
+    --sidebar-foreground: #ffffff;
+    --sidebar-primary: #ef4444;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #dc2626;
+    --sidebar-accent-foreground: #ffffff;
+    --sidebar-border: #ef4444;
+    --sidebar-ring: #ef4444;
+    --custom: #333;
+}
+
+.dark {
+    --background: #252525;
+    --foreground: #ffffff;
+    --foreground: #ffffff;
+    --card: #252525;
+    --card-foreground: #ffffff;
+    --card-foreground: #ffffff;
+    --popover: #252525;
+    --popover-foreground: #ffffff;
+    --primary: #ef4444;
+    --primary-foreground: #ffffff;
+    --secondary: #dc2626;
+    --secondary-foreground: #ffffff;
+    --popover-foreground: #ffffff;
+    --primary: #ef4444;
+    --primary-foreground: #ffffff;
+    --secondary: #dc2626;
+    --secondary-foreground: #ffffff;
+    --muted: #252525;
+    --muted-foreground: #ffffff;
+    --accent: #ef4444;
+    --accent-foreground: #ffffff;
+    --destructive: #dc2626;
+    --destructive-foreground: #ffffff;
+    --border: #ef4444;
+    --input: #ef4444;
+    --ring: #ef4444;
+    --chart-1: #ef4444;
+    --chart-2: #dc2626;
+    --muted-foreground: #ffffff;
+    --accent: #ef4444;
+    --accent-foreground: #ffffff;
+    --destructive: #dc2626;
+    --destructive-foreground: #ffffff;
+    --border: #ef4444;
+    --input: #ef4444;
+    --ring: #ef4444;
+    --chart-1: #ef4444;
+    --chart-2: #dc2626;
+    --chart-3: #252525;
+    --chart-4: #fef2f2;
+    --chart-5: #ef4444;
+    --chart-4: #fef2f2;
+    --chart-5: #ef4444;
+    --sidebar: #252525;
+    --sidebar-foreground: #ffffff;
+    --sidebar-primary: #ef4444;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #dc2626;
+    --sidebar-accent-foreground: #ffffff;
+    --sidebar-border: #ef4444;
+    --sidebar-foreground: #ffffff;
+    --sidebar-primary: #ef4444;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #dc2626;
+    --sidebar-accent-foreground: #ffffff;
+    --sidebar-border: #ef4444;
+    --sidebar-ring: #8f8f8f;
+    --custom: #333;
+    --white: #ffffff;
+    --white: #ffffff;
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+    }
+}
+
+@keyframes float {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes glow {
+    0%,
+    100% {
+        box-shadow:
+            0 0 8px #f43f5e,
+            0 0 16px #f43f5e,
+            0 0 24px #f43f5e;
+    }
+    50% {
+        box-shadow:
+            0 0 12px #f43f5e,
+            0 0 24px #f43f5e,
+            0 0 36px #f43f5e;
+    }
+}
+
+.animate-glow-line {
+    animation: glow 2s infinite ease-in-out;
+}
+
+.animate-glow-line {
+    animation: glow 2s infinite ease-in-out;
+}
+
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+    will-change: transform;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+}
+
+@keyframes glow-move {
+    0% {
+        background-position: 0% 0%;
+        box-shadow:
+            0 0 8px #f43f5e,
+            0 0 16px #f43f5e;
+    }
+    50% {
+        background-position: 0% 100%;
+        box-shadow:
+            0 0 12px #f43f5e,
+            0 0 24px #f43f5e;
+    }
+    100% {
+        background-position: 0% 0%;
+        box-shadow:
+            0 0 8px #f43f5e,
+            0 0 16px #f43f5e;
+    }
+}
+
+.animate-glow-move {
+    background-size: 100% 300%;
+    animation: glow-move 3s ease-in-out infinite;
+}
+
+@keyframes gradient-glow-strong {
+    0%,
+    100% {
+        background-position: 0% 0%;
+        box-shadow:
+            0 0 5px rgba(244, 63, 94, 0.4),
+            0 0 10px rgba(244, 63, 94, 0.2);
+    }
+    50% {
+        background-position: 0% 100%;
+        box-shadow:
+            0 0 8px rgba(244, 63, 94, 0.5),
+            0 0 15px rgba(244, 63, 94, 0.3);
+    }
+}
+
+.animate-gradient-glow-strong {
+    background: linear-gradient(to bottom, #ef4444, #dc2626, #ef4444);
+    background-size: 100% 300%;
+    background-repeat: no-repeat;
+    animation: gradient-glow-strong 8s ease-in-out infinite;
+    border-radius: 9999px;
+}
+
+/* Custom animation khusus untuk garis timeline */
+@keyframes timeline-glow {
+    0%, 100% {
+        box-shadow: 0 0 8px rgba(244, 63, 94, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 12px rgba(244, 63, 94, 0.4);
+    }
+}
+
+.timeline-line {
+    background: linear-gradient(to bottom, #ef4444, #dc2626);
+    border-radius: 9999px;
+    animation: timeline-glow 4s ease-in-out infinite;
+    will-change: box-shadow;
+    transform: translateZ(0);
+}
+
+@font-face {
+    font-family: Akira;
+    src:
+        url('/fonts/AkiraExpanded-SuperBold.woff') format('woff'),
+        url('/fonts/AkiraExpanded-SuperBold.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* .container {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 0 1rem;
+} */
+
+/* Custom Scrollbar Styles */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(239, 68, 68, 0.5);
+    border-radius: 100vh;
+    transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(239, 68, 68, 0.8);
+}
+
+/* Smooth Scroll Behavior */
+html {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Optimisasi Performa */
+* {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    backface-visibility: hidden;
+}
+
+/* Optimisasi Transisi Halaman */
+.page-transition-enter {
+    opacity: 0;
+    transform: translate3d(0, 15px, 0);
+}
+
+.page-transition-enter-active {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    transition:
+        opacity 200ms ease-out,
+        transform 200ms ease-out;
+    transition:
+        opacity 200ms ease-out,
+        transform 200ms ease-out;
+}
+
+.page-transition-exit {
+    opacity: 1;
+}
+
+.page-transition-exit-active {
+    opacity: 0;
+    transition: opacity 200ms ease-in;
+}
+
+/* Mengoptimalkan Scrolling */
+html {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Mengurangi Layout Shifts */
+body {
+    overflow-y: scroll;
+}
+
+/* Placeholder style global */
+::placeholder {
+    color: #9ca3af !important; /* gray-400 */
+    opacity: 0.8 !important;
+}
+
+/* Untuk Firefox */
+::-moz-placeholder {
+    color: #9ca3af !important; /* gray-400 */
+    opacity: 0.8 !important;
+}

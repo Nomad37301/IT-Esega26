@@ -1,0 +1,1 @@
+export type TableColumn<TData> = import("@tanstack/react-table").ColumnDef<TData>;
