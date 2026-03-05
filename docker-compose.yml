@@ -14,8 +14,7 @@ services:
     depends_on:
       - mysql
     networks:
-      laravel:
-        driver: bridge
+      - laravel
 
   mysql:
     image: mysql:8.0
@@ -30,8 +29,7 @@ services:
       - mysql-data:/var/lib/mysql
       - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
     networks:
-      laravel:
-        driver: bridge
+      - laravel
 
   nginx:
     image: nginx:alpine
@@ -45,11 +43,10 @@ services:
     depends_on:
       - app
     networks:
-      laravel:
-        driver: bridge
+      - laravel
+
 volumes:
   mysql-data:
-
 
 networks:
   laravel:
