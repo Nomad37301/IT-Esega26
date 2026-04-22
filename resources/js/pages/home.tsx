@@ -210,7 +210,7 @@ export default function Home() {
     }, []);
 
     // === PENDAFTARAN OTOMATIS TUTUP ===
-    const REGISTRATION_DEADLINE = dayjs('2025-07-02T00:00:00');
+    const REGISTRATION_DEADLINE = dayjs('2027-07-02T00:00:00');
     const [isRegistrationClosed, setIsRegistrationClosed] = useState(false);
     const [showClosedPopup, setShowClosedPopup] = useState(false);
 

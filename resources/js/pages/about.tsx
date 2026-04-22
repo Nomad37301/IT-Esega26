@@ -23,7 +23,7 @@ export default function About() {
 
     // State untuk kontrol registration closed popup
     const [showClosedPopup, setShowClosedPopup] = useState(false);
-    const isRegistrationClosed = true; // Set registration sebagai closed
+    const isRegistrationClosed = false; // Set registration sebagai open (untuk testing)
 
     useEffect(() => {
         // Reset scroll position ke atas 
