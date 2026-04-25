@@ -125,10 +125,10 @@ export function Navbar({ logo, items = [], user, isRegistrationClosed = false, s
 
     return (
         <nav 
-            className={`fixed top-0 left-0 right-0 z-[999] transform-gpu transition-all duration-300 ${
+            className={`fixed top-0 left-0 right-0 z-[999] transform-gpu transition-all duration-500 ${
                 isScrolled 
-                    ? 'bg-white/95 backdrop-blur-md shadow-sm translate-y-0' 
-                    : 'bg-transparent translate-y-0'
+                    ? 'navbar-scrolled translate-y-0' 
+                    : 'navbar-transparent translate-y-0'
             }`}
             style={{
                 willChange: 'transform, opacity, background-color',
@@ -157,23 +157,37 @@ export function Navbar({ logo, items = [], user, isRegistrationClosed = false, s
                     <div className="hidden flex-grow justify-center md:flex">
                         {/* Center Navigation Links */}
                         <div className="flex items-center justify-center space-x-12 w-full max-w-2xl">
-                            {navigationItems.map((item) => (
+                            {navigationItems.map((item) => {
+                                const isActive = currentPath === item.href;
+                                return (
                                 <Link
                                     key={item.title}
                                     href={item.title === 'FAQ' ? '#faq' : item.title === 'Contact' ? '#contact' : item.href}
                                     onClick={(e) => handleNavigation(e, item.title === 'FAQ' ? '#faq' : item.title === 'Contact' ? '#contact' : item.href, item.title)}
-                                    className={`relative px-2 py-1 text-[15px] font-medium transition-all duration-300 
-                                        ${isScrolled ? 'text-gray-700' : 'text-gray-800'} 
-                                        hover:text-red-600 group overflow-hidden`}
+                                    className={`nav-link relative px-2 py-1 text-[15px] font-medium group overflow-hidden ${
+                                        isActive ? 'active' : ''
+                                    }`}
                                 >
                                     {item.title}
-                                    <span className={`absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-red-500 to-red-600
-                                        transform origin-left transition-all duration-300 ease-out
-                                        translate-x-[-100%] group-hover:translate-x-0
-                                        ${currentPath === item.href ? 'translate-x-0' : ''}`}>
+                                    <span
+                                        className="absolute bottom-0 left-0 w-full h-0.5 transform origin-left transition-all duration-300 ease-out"
+                                        style={{
+                                            background: 'linear-gradient(to right, var(--color-teal), var(--color-teal-light))',
+                                            transform: isActive ? 'translateX(0)' : 'translateX(-100%)',
+                                        }}
+                                        onMouseEnter={(e) => (e.currentTarget.style.transform = 'translateX(0)')}
+                                    >
+                                    </span>
+                                    <span
+                                        className="absolute bottom-0 left-0 w-full h-0.5 group-hover:translate-x-0 translate-x-[-100%] transform transition-all duration-300 ease-out"
+                                        style={{
+                                            background: 'linear-gradient(to right, var(--color-teal), var(--color-teal-light))',
+                                        }}
+                                    >
                                     </span>
                                 </Link>
-                            ))}
+                                );
+                            })}
                         </div>
                     </div>
 
@@ -240,11 +254,8 @@ export function Navbar({ logo, items = [], user, isRegistrationClosed = false, s
                             registerItem && (
                                 <button
                                     type="button"
-                                    className="inline-flex items-center px-6 py-2.5 font-semibold rounded-lg
-                                        bg-gradient-to-r from-[#ba0000] to-[#ba0000]/90 text-white
-                                        shadow-md hover:shadow-lg transform hover:-translate-y-0.5
-                                        transition-all duration-300 hover:from-[#ba0000]/90 hover:to-[#ba0000]
-                                        disabled:opacity-60 disabled:cursor-not-allowed"
+                                    className="btn-navy inline-flex items-center px-6 py-2.5 text-sm font-semibold rounded-lg
+                                        shadow-md disabled:opacity-60 disabled:cursor-not-allowed"
                                     disabled={isRegistrationClosed}
                                     onClick={(e) => {
                                         if (isRegistrationClosed) {
@@ -351,10 +362,8 @@ export function Navbar({ logo, items = [], user, isRegistrationClosed = false, s
                                             registerItem && (
                                                 <button
                                                     type="button"
-                                                    className="block px-4 py-3 mt-2 text-[15px] font-semibold text-center text-white rounded-lg
-                                                        bg-gradient-to-r from-[#ba0000] to-[#ba0000]/90
-                                                        hover:from-[#ba0000]/90 hover:to-[#ba0000] transition-all duration-300
-                                                        disabled:opacity-60 disabled:cursor-not-allowed"
+                                                    className="btn-navy block px-4 py-3 mt-2 w-full text-[15px] font-semibold text-center rounded-lg
+                                                        disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-300"
                                                     disabled={isRegistrationClosed}
                                                     onClick={(e) => {
                                                         if (isRegistrationClosed) {

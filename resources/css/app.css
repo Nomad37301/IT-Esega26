@@ -17,6 +17,7 @@ body {
     --font-sans:
         'Poppins', 'Akira', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
+    --font-demarus: 'Demarus', sans-serif;
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
     --radius-sm: calc(var(--radius) - 4px);
@@ -87,30 +88,15 @@ body {
     --background: #ffffff;
     --foreground: #252525;
     --card: #ffffff;
-    --card: #ffffff;
     --card-foreground: #252525;
     --popover: #ffffff;
-    --popover: #ffffff;
     --popover-foreground: #252525;
-    --primary: #ef4444;
-    --primary-foreground: #ffffff;
-    --secondary: #fef2f2;
-    --primary: #ef4444;
+    --primary: #234773;
     --primary-foreground: #ffffff;
     --secondary: #fef2f2;
     --secondary-foreground: #252525;
     --muted: #fef2f2;
-    --muted: #fef2f2;
     --muted-foreground: #252525;
-    --accent: #ef4444;
-    --accent-foreground: #ffffff;
-    --destructive: #dc2626;
-    --destructive-foreground: #ffffff;
-    --border: #ef4444;
-    --input: #ef4444;
-    --ring: #ef4444;
-    --chart-1: #ef4444;
-    --chart-2: #dc2626;
     --accent: #ef4444;
     --accent-foreground: #ffffff;
     --destructive: #dc2626;
@@ -123,8 +109,6 @@ body {
     --chart-3: #252525;
     --chart-4: #fef2f2;
     --chart-5: #ef4444;
-    --chart-4: #fef2f2;
-    --chart-5: #ef4444;
     --radius: 0.625rem;
     --sidebar: #252525;
     --sidebar-foreground: #ffffff;
@@ -134,14 +118,31 @@ body {
     --sidebar-accent-foreground: #ffffff;
     --sidebar-border: #ef4444;
     --sidebar-ring: #ef4444;
-    --sidebar-foreground: #ffffff;
-    --sidebar-primary: #ef4444;
-    --sidebar-primary-foreground: #ffffff;
-    --sidebar-accent: #dc2626;
-    --sidebar-accent-foreground: #ffffff;
-    --sidebar-border: #ef4444;
-    --sidebar-ring: #ef4444;
     --custom: #333;
+
+    /* ============================================
+       Design Color System - IT-ESEGA 2026
+       ============================================ */
+    /* Navy Blue - Tombol utama & Register button */
+    --color-navy: #1E4C7A;
+    --color-navy-dark: #163A5F;
+    --color-navy-light: #2A6099;
+
+    /* Teal / Aqua - Active nav link & accent */
+    --color-teal: #4EAAC5;
+    --color-teal-dark: #3A8FA8;
+    --color-teal-light: #6DC4DC;
+
+    /* Hero Section Colors */
+    --hero-overlay: rgba(10, 20, 35, 0.60);
+    --hero-overlay-gradient: linear-gradient(to right, rgba(10, 20, 35, 0.85) 0%, rgba(10, 20, 35, 0.40) 100%);
+
+    /* Navbar Colors */
+    --navbar-bg-scrolled: rgba(255, 255, 255, 0.96);
+    --navbar-bg-transparent: rgba(200, 215, 230, 0.15);
+    --navbar-link-color: #4a5568;
+    --navbar-link-active: #4EAAC5;
+    --navbar-link-hover: #4EAAC5;
 }
 
 .dark {
@@ -153,12 +154,12 @@ body {
     --card-foreground: #ffffff;
     --popover: #252525;
     --popover-foreground: #ffffff;
-    --primary: #ef4444;
+    --primary: #234773;
     --primary-foreground: #ffffff;
     --secondary: #dc2626;
     --secondary-foreground: #ffffff;
     --popover-foreground: #ffffff;
-    --primary: #ef4444;
+    --primary: #234773;
     --primary-foreground: #ffffff;
     --secondary: #dc2626;
     --secondary-foreground: #ffffff;
@@ -314,7 +315,8 @@ body {
 
 /* Custom animation khusus untuk garis timeline */
 @keyframes timeline-glow {
-    0%, 100% {
+    0%,
+    100% {
         box-shadow: 0 0 8px rgba(244, 63, 94, 0.3);
     }
     50% {
@@ -336,6 +338,14 @@ body {
         url('/fonts/AkiraExpanded-SuperBold.woff') format('woff'),
         url('/fonts/AkiraExpanded-SuperBold.woff2') format('woff2');
     font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Demarus';
+    src: url('/fonts/DEMARUS.otf') format('opentype');
+    font-weight: normal;
     font-style: normal;
     font-display: swap;
 }
@@ -377,6 +387,14 @@ html {
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* backface-visibility: hidden dipindah ke selector spesifik
+       karena break background-clip:text untuk gradient text */
+}
+
+/* Hanya berlaku untuk animasi/transform elements */
+.animate-float,
+[data-framer-component-type],
+.motion-element {
     backface-visibility: hidden;
 }
 
@@ -427,4 +445,145 @@ body {
 ::-moz-placeholder {
     color: #9ca3af !important; /* gray-400 */
     opacity: 0.8 !important;
+}
+
+/* ============================================
+   Hero Section Styles - IT-ESEGA 2026
+   ============================================ */
+
+/* Hero wrapper: full-screen dengan background image */
+.hero-section {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+/* Overlay gradien gelap dari kiri ke kanan */
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--hero-overlay-gradient);
+    z-index: 1;
+}
+
+/* Content hero berada di atas overlay */
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+/* Teks judul hero dengan gradient teal */
+.hero-title {
+    display: inline-block;
+    background: linear-gradient(135deg, #a8d8ea 0%, #c8eefc 40%, #7ec8e3 70%, #4EAAC5 100%);
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    color: transparent !important;
+    backface-visibility: visible !important;
+    filter: drop-shadow(0 0 20px rgba(78, 170, 197, 0.25));
+}
+
+/* ============================================
+   Navbar Styles - IT-ESEGA 2026
+   ============================================ */
+
+/* Navbar transparent (saat di atas hero) */
+.navbar-transparent {
+    background: rgba(180, 200, 220, 0.10);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Navbar scrolled (saat user scroll) */
+.navbar-scrolled {
+    background: rgba(240, 245, 252, 0.97);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 2px 20px rgba(30, 76, 122, 0.08);
+    border-bottom: 1px solid rgba(30, 76, 122, 0.06);
+}
+
+/* Nav link default */
+.nav-link {
+    color: rgba(255, 255, 255, 0.85) !important;
+    transition: color 0.3s ease;
+    position: relative;
+}
+
+.nav-link:hover {
+    color: var(--color-teal) !important;
+}
+
+.nav-link.active {
+    color: var(--color-teal) !important;
+    font-weight: 600;
+}
+
+/* Nav link saat scrolled */
+.navbar-scrolled .nav-link {
+    color: #4a5568 !important;
+}
+
+.navbar-scrolled .nav-link:hover {
+    color: var(--color-teal) !important;
+}
+
+.navbar-scrolled .nav-link.active {
+    color: var(--color-teal) !important;
+    font-weight: 600;
+}
+
+/* ============================================
+   Button Styles - IT-ESEGA 2026
+   ============================================ */
+
+/* Tombol Register (navy) */
+.btn-navy {
+    background: var(--color-navy);
+    color: #ffffff;
+    border: none;
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.btn-navy:hover {
+    background: var(--color-navy-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(30, 76, 122, 0.35);
+}
+
+/* Tombol outline putih (How to Register) */
+.btn-outline-white {
+    background: transparent;
+    color: #ffffff;
+    border: 2px solid rgba(255, 255, 255, 0.85);
+    transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-outline-white:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: translateY(-1px);
+}
+
+/* ============================================
+   Responsive Utilities
+   ============================================ */
+
+/* Mobile: hero min-height lebih kecil */
+@media (max-width: 768px) {
+    .hero-section {
+        min-height: 100svh;
+        background-position: center center;
+    }
+
+    .hero-overlay {
+        background: linear-gradient(to bottom, rgba(10, 20, 35, 0.70) 0%, rgba(10, 20, 35, 0.75) 100%);
+    }
 }
