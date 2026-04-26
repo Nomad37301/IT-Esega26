@@ -280,7 +280,7 @@ export default function Home() {
                                         <button
                                             aria-label="Sebelumnya"
                                             onClick={() => popupInstanceRef.current?.prev()}
-                                            className="absolute top-1/2 left-2 z-10 -translate-y-1/2 rounded-full border border-primary bg-white/80 p-2 text-primary shadow transition hover:bg-primary disabled:opacity-50"
+                                            className="border-primary text-primary hover:bg-primary absolute top-1/2 left-2 z-10 -translate-y-1/2 rounded-full border bg-white/80 p-2 shadow transition disabled:opacity-50"
                                             style={{ display: merchSlides.length > 1 ? 'block' : 'none' }}
                                         >
                                             <svg
@@ -307,7 +307,7 @@ export default function Home() {
                                         <button
                                             aria-label="Selanjutnya"
                                             onClick={() => popupInstanceRef.current?.next()}
-                                            className="absolute top-1/2 right-2 z-10 -translate-y-1/2 rounded-full border border-primary bg-white/80 p-2 text-primary shadow transition hover:bg-primary disabled:opacity-50"
+                                            className="border-primary text-primary hover:bg-primary absolute top-1/2 right-2 z-10 -translate-y-1/2 rounded-full border bg-white/80 p-2 shadow transition disabled:opacity-50"
                                             style={{ display: merchSlides.length > 1 ? 'block' : 'none' }}
                                         >
                                             <svg
@@ -336,7 +336,7 @@ export default function Home() {
                                         <h3 className="mb-3 text-2xl leading-tight font-extrabold text-gray-900 md:text-3xl">
                                             {merchSlides[popupSlide].title}
                                         </h3>
-                                        <div className="mb-2 text-xl font-bold text-primary md:text-2xl">{merchSlides[popupSlide].price}</div>
+                                        <div className="text-primary mb-2 text-xl font-bold md:text-2xl">{merchSlides[popupSlide].price}</div>
                                         <div className="mb-4 text-xs font-medium text-gray-500 md:text-sm">{merchSlides[popupSlide].preorder}</div>
                                         {/* Hapus deskripsi untuk tampilan lebih clean */}
                                         {/* <p className="mb-6 text-sm text-left text-gray-700 md:text-base">{merchSlides[popupSlide].desc}</p> */}
@@ -344,7 +344,7 @@ export default function Home() {
                                             href={merchSlides[popupSlide].link}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="-mt-2 mb-2 inline-flex w-full items-center justify-center rounded-lg bg-primary px-7 py-3 text-base font-bold text-white shadow transition hover:bg-primary sm:mt-6 sm:mb-0 sm:w-auto"
+                                            className="bg-primary hover:bg-primary -mt-2 mb-2 inline-flex w-full items-center justify-center rounded-lg px-7 py-3 text-base font-bold text-white shadow transition sm:mt-6 sm:mb-0 sm:w-auto"
                                             style={{ letterSpacing: '0.5px' }}
                                         >
                                             <svg className="mr-2 -ml-1 h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -456,9 +456,9 @@ export default function Home() {
                 {/* Hero Content */}
                 <div className="hero-content relative z-10 mx-auto max-w-[1350px] px-4 pt-32 pb-20 md:px-8 md:pt-60 md:pb-36 lg:px-12">
                     <div className="grid w-full grid-cols-1 items-center gap-8 md:grid-cols-[1.5fr_1fr]">
-                        <div className="flex flex-col items-center text-center md:items-start md:text-left w-full" data-aos="fade-up">
+                        <div className="flex w-full flex-col items-center text-center md:items-start md:text-left" data-aos="fade-up">
                             {/* Judul Besar Hero */}
-                            <h1 className="w-full text-center md:text-left font-demarus text-[3.5rem] sm:text-[8.5rem] font-medium leading-[0.8] -mb-6 sm:-mb-24">
+                            <h1 className="font-demarus -mb-6 w-full text-center text-[3.5rem] leading-[0.8] font-medium sm:-mb-24 sm:text-[8.5rem] md:text-left">
                                 <span className="bg-[linear-gradient(135deg,#a8d8ea_0%,#c8eefc_40%,#7ec8e3_70%,#4EAAC5_100%)] bg-clip-text text-transparent [-webkit-background-clip:text] [-webkit-text-fill-color:transparent]">
                                     IT-ESEGA 2026
                                 </span>
@@ -467,7 +467,7 @@ export default function Home() {
                                 Bergabunglah dalam perlombaan eSport bergengsi. Daftarkan timmu, taklukkan bracket, dan menangkan hadiah jutaan
                                 rupiah! Ayo Menjadi Juara dalam IT-ESEGA 2026
                             </p>
-                            <div className="flex flex-col sm:flex-row w-full justify-center items-center md:justify-start space-y-4 sm:space-y-0 sm:space-x-4">
+                            <div className="flex w-full flex-col items-center justify-center space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4 md:justify-start">
                                 {/* HERO SECTION BUTTON */}
                                 <button
                                     type="button"
@@ -592,7 +592,7 @@ export default function Home() {
                                                 </div>
                                                 <button
                                                     type="button"
-                                                    className="inline-flex justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-white transition-colors duration-200 hover:bg-primary"
+                                                    className="bg-primary hover:bg-primary inline-flex justify-center rounded-md px-4 py-2 text-sm font-medium text-white transition-colors duration-200"
                                                     onClick={() => setIsOpen(false)}
                                                 >
                                                     Got it
@@ -612,7 +612,7 @@ export default function Home() {
                     <div className="absolute inset-0 bg-white"></div>
 
                     {/* Gradient Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-white via-primary/5 to-primary/5"></div>
+                    <div className="via-primary/5 to-primary/5 absolute inset-0 bg-gradient-to-b from-white"></div>
 
                     {/* Cross Blob - Top Left Competition */}
                     <div className="pointer-events-none absolute top-24 -left-12 h-28 w-28 opacity-5">
@@ -627,7 +627,7 @@ export default function Home() {
                             }}
                             className="h-full w-full"
                         >
-                            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="h-full w-full fill-primary">
+                            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="fill-primary h-full w-full">
                                 <path d="M85,40 h30 v45 h45 v30 h-45 v45 h-30 v-45 h-45 v-30 h45 z" />
                             </svg>
                         </motion.div>
@@ -646,7 +646,7 @@ export default function Home() {
                             }}
                             className="h-full w-full"
                         >
-                            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="h-full w-full fill-primary">
+                            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="fill-primary h-full w-full">
                                 <path d="M85,40 h30 v45 h45 v30 h-45 v45 h-30 v-45 h-45 v-30 h45 z" />
                             </svg>
                         </motion.div>
@@ -655,10 +655,10 @@ export default function Home() {
                     {/* Content Container */}
                     <div className="relative z-10 mx-auto max-w-[1350px] px-4 md:px-8 lg:px-12">
                         <div className="mb-8 text-center md:mb-12">
-                            <h2 className="mb-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl" data-aos="fade-up">
+                            <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl" data-aos="fade-up">
                                 Upcoming <span className="text-section-title">Tournament</span>
                             </h2>
-                            <div className="mx-auto h-1 w-20 rounded-full bg-primary sm:w-24" data-aos="fade-up" data-aos-delay="50"></div>
+                            <div className="bg-primary mx-auto h-1 w-20 rounded-full sm:w-24" data-aos="fade-up" data-aos-delay="50"></div>
                         </div>
 
                         <div className="grid grid-cols-1 justify-items-center gap-6 md:grid-cols-2 md:gap-8">
@@ -692,7 +692,7 @@ export default function Home() {
                             ].map((game, i) => (
                                 <div
                                     key={i}
-                                    className="group relative w-full max-w-md overflow-hidden rounded-2xl border-2 border-primary/50 bg-white p-3 shadow-lg transition-all duration-500 hover:border-primary hover:shadow-2xl"
+                                    className="group border-primary/50 hover:border-primary relative w-full max-w-md overflow-hidden rounded-2xl border-2 bg-white p-3 shadow-lg transition-all duration-500 hover:shadow-2xl"
                                     data-aos={game.animation}
                                     data-aos-delay={game.delay}
                                     style={{ height: '600px' }}
@@ -726,7 +726,7 @@ export default function Home() {
                                         <div className="absolute right-0 bottom-0 left-0 my-5 flex translate-y-0 flex-col items-center p-8 opacity-100 transition-all duration-500 md:translate-y-4 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">
                                             <h3 className="mb-4 text-center text-2xl font-bold text-white">
                                                 {game.title} <span className="text-primary">Tournament</span>
-                                                <div className="mx-auto mt-2 h-0.5 w-64 rounded-full bg-primary"></div>
+                                                <div className="bg-primary mx-auto mt-2 h-0.5 w-64 rounded-full"></div>
                                             </h3>
 
                                             <div className="mb-6 space-y-2 text-center">
@@ -735,7 +735,7 @@ export default function Home() {
                                                 <p className="text-base text-white/90">{game.scope}</p>
                                                 <p className="text-base font-semibold text-white/90">{game.date}</p>
                                                 <p className="text-base font-bold text-white/90">{game.mode}</p>
-                                                <div className="mt-2 border-t border-primary/30 pt-2">
+                                                <div className="border-primary/30 mt-2 border-t pt-2">
                                                     <p className="text-sm text-white/90">Registration Fee</p>
                                                     <p className="text-base font-semibold text-white">{game.fee}</p>
                                                 </div>
@@ -743,7 +743,7 @@ export default function Home() {
 
                                             <Link
                                                 href={route('register')}
-                                                className="inline-block transform rounded-lg bg-primary px-8 py-3 text-base font-semibold text-white transition-all duration-300 hover:scale-105 hover:bg-primary hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
+                                                className="bg-primary hover:bg-primary inline-block transform rounded-lg px-8 py-3 text-base font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
                                                 onClick={(e) => {
                                                     if (isRegistrationClosed) {
                                                         e.preventDefault();
@@ -767,14 +767,14 @@ export default function Home() {
 
                 {/* Video Teaser Section */}
                 <section className="relative overflow-hidden py-16 md:py-24">
-                    <div className="absolute inset-0 bg-gradient-to-b from-primary/20 via-white to-primary/5"></div>
+                    <div className="from-primary/20 to-primary/5 absolute inset-0 bg-gradient-to-b via-white"></div>
                     <div className="relative z-10 mx-auto max-w-[1350px] px-4 md:px-8 lg:px-12">
                         <div className="mb-8 text-center md:mb-12">
-                            <h2 className="mb-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl" data-aos="fade-up">
+                            <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl" data-aos="fade-up">
                                 IT-ESEGA <span className="text-section-title">Teaser</span>
                             </h2>
                             <div
-                                className="mx-auto mb-6 h-1 w-20 rounded-full bg-primary sm:mb-8 sm:w-24"
+                                className="bg-primary mx-auto mb-6 h-1 w-20 rounded-full sm:mb-8 sm:w-24"
                                 data-aos="fade-up"
                                 data-aos-delay="50"
                             ></div>
@@ -785,7 +785,7 @@ export default function Home() {
 
                         <div className="mx-auto max-w-4xl px-4 sm:px-0">
                             <div
-                                className="relative w-full overflow-hidden rounded-2xl border-4 border-primary/20 shadow-2xl transition-all duration-500 hover:border-primary/40"
+                                className="border-primary/20 hover:border-primary/40 relative w-full overflow-hidden rounded-2xl border-4 shadow-2xl transition-all duration-500"
                                 data-aos="fade-up"
                                 data-aos-delay="150"
                             >
@@ -808,7 +808,7 @@ export default function Home() {
                                             <p className="text-sm text-gray-300">Experience the Next Level of Gaming Competition</p>
                                         </div>
                                         <div className="flex items-center space-x-2">
-                                            <span className="inline-flex items-center rounded-full bg-primary/80 px-3 py-1 text-sm">
+                                            <span className="bg-primary/80 inline-flex items-center rounded-full px-3 py-1 text-sm">
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     className="mr-1 h-4 w-4"
@@ -835,28 +835,28 @@ export default function Home() {
 
                 {/* Prizepool Section */}
                 <section className="relative overflow-hidden py-16 md:py-24">
-                    <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-primary/10 to-white"></div>
+                    <div className="from-primary/5 via-primary/10 absolute inset-0 bg-gradient-to-b to-white"></div>
                     <div className="relative z-10 mx-auto max-w-[1350px] px-4 md:px-8 lg:px-12">
                         <div className="mb-10 text-center md:mb-16">
-                            <h2 className="mb-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl" data-aos="fade-up">
+                            <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl" data-aos="fade-up">
                                 Total <span className="text-section-title">Prizepool</span>
                             </h2>
-                            <div className="mx-auto h-1 w-20 rounded-full bg-primary sm:w-24" data-aos="fade-up" data-aos-delay="50"></div>
+                            <div className="bg-primary mx-auto h-1 w-20 rounded-full sm:w-24" data-aos="fade-up" data-aos-delay="50"></div>
                         </div>
 
                         <div className="mx-auto max-w-lg">
                             <div
-                                className="relative overflow-hidden rounded-2xl border-2 border-primary/50 bg-white shadow-lg transition-all duration-500 hover:border-primary hover:shadow-xl"
+                                className="border-primary/50 hover:border-primary relative overflow-hidden rounded-2xl border-2 bg-white shadow-lg transition-all duration-500 hover:shadow-xl"
                                 data-aos="fade-up"
                                 data-aos-delay="100"
                             >
-                                <div className="absolute top-0 left-0 h-2 w-full bg-gradient-to-r from-primary/20 to-primary/5"></div>
+                                <div className="from-primary/20 to-primary/5 absolute top-0 left-0 h-2 w-full bg-gradient-to-r"></div>
                                 <div className="px-6 py-8 sm:px-8 sm:py-10">
                                     <div className="flex flex-col items-center">
-                                        <div className="mb-3 rounded-full bg-primary/10 p-3">
+                                        <div className="bg-primary/10 mb-3 rounded-full p-3">
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
-                                                className="h-8 w-8 text-primary"
+                                                className="text-primary h-8 w-8"
                                                 fill="none"
                                                 viewBox="0 0 24 24"
                                                 stroke="currentColor"
@@ -871,7 +871,7 @@ export default function Home() {
                                         </div>
                                         <div className="text-center">
                                             <p className="mb-1 text-sm font-medium text-gray-500">Total Hadiah</p>
-                                            <h3 className="mb-3 text-4xl font-bold text-section-title sm:text-5xl">Rp 12.000.000</h3>
+                                            <h3 className="text-section-title mb-3 text-4xl font-bold sm:text-5xl">Rp 12.000.000</h3>
                                             <div className="flex items-center justify-center gap-2 text-gray-600">
                                                 <span className="text-2xl">🏆</span>
                                                 <p className="text-sm">Mobile Legends & Free Fire</p>
@@ -879,7 +879,7 @@ export default function Home() {
                                         </div>
                                         <Link
                                             href={route('register')}
-                                            className="mt-6 inline-flex transform items-center rounded-lg bg-gradient-to-r from-primary/20 to-primary/5 px-6 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:scale-105 hover:from-primary/20 hover:to-primary/5 disabled:cursor-not-allowed disabled:opacity-60"
+                                            className="from-primary/20 to-primary/5 hover:from-primary/20 hover:to-primary/5 mt-6 inline-flex transform items-center rounded-lg bg-gradient-to-r px-6 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:scale-105 disabled:cursor-not-allowed disabled:opacity-60"
                                             onClick={(e) => {
                                                 if (isRegistrationClosed) {
                                                     e.preventDefault();
@@ -905,15 +905,19 @@ export default function Home() {
 
                 {/* FAQ Section */}
                 <section id="faq" className="relative overflow-hidden py-16 md:py-24">
-                    <div className="absolute inset-0 bg-gradient-to-b from-primary/20 via-white to-primary/5"></div>
+                    <div className="from-primary/20 to-primary/5 absolute inset-0 bg-gradient-to-b via-white"></div>
                     <div className="relative z-10 mx-auto max-w-[1350px] px-4 md:px-8 lg:px-12">
                         <div className="mx-auto max-w-3xl">
                             <div className="text-center md:text-left">
-                                <h2 className="mb-4 text-3xl font-extrabold text-foreground sm:text-4xl" data-aos="fade-up">
+                                <h2 className="mb-4 text-center text-3xl font-extrabold sm:text-4xl" data-aos="fade-up">
                                     Frequently <span className="text-section-title">Asked Questions</span>
                                 </h2>
-                                <div className="mx-auto h-1 w-20 rounded-full bg-primary sm:w-24" data-aos="fade-up" data-aos-delay="50"></div>
-                                <p className="mx-auto mt-6 max-w-2xl text-base text-gray-600 sm:text-lg" data-aos="fade-up" data-aos-delay="100">
+                                <div className="bg-primary mx-auto h-1 w-20 rounded-full sm:w-24" data-aos="fade-up" data-aos-delay="50"></div>
+                                <p
+                                    className="mx-auto mt-6 mb-6 max-w-2xl text-center text-base text-gray-600 sm:text-lg"
+                                    data-aos="fade-up"
+                                    data-aos-delay="100"
+                                >
                                     Temukan jawaban untuk pertanyaan umum tentang IT-ESEGA 2025 dan proses pendaftaran turnamen
                                 </p>
                             </div>
@@ -927,7 +931,7 @@ export default function Home() {
                                     >
                                         {({ open }: { open: boolean }) => (
                                             <>
-                                                <Disclosure.Button className="flex w-full items-center justify-between px-6 py-5 text-left focus:outline-none focus-visible:ring focus-visible:ring-primary/50">
+                                                <Disclosure.Button className="focus-visible:ring-primary/50 flex w-full items-center justify-between px-6 py-5 text-left focus:outline-none focus-visible:ring">
                                                     <span className={`text-lg font-medium ${open ? 'text-primary' : 'text-section-title'}`}>
                                                         {faq.question}
                                                     </span>
@@ -961,7 +965,7 @@ export default function Home() {
                                 <p className="mb-4 text-gray-600">Masih punya pertanyaan lain?</p>
                                 <a
                                     href="#contact"
-                                    className="inline-flex items-center rounded-lg bg-primary/10 px-5 py-2.5 text-sm font-medium text-primary transition-colors duration-300 hover:bg-primary hover:text-primary"
+                                    className="bg-primary/10 text-primary hover:bg-primary hover:text-primary inline-flex items-center rounded-lg px-5 py-2.5 text-sm font-medium transition-colors duration-300"
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" className="mr-2 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                         <path
@@ -979,13 +983,13 @@ export default function Home() {
 
                 {/* Contact Person Section */}
                 <section id="contact" className="relative overflow-hidden py-16 md:py-24">
-                    <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-primary/10 to-white"></div>
+                    <div className="from-primary/5 via-primary/10 absolute inset-0 bg-gradient-to-b to-white"></div>
                     <div className="relative z-10 mx-auto max-w-[1350px] px-4 md:px-8 lg:px-12">
                         <div className="mb-10 text-center md:mb-16">
                             <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl" data-aos="fade-up">
-                                <span className="text-foreground">CONTACT</span> <span className="text-section-title">PERSON</span>
+                                <span className="">Contact</span> <span className="text-section-title">Person</span>
                             </h2>
-                            <div className="mx-auto h-1 w-20 rounded-full bg-primary sm:w-24" data-aos="fade-up" data-aos-delay="50"></div>
+                            <div className="bg-primary mx-auto h-1 w-20 rounded-full sm:w-24" data-aos="fade-up" data-aos-delay="50"></div>
                             <p className="mx-auto mt-4 max-w-2xl text-base text-gray-600 sm:text-lg" data-aos="fade-up" data-aos-delay="100">
                                 Jika Anda memiliki pertanyaan lebih lanjut, jangan ragu untuk menghubungi narahubung yang tertera di bawah ini.
                             </p>
@@ -1017,12 +1021,12 @@ export default function Home() {
                             ].map((contact, index) => (
                                 <div
                                     key={index}
-                                    className="rounded-xl border border-primary bg-white p-6 shadow-lg transition-shadow duration-300 hover:shadow-xl"
+                                    className="border-primary rounded-xl border bg-white p-6 shadow-lg transition-shadow duration-300 hover:shadow-xl"
                                     data-aos={contact.animation}
                                     data-aos-delay={contact.delay}
                                 >
                                     <div className="mb-4 flex items-center gap-4">
-                                        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary shadow-md">
+                                        <div className="bg-primary flex h-12 w-12 items-center justify-center rounded-full shadow-md">
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 className="h-6 w-6 text-white"
@@ -1038,14 +1042,14 @@ export default function Home() {
                                                 />
                                             </svg>
                                         </div>
-                                        <h3 className="text-xl font-semibold text-primary">{contact.name}</h3>
+                                        <h3 className="text-primary text-xl font-semibold">{contact.name}</h3>
                                     </div>
                                     <div className="space-y-3">
                                         <a
                                             href={`https://wa.me/${contact.wa}`}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="flex items-center gap-2 text-gray-600 transition-colors duration-300 hover:text-primary"
+                                            className="hover:text-primary flex items-center gap-2 text-gray-600 transition-colors duration-300"
                                         >
                                             <span className="font-semibold">WA:</span>
                                             <span className="hover:underline">{contact.wa}</span>
@@ -1067,10 +1071,10 @@ export default function Home() {
                     <div className="relative z-10 mx-auto flex max-w-[1350px] flex-col px-4 md:px-8 lg:px-12">
                         {/* Header */}
                         <div className="mx-auto mb-10 max-w-2xl text-center md:mb-16">
-                            <h2 className="mb-2 text-center text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
-                                Merchandise <span className="ml-2 text-section-title">IT-ESEGA 25</span>
+                            <h2 className="mb-2 text-center text-3xl font-extrabold tracking-tight sm:text-4xl">
+                                Merchandise <span className="text-section-title ml-2">IT-ESEGA 25</span>
                             </h2>
-                            <div className="mx-auto mb-4 h-1 w-24 rounded-full bg-primary/80"></div>
+                            <div className="bg-primary/80 mx-auto mb-4 h-1 w-24 rounded-full"></div>
                             <p className="mx-auto mb-15 max-w-2xl text-center text-base text-gray-600 sm:text-lg">
                                 Merchandise resmi IT-ESEGA 25, desain eksklusif dan nyaman dipakai. Tersedia kaos & jersey edisi terbatas.
                             </p>
@@ -1081,7 +1085,7 @@ export default function Home() {
                                 <button
                                     aria-label="Sebelumnya"
                                     onClick={() => instanceRef.current?.prev()}
-                                    className="absolute top-1/2 -left-2 z-10 -translate-y-1/2 rounded-full border border-primary bg-white/80 p-2 text-primary shadow transition hover:bg-primary disabled:opacity-50"
+                                    className="border-primary text-primary hover:bg-primary absolute top-1/2 -left-2 z-10 -translate-y-1/2 rounded-full border bg-white/80 p-2 shadow transition disabled:opacity-50"
                                     style={{ display: merchSlides.length > 1 ? 'block' : 'none' }}
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1102,7 +1106,7 @@ export default function Home() {
                                 <button
                                     aria-label="Selanjutnya"
                                     onClick={() => instanceRef.current?.next()}
-                                    className="absolute top-1/2 right-0 z-10 -translate-y-1/2 rounded-full border border-primary bg-white/80 p-2 text-primary shadow transition hover:bg-primary disabled:opacity-50"
+                                    className="border-primary text-primary hover:bg-primary absolute top-1/2 right-0 z-10 -translate-y-1/2 rounded-full border bg-white/80 p-2 shadow transition disabled:opacity-50"
                                     style={{ display: merchSlides.length > 1 ? 'block' : 'none' }}
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1137,14 +1141,14 @@ export default function Home() {
                                     </a>
                                     */}
                                 <h3 className="mb-2 text-2xl font-bold text-gray-900 sm:text-3xl">{activeInfo.title}</h3>
-                                <div className="mb-1 text-xl font-semibold text-primary">{activeInfo.price}</div>
+                                <div className="text-primary mb-1 text-xl font-semibold">{activeInfo.price}</div>
                                 <div className="mb-3 text-sm text-gray-500">{activeInfo.preorder}</div>
                                 <p className="mb-6 text-base text-gray-700 sm:text-lg">{activeInfo.desc}</p>
                                 <a
                                     href={activeInfo.link}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="mt-0 mb-2 inline-flex w-full items-center justify-center rounded-lg bg-primary px-7 py-3 text-base font-bold text-white shadow transition hover:bg-primary md:w-auto"
+                                    className="bg-primary hover:bg-primary mt-0 mb-2 inline-flex w-full items-center justify-center rounded-lg px-7 py-3 text-base font-bold text-white shadow transition md:w-auto"
                                 >
                                     Order Now
                                 </a>
@@ -1203,7 +1207,7 @@ export default function Home() {
                                 <div className="mt-4 flex flex-col gap-4">
                                     <Link
                                         href={route('home')}
-                                        className="inline-flex w-full items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-white transition hover:bg-primary"
+                                        className="bg-primary hover:bg-primary inline-flex w-full items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-white transition"
                                     >
                                         Kembali ke Beranda
                                     </Link>

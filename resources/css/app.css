@@ -369,13 +369,13 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgba(239, 68, 68, 0.5);
+    background: rgba(68, 171, 239, 0.5);
     border-radius: 100vh;
     transition: all 0.3s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: rgba(239, 68, 68, 0.8);
+    background: rgba(85, 187, 255, 0.666);
 }
 
 /* Smooth Scroll Behavior */

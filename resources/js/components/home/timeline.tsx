@@ -10,13 +10,13 @@ export default function TimelineSection({ timeline }: { timeline: Event[] }) {
     return (
         <>
             <section className="relative overflow-hidden py-16 md:py-24">
-                <div className="absolute inset-0 bg-gradient-to-b from-white via-primary/5 to-primary/10"></div>
+                <div className="via-primary/5 to-primary/10 absolute inset-0 bg-gradient-to-b from-white"></div>
                 <div className="relative z-10 mx-auto max-w-[1350px] px-4 md:px-8 lg:px-12">
                     <div className="mb-8 text-center md:mb-12">
-                        <h2 className="mb-4 text-3xl font-extrabold text-foreground sm:text-4xl" data-aos="fade-up">
+                        <h2 className="mb-4 text-3xl font-extrabold sm:text-4xl" data-aos="fade-up">
                             Event <span className="text-section-title">Timeline</span>
                         </h2>
-                        <div className="mx-auto h-1 w-20 rounded-full bg-primary sm:w-24" data-aos="fade-up" data-aos-delay="50"></div>
+                        <div className="bg-primary mx-auto h-1 w-20 rounded-full sm:w-24" data-aos="fade-up" data-aos-delay="50"></div>
                     </div>
 
                     <div className="relative mx-auto flex w-full flex-col items-center">
