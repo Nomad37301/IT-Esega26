@@ -348,7 +348,7 @@ export default function Home() {
             </Transition>
 
             {/* Head title tetap */}
-            <Head title="IT-ESEGA 2025 Official Website" />
+            <Head title="IT-ESEGA 2026 Official Website" />
 
             {/* Notifikasi Double Slot */}
             <Transition

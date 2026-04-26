@@ -124,25 +124,25 @@ body {
        Design Color System - IT-ESEGA 2026
        ============================================ */
     /* Navy Blue - Tombol utama & Register button */
-    --color-navy: #1E4C7A;
-    --color-navy-dark: #163A5F;
-    --color-navy-light: #2A6099;
+    --color-navy: #1e4c7a;
+    --color-navy-dark: #163a5f;
+    --color-navy-light: #2a6099;
 
     /* Teal / Aqua - Active nav link & accent */
-    --color-teal: #4EAAC5;
-    --color-teal-dark: #3A8FA8;
-    --color-teal-light: #6DC4DC;
+    --color-teal: #4eaac5;
+    --color-teal-dark: #3a8fa8;
+    --color-teal-light: #6dc4dc;
 
     /* Hero Section Colors */
-    --hero-overlay: rgba(10, 20, 35, 0.60);
-    --hero-overlay-gradient: linear-gradient(to right, rgba(10, 20, 35, 0.85) 0%, rgba(10, 20, 35, 0.40) 100%);
+    --hero-overlay: rgba(10, 20, 35, 0.6);
+    --hero-overlay-gradient: linear-gradient(to right, rgba(10, 20, 35, 0.85) 0%, rgba(10, 20, 35, 0.4) 100%);
 
     /* Navbar Colors */
     --navbar-bg-scrolled: rgba(255, 255, 255, 0.96);
     --navbar-bg-transparent: rgba(200, 215, 230, 0.15);
     --navbar-link-color: #4a5568;
-    --navbar-link-active: #4EAAC5;
-    --navbar-link-hover: #4EAAC5;
+    --navbar-link-active: #4eaac5;
+    --navbar-link-hover: #4eaac5;
 }
 
 .dark {
@@ -345,9 +345,9 @@ body {
 @font-face {
     font-family: 'Demarus';
     src: url('/fonts/DEMARUS.otf') format('opentype');
-    font-weight: normal;
+    /* font-weight: normal;
     font-style: normal;
-    font-display: swap;
+    font-display: swap; */
 }
 
 /* .container {
@@ -481,7 +481,7 @@ body {
 /* Teks judul hero dengan gradient teal */
 .hero-title {
     display: inline-block;
-    background: linear-gradient(135deg, #a8d8ea 0%, #c8eefc 40%, #7ec8e3 70%, #4EAAC5 100%);
+    background: linear-gradient(135deg, #a8d8ea 0%, #c8eefc 40%, #7ec8e3 70%, #4eaac5 100%);
     -webkit-background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
     background-clip: text !important;
@@ -496,7 +496,7 @@ body {
 
 /* Navbar transparent (saat di atas hero) */
 .navbar-transparent {
-    background: rgba(180, 200, 220, 0.10);
+    background: rgba(180, 200, 220, 0.1);
     backdrop-filter: blur(2px);
     -webkit-backdrop-filter: blur(2px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -550,7 +550,10 @@ body {
     background: var(--color-navy);
     color: #ffffff;
     border: none;
-    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    transition:
+        background 0.3s ease,
+        transform 0.2s ease,
+        box-shadow 0.3s ease;
 }
 
 .btn-navy:hover {
@@ -564,7 +567,10 @@ body {
     background: transparent;
     color: #ffffff;
     border: 2px solid rgba(255, 255, 255, 0.85);
-    transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    transition:
+        background 0.3s ease,
+        color 0.3s ease,
+        transform 0.2s ease;
 }
 
 .btn-outline-white:hover {
@@ -584,6 +590,6 @@ body {
     }
 
     .hero-overlay {
-        background: linear-gradient(to bottom, rgba(10, 20, 35, 0.70) 0%, rgba(10, 20, 35, 0.75) 100%);
+        background: linear-gradient(to bottom, rgba(10, 20, 35, 0.7) 0%, rgba(10, 20, 35, 0.75) 100%);
     }
 }
