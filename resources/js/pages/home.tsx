@@ -227,6 +227,19 @@ export default function Home() {
 
     return (
         <>
+            {/* Navbar - di luar hero section agar tidak terperangkap stacking context */}
+            <Navbar
+                user={user}
+                logo={
+                    <div className="flex items-center justify-start">
+                        <img src="/Images/LogoEsega25.png" alt="IT-ESEGA-25 Logo" className="h-18 w-auto object-contain" />
+                    </div>
+                }
+                items={navItems}
+                isRegistrationClosed={isRegistrationClosed}
+                setShowClosedPopup={setShowClosedPopup}
+            />
+
             {/* Merch Popup Modal with Horizontal Layout and Professional Style */}
             <Transition appear show={showMerchPopup} as={Fragment}>
                 <Dialog as="div" className="fixed inset-0 z-[100] overflow-y-auto" onClose={() => setShowMerchPopup(false)}>
@@ -440,83 +453,69 @@ export default function Home() {
                 {/* Dark overlay */}
                 <div className="hero-overlay" />
 
-                <div className="relative z-10 w-full">
-                    <Navbar
-                        user={user}
-                        logo={
-                            <div className="flex items-center justify-start">
-                                <img src="/Images/LogoEsega25.png" alt="IT-ESEGA-25 Logo" className="h-18 w-auto object-contain" />
-                            </div>
-                        }
-                        items={navItems}
-                        isRegistrationClosed={isRegistrationClosed}
-                        setShowClosedPopup={setShowClosedPopup}
-                    />
-
-                    {/* Hero Content */}
-                    <div className="hero-content mx-auto max-w-[1350px] px-4 pt-32 pb-20 md:px-8 md:pt-60 md:pb-36 lg:px-12">
-                        <div className="relative z-10 grid w-full grid-cols-1 items-center gap-8 md:grid-cols-[1.5fr_1fr]">
-                            <div className="-mb-10 text-center md:text-left" data-aos="fade-up">
-                                {/* Judul Besar Hero */}
-                                <h1 className="font-demarus -mb-4 text-[5rem] leading-none font-medium sm:-mb-32 sm:text-[9rem] sm:leading-[0.85]">
-                                    <span className="bg-[linear-gradient(135deg,#a8d8ea_0%,#c8eefc_40%,#7ec8e3_70%,#4EAAC5_100%)] bg-clip-text text-transparent [-webkit-background-clip:text] [-webkit-text-fill-color:transparent]">
-                                        IT-ESEGA 2026
-                                    </span>
-                                </h1>
-                                <p className="mx-auto mb-6 max-w-2xl text-base leading-relaxed text-white/90 sm:mb-8 sm:text-lg md:mx-0">
-                                    Bergabunglah dalam perlombaan eSport bergengsi. Daftarkan timmu, taklukkan bracket, dan menangkan hadiah jutaan
-                                    rupiah! Ayo Menjadi Juara dalam IT-ESEGA 2026
-                                </p>
-                                <div className="flex justify-center space-x-4 md:justify-start">
-                                    {/* HERO SECTION BUTTON */}
-                                    <button
-                                        type="button"
-                                        className="btn-navy inline-flex transform items-center rounded-lg px-6 py-3 text-base font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60 sm:px-8 sm:py-4 sm:text-lg"
-                                        disabled={isRegistrationClosed}
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            if (isRegistrationClosed) {
-                                                setShowClosedPopup(true);
-                                            } else {
-                                                window.location.href = route('register');
-                                            }
-                                        }}
-                                    >
-                                        Register Now!
-                                    </button>
-                                    <a
-                                        href="https://www.instagram.com/reel/DJx6DmICh5B/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="btn-outline-white inline-flex transform items-center rounded-lg px-6 py-3 text-base font-semibold transition-all duration-300 hover:scale-105 sm:px-8 sm:py-4 sm:text-lg"
-                                    >
-                                        How to Register
-                                    </a>
-                                </div>
-                            </div>
-                            <div className="hidden justify-center md:flex md:justify-end" data-aos="fade-up" data-aos-delay="100">
-                                <motion.img
-                                    src="/Images/LogoEsega25.png"
-                                    alt="IT-ESEGA Logo"
-                                    className="h-[380px] w-auto object-contain drop-shadow-2xl"
-                                    style={{
-                                        maxWidth: '100%',
-                                        willChange: 'transform',
-                                        backfaceVisibility: 'hidden',
-                                        transform: 'translateZ(0)',
-                                        filter: 'drop-shadow(0 0 30px rgba(78, 170, 197, 0.4))',
+                {/* Hero Content */}
+                <div className="hero-content relative z-10 mx-auto max-w-[1350px] px-4 pt-32 pb-20 md:px-8 md:pt-60 md:pb-36 lg:px-12">
+                    <div className="grid w-full grid-cols-1 items-center gap-8 md:grid-cols-[1.5fr_1fr]">
+                        <div className="-mb-10 text-center md:text-left" data-aos="fade-up">
+                            {/* Judul Besar Hero */}
+                            <h1 className="font-demarus -mb-4 text-[5rem] leading-none font-medium sm:-mb-32 sm:text-[9rem] sm:leading-[0.85]">
+                                <span className="bg-[linear-gradient(135deg,#a8d8ea_0%,#c8eefc_40%,#7ec8e3_70%,#4EAAC5_100%)] bg-clip-text text-transparent [-webkit-background-clip:text] [-webkit-text-fill-color:transparent]">
+                                    IT-ESEGA 2026
+                                </span>
+                            </h1>
+                            <p className="mx-auto mb-6 max-w-2xl text-base leading-relaxed text-white/90 sm:mb-8 sm:text-lg md:mx-0">
+                                Bergabunglah dalam perlombaan eSport bergengsi. Daftarkan timmu, taklukkan bracket, dan menangkan hadiah jutaan
+                                rupiah! Ayo Menjadi Juara dalam IT-ESEGA 2026
+                            </p>
+                            <div className="flex justify-center space-x-4 md:justify-start">
+                                {/* HERO SECTION BUTTON */}
+                                <button
+                                    type="button"
+                                    className="btn-navy inline-flex transform items-center rounded-lg px-6 py-3 text-base font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60 sm:px-8 sm:py-4 sm:text-lg"
+                                    disabled={isRegistrationClosed}
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        if (isRegistrationClosed) {
+                                            setShowClosedPopup(true);
+                                        } else {
+                                            window.location.href = route('register');
+                                        }
                                     }}
-                                    animate={{
-                                        y: [0, -12, 0],
-                                    }}
-                                    transition={{
-                                        duration: 3,
-                                        repeat: Infinity,
-                                        ease: 'easeInOut',
-                                        type: 'tween',
-                                    }}
-                                />
+                                >
+                                    Register Now!
+                                </button>
+                                <a
+                                    href="https://www.instagram.com/reel/DJx6DmICh5B/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="btn-outline-white inline-flex transform items-center rounded-lg px-6 py-3 text-base font-semibold transition-all duration-300 hover:scale-105 sm:px-8 sm:py-4 sm:text-lg"
+                                >
+                                    How to Register
+                                </a>
                             </div>
+                        </div>
+                        <div className="hidden justify-center md:flex md:justify-end" data-aos="fade-up" data-aos-delay="100">
+                            <motion.img
+                                src="/Images/LogoEsega25.png"
+                                alt="IT-ESEGA Logo"
+                                className="h-[380px] w-auto object-contain drop-shadow-2xl"
+                                style={{
+                                    maxWidth: '100%',
+                                    willChange: 'transform',
+                                    backfaceVisibility: 'hidden',
+                                    transform: 'translateZ(0)',
+                                    filter: 'drop-shadow(0 0 30px rgba(78, 170, 197, 0.4))',
+                                }}
+                                animate={{
+                                    y: [0, -12, 0],
+                                }}
+                                transition={{
+                                    duration: 3,
+                                    repeat: Infinity,
+                                    ease: 'easeInOut',
+                                    type: 'tween',
+                                }}
+                            />
                         </div>
                     </div>
                 </div>
