@@ -33,6 +33,7 @@ body {
 
     --color-primary: var(--primary);
     --color-primary-foreground: var(--primary-foreground);
+    --color-section-title: var(--section-title);
 
     --color-secondary: var(--secondary);
     --color-secondary-foreground: var(--secondary-foreground);
@@ -91,8 +92,9 @@ body {
     --card-foreground: #252525;
     --popover: #ffffff;
     --popover-foreground: #252525;
-    --primary: #234773;
+    --primary: #1e4c7a;
     --primary-foreground: #ffffff;
+    --section-title: #447089;
     --secondary: #fef2f2;
     --secondary-foreground: #252525;
     --muted: #fef2f2;

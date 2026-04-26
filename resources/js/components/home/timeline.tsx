@@ -10,13 +10,13 @@ export default function TimelineSection({ timeline }: { timeline: Event[] }) {
     return (
         <>
             <section className="relative overflow-hidden py-16 md:py-24">
-                <div className="absolute inset-0 bg-gradient-to-b from-white via-red-50/40 to-red-100/30"></div>
+                <div className="absolute inset-0 bg-gradient-to-b from-white via-primary/5 to-primary/10"></div>
                 <div className="relative z-10 mx-auto max-w-[1350px] px-4 md:px-8 lg:px-12">
                     <div className="mb-8 text-center md:mb-12">
-                        <h2 className="mb-4 text-3xl font-extrabold text-gray-900 sm:text-4xl" data-aos="fade-up">
-                            Event <span className="text-red-600">Timeline</span>
+                        <h2 className="mb-4 text-3xl font-extrabold text-foreground sm:text-4xl" data-aos="fade-up">
+                            Event <span className="text-section-title">Timeline</span>
                         </h2>
-                        <div className="mx-auto h-1 w-20 rounded-full bg-red-600 sm:w-24" data-aos="fade-up" data-aos-delay="50"></div>
+                        <div className="mx-auto h-1 w-20 rounded-full bg-primary sm:w-24" data-aos="fade-up" data-aos-delay="50"></div>
                     </div>
 
                     <div className="relative mx-auto flex w-full flex-col items-center">
@@ -57,7 +57,7 @@ export default function TimelineSection({ timeline }: { timeline: Event[] }) {
                                         className={`relative w-full max-w-md rounded-xl border p-4 shadow-lg transition-shadow duration-300 hover:shadow-xl sm:p-6 ${
                                             isPast
                                                 ? 'border-gray-300 bg-gray-100 text-gray-500 opacity-80 grayscale-[30%] backdrop-blur-sm backdrop-brightness-90'
-                                                : 'border-red-200 bg-white text-gray-800'
+                                                : 'border-primary/20 bg-white text-gray-800'
                                         }`}
                                     >
                                         {isPast && (
@@ -70,7 +70,7 @@ export default function TimelineSection({ timeline }: { timeline: Event[] }) {
                                             <div className="relative">
                                                 <div
                                                     className={`flex h-10 w-10 items-center justify-center rounded-full border-4 border-white shadow-lg ${
-                                                        isPast ? 'bg-gray-400 grayscale' : 'bg-red-500'
+                                                        isPast ? 'bg-gray-400 grayscale' : 'bg-primary'
                                                     }`}
                                                 >
                                                     <div className="text-white">
@@ -97,7 +97,7 @@ export default function TimelineSection({ timeline }: { timeline: Event[] }) {
                                             <div className="relative">
                                                 <div
                                                     className={`relative flex h-7 w-7 items-center justify-center rounded-full border-4 border-white shadow-lg ${
-                                                        isPast ? 'bg-gray-400 grayscale' : 'bg-red-500'
+                                                        isPast ? 'bg-gray-400 grayscale' : 'bg-primary'
                                                     }`}
                                                 >
                                                     <div className="scale-75 text-white">
@@ -121,7 +121,7 @@ export default function TimelineSection({ timeline }: { timeline: Event[] }) {
                                         </div>
 
                                         <p
-                                            className={`mb-2 text-sm font-medium ${isPast ? 'text-gray-500' : 'text-red-500'} ${
+                                            className={`mb-2 text-sm font-medium ${isPast ? 'text-gray-500' : 'text-primary'} ${
                                                 item.end_date ? 'mt-4' : ''
                                             }`}
                                             data-aos="fade-up"
@@ -138,7 +138,7 @@ export default function TimelineSection({ timeline }: { timeline: Event[] }) {
                                             )}
                                         </p>
 
-                                        <h4 className={`mb-2 text-lg font-semibold sm:text-xl ${isPast ? 'text-gray-500' : 'text-red-600'}`}>
+                                        <h4 className={`mb-2 text-lg font-semibold sm:text-xl ${isPast ? 'text-gray-500' : 'text-primary'}`}>
                                             {item.title}
                                         </h4>
                                         <p className="text-sm leading-relaxed text-gray-600 sm:text-base">{item.description}</p>
@@ -148,7 +148,7 @@ export default function TimelineSection({ timeline }: { timeline: Event[] }) {
                                                     <div className="relative">
                                                         <div
                                                             className={`flex h-6 w-6 items-center justify-center rounded-full p-1 text-white shadow ${
-                                                                isPast ? 'bg-gray-400 grayscale' : 'bg-red-500'
+                                                                isPast ? 'bg-gray-400 grayscale' : 'bg-primary'
                                                             }`}
                                                         >
                                                             <YoutubeIcon />
@@ -158,7 +158,7 @@ export default function TimelineSection({ timeline }: { timeline: Event[] }) {
                                                     <div className="relative">
                                                         <div
                                                             className={`flex h-6 w-6 items-center justify-center rounded-full p-1 text-white shadow ${
-                                                                isPast ? 'bg-gray-400 grayscale' : 'bg-red-500'
+                                                                isPast ? 'bg-gray-400 grayscale' : 'bg-primary'
                                                             }`}
                                                         >
                                                             <MapPinPlus />
@@ -171,7 +171,7 @@ export default function TimelineSection({ timeline }: { timeline: Event[] }) {
                                                         href={item.location}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        className="text-red-500 hover:text-red-700"
+                                                        className="text-primary hover:text-primary/90"
                                                     >
                                                         <span className="italic">Watch On YouTube</span>
                                                     </a>
@@ -180,7 +180,7 @@ export default function TimelineSection({ timeline }: { timeline: Event[] }) {
                                                         href={item.location}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        className="text-red-500 hover:text-red-700"
+                                                        className="text-primary hover:text-primary/90"
                                                     >
                                                         <span className="italic">Visit On Google Maps</span>
                                                     </a>
