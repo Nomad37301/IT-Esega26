@@ -178,7 +178,7 @@ export function Footer({ customDescription, customSections, customSocialMedia, c
     };
 
     return (
-        <footer className="py-12 text-white bg-gradient-to-b from-red-500 to-red-900">
+        <footer className="py-12 text-white bg-gradient-to-b from-primary to-section-title">
             <div className="mx-auto max-w-[1350px] px-4 md:px-8 lg:px-12">
                 {/* Main Footer Content */}
                 <div className="grid grid-cols-1 gap-10 md:grid-cols-[2.5fr_1fr_1fr]">
