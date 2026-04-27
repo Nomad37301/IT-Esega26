@@ -175,7 +175,7 @@ export default function About() {
                                     </h2>
                                     <div className="max-w-4xl mx-auto">
                                         <p className="mb-8 text-base sm:text-lg text-[#333] leading-relaxed px-4 sm:px-0">
-                                            IT-ESEGA(Information Technology Electronic Sport Based On Excellent Games) merupakan ajang tahunan bergengsi yang diselenggarakan oleh Himpunan Mahasiswa Teknologi Informasi, Universitas Udayana. Kompetisi ini mempertemukan para gamers dari berbagai kalangan dalam dua cabang E-Sport populer, yaitu Mobile Legends dan PUBG Mobile. IT-ESEGA hadir sebagai representasi semangat kolaborasi, sportivitas, serta wadah untuk mengembangkan potensi, menjalin komunitas, dan mendorong lahirnya atlet E-Sport berbakat yang siap bersaing di tingkat nasional hingga internasional.
+                                            IT-ESEGA 2026 adalah ajang kompetisi E-Sports tahunan yang diselenggarakan oleh Himpunan Mahasiswa Teknologi Informasi Universitas Udayana. Kompetisi ini mempertemukan para gamer dari berbagai latar belakang untuk beradu kemampuan dalam cabang Mobile Legends dan PUBG Mobile. Di tengah atmosfer persaingan yang membara, IT-ESEGA 2026 menjadi panggung untuk menguji ketajaman strategi, kekompakan tim, dan sportivitas sejati. Setiap pertandingan menjadi arena pembuktian, tempat lahirnya talenta yang siap melangkah lebih jauh dan meninggalkan jejak di dunia E-Sports.
                                         </p>
                                     </div>
                                 </div>
@@ -325,12 +325,9 @@ export default function About() {
                                         <div className="mb-6 h-1 w-20 rounded-full bg-primary sm:mb-8 sm:w-24"></div>
                                         <div className="space-y-4 text-gray-600 sm:space-y-6">
                                             <div>
-                                                <h3 className="mb-4 text-2xl font-semibold text-primary">[MAS COT]</h3>
+                                                <h3 className="mb-4 text-2xl font-semibold text-primary">[POLARIX]</h3>
                                                 <p className="mb-6 leading-relaxed">
-                                                    VAULDRON adalah simbol dari kekuatan yang tak terhentikan untuk memimpin pertempuran dan
-                                                    menghancurkan batasan. Maskot ini menjadi pemantik semangat, pengobar ambisi, dan penakluk segala
-                                                    rintangan mewakili keberanian untuk keluar dari batas yang dimiliki dan membebaskan potensi
-                                                    terbaik daslam setiap jiwa kompetitor.
+                                                    “POLARIX” adalah simbol kecerdasan yang tajam, ketangguhan yang tak mudah runtuh, dan presisi dalam setiap langkah di tengah dunia digital yang terus bergerak cepat. Ia mencerminkan cara berpikir yang strategis, tindakan yang terukur, serta kemampuan untuk beradaptasi di setiap perubahan. Polarix menjadi pengingat untuk terus bertumbuh, melampaui batas diri, dan menjaga standar terbaik dalam setiap proses.
                                                 </p>
                                             </div>
 
@@ -447,7 +444,7 @@ export default function About() {
                                             <div>
                                                 <h3 className="text-2xl font-semibold text-secondary mb-4">IT-ESEGA 2026</h3>
                                                 <p className="leading-relaxed mb-6 text-base">
-                                                    Logo IT-ESEGA 2026 menghadirkan kombinasi warna merah, emas, dan perak yang melambangkan semangat, kejayaan, dan kekuatan. Perisai menunjukan identitas yang kokoh, sementara sayap tajam dan bintang emas menjadi lambang kebebasan serta ambisi.
+                                                    Logo IT-ESEGA 2026 mengusung gradasi biru yang mencerminkan ketenangan, kepercayaan, dan ketajaman dalam mengambil keputusan. Perisai melambangkan ketahanan yang kokoh, dipadukan dengan sayap sebagai simbol kecepatan dan ambisi untuk melesat melampaui batas. Elemen api di puncak menghadirkan semangat yang terus menyala, merepresentasikan harmoni antara stabilitas, strategi, dan dorongan untuk unggul di dunia E-Sports.
                                                 </p>
                                             </div>
 
