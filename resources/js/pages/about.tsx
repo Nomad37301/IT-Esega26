@@ -112,7 +112,7 @@ export default function About() {
                         user={user}
                         logo={
                             <div className="flex items-center justify-start">
-                                <img src="/Images/LogoEsega25.png" alt="IT-ESEGA-25 Logo" className="h-18 w-auto object-contain" />
+                                <img src="/Images/LogoEsega25.png" alt="IT-ESEGA-26 Logo" className="h-18 w-auto object-contain" />
                             </div>
                         }
                         items={navItems}
@@ -127,7 +127,7 @@ export default function About() {
                             <div className="absolute inset-0 bg-white"></div>
 
                             {/* Gradient Overlay */}
-                            <div className="absolute inset-0 bg-gradient-to-b from-white via-red-50/40 to-red-100/30"></div>
+                            <div className="absolute inset-0 bg-gradient-to-b from-white via-blue-50/40 to-blue-100/30"></div>
 
                             {/* Cross Blob - Top Left */}
                             <div className="pointer-events-none absolute top-24 -left-12 h-28 w-28 opacity-5">
@@ -142,7 +142,7 @@ export default function About() {
                                     }}
                                     className="h-full w-full"
                                 >
-                                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="h-full w-full fill-red-500">
+                                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="h-full w-full fill-primary">
                                         <path d="M85,40 h30 v45 h45 v30 h-45 v45 h-30 v-45 h-45 v-30 h45 z" />
                                     </svg>
                                 </motion.div>
@@ -161,7 +161,7 @@ export default function About() {
                                     }}
                                     className="h-full w-full"
                                 >
-                                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="h-full w-full fill-red-500">
+                                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="h-full w-full fill-primary">
                                         <path d="M85,40 h30 v45 h45 v30 h-45 v45 h-30 v-45 h-45 v-30 h45 z" />
                                     </svg>
                                 </motion.div>
@@ -171,23 +171,24 @@ export default function About() {
                             <div className="relative max-w-[1350px] mx-auto px-4 md:px-8 lg:px-12 pt-28 md:pt-36 pb-16 md:pb-24">
                                 <div className="text-center" data-aos="fade-up">
                                     <h2 className="mb-6 sm:mb-8 text-3xl sm:text-5xl font-bold text-[#333]">
-                                        About <span className="text-red-600">IT-ESEGA</span>
+                                        About <span className="text-section-title">IT-ESEGA</span>
                                     </h2>
                                     <div className="max-w-4xl mx-auto">
                                         <p className="mb-8 text-base sm:text-lg text-[#333] leading-relaxed px-4 sm:px-0">
-                                            IT-ESEGA(Information Technology Electronic Sport Based On Excellent Games) merupakan ajang tahunan bergengsi yang diselenggarakan oleh Himpunan Mahasiswa Teknologi Informasi, Universitas Udayana. Kompetisi ini mempertemukan para gamers dari berbagai kalangan dalam dua cabang E-Sport populer, yaitu Mobile Legends dan Free Fire. IT-ESEGA hadir sebagai representasi semangat kolaborasi, sportivitas, serta wadah untuk mengembangkan potensi, menjalin komunitas, dan mendorong lahirnya atlet E-Sport berbakat yang siap bersaing di tingkat nasional hingga internasional.
+                                            IT-ESEGA(Information Technology Electronic Sport Based On Excellent Games) merupakan ajang tahunan bergengsi yang diselenggarakan oleh Himpunan Mahasiswa Teknologi Informasi, Universitas Udayana. Kompetisi ini mempertemukan para gamers dari berbagai kalangan dalam dua cabang E-Sport populer, yaitu Mobile Legends dan PUBG Mobile. IT-ESEGA hadir sebagai representasi semangat kolaborasi, sportivitas, serta wadah untuk mengembangkan potensi, menjalin komunitas, dan mendorong lahirnya atlet E-Sport berbakat yang siap bersaing di tingkat nasional hingga internasional.
                                         </p>
                                     </div>
                                 </div>
 
                                 {/* Vision, Mission, Values Cards */}
                                 <div className="mt-12 grid grid-cols-1 gap-6 sm:mt-16 sm:gap-8 md:grid-cols-3" data-aos="fade-up">
-                                    <div className="rounded-xl border border-red-100 bg-white p-8 shadow-lg transition-all duration-300 hover:shadow-xl">
+                                    {/* Vision */}
+                                    <div className="rounded-xl border border-secondary bg-white p-8 shadow-lg transition-all duration-300 hover:shadow-xl">
                                         <div className="mb-6 flex justify-center">
-                                            <div className="rounded-full bg-red-100 p-4">
+                                            <div className="rounded-full bg-blue-100 p-4">
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
-                                                    className="h-8 w-8 text-red-600"
+                                                    className="h-8 w-8 text-primary"
                                                     fill="none"
                                                     viewBox="0 0 24 24"
                                                     stroke="currentColor"
@@ -207,17 +208,18 @@ export default function About() {
                                                 </svg>
                                             </div>
                                         </div>
-                                        <h3 className="mb-4 text-center text-xl font-semibold text-red-600">Visi</h3>
+                                        <h3 className="mb-4 text-center text-xl font-semibold text-primary">Visi</h3>
                                         <p className="text-center leading-relaxed text-gray-600">
                                             Menjadi platform utama yang mempertemukan dan mengembangkan bakat esports.
                                         </p>
                                     </div>
-                                    <div className="rounded-xl border border-red-100 bg-white p-8 shadow-lg transition-all duration-300 hover:shadow-xl">
+                                    {/* mission */}
+                                    <div className="rounded-xl border border-secondary bg-white p-8 shadow-lg transition-all duration-300 hover:shadow-xl">
                                         <div className="mb-6 flex justify-center">
-                                            <div className="rounded-full bg-red-100 p-4">
+                                            <div className="rounded-full bg-blue-100 p-4">
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
-                                                    className="h-8 w-8 text-red-600"
+                                                    className="h-8 w-8 text-primary"
                                                     fill="none"
                                                     viewBox="0 0 24 24"
                                                     stroke="currentColor"
@@ -231,18 +233,19 @@ export default function About() {
                                                 </svg>
                                             </div>
                                         </div>
-                                        <h3 className="mb-4 text-center text-xl font-semibold text-red-600">Misi</h3>
+                                        <h3 className="mb-4 text-center text-xl font-semibold text-primary">Misi</h3>
                                         <p className="text-center leading-relaxed text-gray-600">
                                             Menyelenggarakan kompetisi berkualitas tinggi yang mendorong sportivitas dan profesionalisme dalam
                                             esports.
                                         </p>
                                     </div>
-                                    <div className="rounded-xl border border-red-100 bg-white p-8 shadow-lg transition-all duration-300 hover:shadow-xl">
+                                    {/* Values */}
+                                    <div className="rounded-xl border border-secondary bg-white p-8 shadow-lg transition-all duration-300 hover:shadow-xl">
                                         <div className="mb-6 flex justify-center">
-                                            <div className="rounded-full bg-red-100 p-4">
+                                            <div className="rounded-full bg-blue-100 p-4">
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
-                                                    className="h-8 w-8 text-red-600"
+                                                    className="h-8 w-8 text-primary"
                                                     fill="none"
                                                     viewBox="0 0 24 24"
                                                     stroke="currentColor"
@@ -256,7 +259,7 @@ export default function About() {
                                                 </svg>
                                             </div>
                                         </div>
-                                        <h3 className="mb-4 text-center text-xl font-semibold text-red-600">Nilai</h3>
+                                        <h3 className="mb-4 text-center text-xl font-semibold text-primary">Nilai</h3>
                                         <p className="text-center leading-relaxed text-gray-600">
                                             Integritas, Sportivitas, Inovasi, dan Kebersamaan dalam setiap aspek kompetisi.
                                         </p>
