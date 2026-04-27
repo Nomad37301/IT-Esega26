@@ -333,14 +333,6 @@ export default function About() {
                                                     “POLARIX” adalah simbol kecerdasan yang tajam, ketangguhan yang tak mudah runtuh, dan presisi dalam setiap langkah di tengah dunia digital yang terus bergerak cepat. Ia mencerminkan cara berpikir yang strategis, tindakan yang terukur, serta kemampuan untuk beradaptasi di setiap perubahan. Polarix menjadi pengingat untuk terus bertumbuh, melampaui batas diri, dan menjaga standar terbaik dalam setiap proses.
                                                 </p>
                                             </div>
-
-                                            <div>
-                                                <p className="mb-6 leading-relaxed">
-                                                    Desain maskot kami menggabungkan unsur gaming modern dengan sentuhan teknologi futuristik. Warna
-                                                    merah yang dominan melambangkan semangat dan energi yang membara, sementara elemen teknologi yang
-                                                    menyatu dalam desainnya mencerminkan inovasi dan kemajuan yang menjadi inti dari IT-ESEGA.
-                                                </p>
-                                            </div>
                                         </div>
                                     </div>
                                     {/* Gambar Mascot */}
