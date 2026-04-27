@@ -372,7 +372,7 @@ export default function About() {
                             <div className="absolute inset-0 bg-white"></div>
 
                             {/* Gradient Overlay */}
-                            <div className="absolute inset-0 bg-gradient-to-b from-white via-red-50/40 to-red-100/30"></div>
+                            <div className="absolute inset-0 bg-gradient-to-b from-white via-blue-50/40 to-blue-100/30"></div>
 
                             {/* Cross Blob - Top Left */}
                             <div className="absolute left-20 top-16 w-24 h-24 opacity-5 pointer-events-none">
@@ -387,7 +387,7 @@ export default function About() {
                                     }}
                                     className="w-full h-full"
                                 >
-                                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full h-full fill-red-500">
+                                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full h-full fill-primary">
                                         <path d="M85,40 h30 v45 h45 v30 h-45 v45 h-30 v-45 h-45 v-30 h45 z"/>
                                     </svg>
                                 </motion.div>
@@ -406,7 +406,7 @@ export default function About() {
                                     }}
                                     className="w-full h-full"
                                 >
-                                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full h-full fill-red-500">
+                                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full h-full fill-primary">
                                         <path d="M85,40 h30 v45 h45 v30 h-45 v45 h-30 v-45 h-45 v-30 h45 z"/>
                                     </svg>
                                 </motion.div>
@@ -440,14 +440,14 @@ export default function About() {
                                     </div>
                                     <div data-aos="fade-left">
                                         <h2 className="mb-4 sm:mb-6 text-3xl sm:text-4xl font-bold text-[#333]">
-                                            About Our <span className="text-red-600">Logo</span>
+                                            About Our <span className="text-section-title">Logo</span>
                                         </h2>
-                                        <div className="w-20 sm:w-24 h-1 bg-red-600 rounded-full mb-6 sm:mb-8"></div>
+                                        <div className="w-20 sm:w-24 h-1 bg-primary rounded-full mb-6 sm:mb-8"></div>
                                         <div className="space-y-4 sm:space-y-6 text-gray-600">
                                             <div>
-                                                <h3 className="text-2xl font-semibold text-red-600 mb-4">IT-ESEGA 2025</h3>
+                                                <h3 className="text-2xl font-semibold text-secondary mb-4">IT-ESEGA 2026</h3>
                                                 <p className="leading-relaxed mb-6 text-base">
-                                                    Logo IT-ESEGA 2025 menghadirkan kombinasi warna merah, emas, dan perak yang melambangkan semangat, kejayaan, dan kekuatan. Perisai menunjukan identitas yang kokoh, sementara sayap tajam dan bintang emas menjadi lambang kebebasan serta ambisi.
+                                                    Logo IT-ESEGA 2026 menghadirkan kombinasi warna merah, emas, dan perak yang melambangkan semangat, kejayaan, dan kekuatan. Perisai menunjukan identitas yang kokoh, sementara sayap tajam dan bintang emas menjadi lambang kebebasan serta ambisi.
                                                 </p>
                                             </div>
 
