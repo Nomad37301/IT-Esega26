@@ -175,7 +175,10 @@ export default function About() {
                                     </h2>
                                     <div className="max-w-4xl mx-auto">
                                         <p className="mb-8 text-base sm:text-lg text-[#333] leading-relaxed px-4 sm:px-0">
-                                            IT-ESEGA 2026 adalah ajang kompetisi E-Sports tahunan yang diselenggarakan oleh Himpunan Mahasiswa Teknologi Informasi Universitas Udayana. Kompetisi ini mempertemukan para gamer dari berbagai latar belakang untuk beradu kemampuan dalam cabang Mobile Legends dan PUBG Mobile. Di tengah atmosfer persaingan yang membara, IT-ESEGA 2026 menjadi panggung untuk menguji ketajaman strategi, kekompakan tim, dan sportivitas sejati. Setiap pertandingan menjadi arena pembuktian, tempat lahirnya talenta yang siap melangkah lebih jauh dan meninggalkan jejak di dunia E-Sports.
+                                            IT-ESEGA 2026 adalah ajang kompetisi E-Sports tahunan yang diselenggarakan oleh Himpunan Mahasiswa Teknologi Informasi Universitas Udayana. Kompetisi ini mempertemukan para gamer dari berbagai latar belakang untuk beradu kemampuan dalam cabang Mobile Legends dan PUBG Mobile.
+                                        </p>
+                                        <p className="mb-8 text-base sm:text-lg text-[#333] leading-relaxed px-4 sm:px-0">
+                                            Di tengah atmosfer persaingan yang membara, IT-ESEGA 2026 menjadi panggung untuk menguji ketajaman strategi, kekompakan tim, dan sportivitas sejati. Setiap pertandingan menjadi arena pembuktian, tempat lahirnya talenta yang siap melangkah lebih jauh dan meninggalkan jejak di dunia E-Sports.
                                         </p>
                                     </div>
                                 </div>
