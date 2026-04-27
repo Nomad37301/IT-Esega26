@@ -274,7 +274,7 @@ export default function About() {
                             <div className="absolute inset-0 bg-white"></div>
 
                             {/* Gradient Overlay */}
-                            <div className="absolute inset-0 bg-gradient-to-b from-red-100/30 via-white to-red-50/40"></div>
+                            <div className="absolute inset-0 bg-gradient-to-b from-blue-100/30 via-white to-blue-50/40"></div>
 
                             {/* Cross Blob - Top Right Mascot */}
                             <div className="pointer-events-none absolute top-20 right-16 h-24 w-24 opacity-5">
@@ -289,7 +289,7 @@ export default function About() {
                                     }}
                                     className="h-full w-full"
                                 >
-                                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="h-full w-full fill-red-500">
+                                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="h-full w-full fill-primary">
                                         <path d="M85,40 h30 v45 h45 v30 h-45 v45 h-30 v-45 h-45 v-30 h45 z" />
                                     </svg>
                                 </motion.div>
@@ -308,7 +308,7 @@ export default function About() {
                                     }}
                                     className="h-full w-full"
                                 >
-                                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="h-full w-full fill-red-500">
+                                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="h-full w-full fill-primary">
                                         <path d="M85,40 h30 v45 h45 v30 h-45 v45 h-30 v-45 h-45 v-30 h45 z" />
                                     </svg>
                                 </motion.div>
@@ -317,16 +317,17 @@ export default function About() {
                             {/* Content Container */}
                             <div className="relative mx-auto max-w-[1350px] px-4 py-16 md:px-8 md:py-24 lg:px-12">
                                 <div className="grid grid-cols-1 items-center gap-8 sm:gap-12 md:grid-cols-2">
+                                    {/* Deskripsi Mascot */}
                                     <div className="order-2 md:order-1" data-aos="fade-right">
                                         <h2 className="mb-4 text-3xl font-bold text-[#333] sm:mb-6 sm:text-4xl">
-                                            About Our <span className="text-red-600">Mascot</span>
+                                            About Our <span className="text-section-title">Mascot</span>
                                         </h2>
-                                        <div className="mb-6 h-1 w-20 rounded-full bg-red-600 sm:mb-8 sm:w-24"></div>
+                                        <div className="mb-6 h-1 w-20 rounded-full bg-primary sm:mb-8 sm:w-24"></div>
                                         <div className="space-y-4 text-gray-600 sm:space-y-6">
                                             <div>
-                                                <h3 className="mb-4 text-2xl font-semibold text-red-600">[VALDRON]</h3>
+                                                <h3 className="mb-4 text-2xl font-semibold text-primary">[MAS COT]</h3>
                                                 <p className="mb-6 leading-relaxed">
-                                                    VALDRON adalah simbol dari kekuatan yang tak terhentikan untuk memimpin pertempuran dan
+                                                    VAULDRON adalah simbol dari kekuatan yang tak terhentikan untuk memimpin pertempuran dan
                                                     menghancurkan batasan. Maskot ini menjadi pemantik semangat, pengobar ambisi, dan penakluk segala
                                                     rintangan mewakili keberanian untuk keluar dari batas yang dimiliki dan membebaskan potensi
                                                     terbaik daslam setiap jiwa kompetitor.
@@ -342,11 +343,12 @@ export default function About() {
                                             </div>
                                         </div>
                                     </div>
+                                    {/* Gambar Mascot */}
                                     <div className="order-1 flex justify-center md:order-2" data-aos="fade-left">
                                         <div className="relative">
                                             <div className="absolute"></div>
                                             <motion.img 
-                                                src="/Images/MascotEsega25.png" 
+                                                src="/Images/MascotEsega26.png" 
                                                 alt="IT-ESEGA Mascot" 
                                                 className="relative w-auto h-[300px] sm:h-[600px] object-contain"
                                                 animate={{
