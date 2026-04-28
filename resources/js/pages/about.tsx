@@ -111,7 +111,7 @@ export default function About() {
                     <Navbar
                         user={user}
                         logo={
-                            <div className="flex items-center justify-start">
+                            <div className="border-none flex items-center justify-start">
                                 <img src="/Images/LogoEsega25.png" alt="IT-ESEGA-26 Logo" className="h-18 w-auto object-contain" />
                             </div>
                         }
@@ -170,9 +170,12 @@ export default function About() {
                             {/* Content Container */}
                             <div className="relative max-w-[1350px] mx-auto px-4 md:px-8 lg:px-12 pt-28 md:pt-36 pb-16 md:pb-24">
                                 <div className="text-center" data-aos="fade-up">
-                                    <h2 className="mb-6 sm:mb-8 text-3xl sm:text-5xl font-bold text-[#333]">
-                                        About <span className="text-section-title">IT-ESEGA</span>
-                                    </h2>
+                                    <h1 className="pt-24 font-demarus text-[3.5rem] leading-[0.8] font-medium sm:-mb-24 sm:text-[8.5rem]">
+                                        <span className="bg-[linear-gradient(135deg,#a8d8ea_0%,#c8eefc_40%,#7ec8e3_70%,#4EAAC5_100%)] bg-clip-text  [-webkit-background-clip:text] [-webkit-text-fill-color:transparent]">
+                                            About IT-ESEGA
+                                        </span>
+                                    </h1>
+
                                     <div className="max-w-4xl mx-auto">
                                         <p className="mb-8 text-base sm:text-lg text-[#333] leading-relaxed px-4 sm:px-0">
                                             IT-ESEGA 2026 adalah ajang kompetisi E-Sports tahunan yang diselenggarakan oleh Himpunan Mahasiswa Teknologi Informasi Universitas Udayana. Kompetisi ini mempertemukan para gamer dari berbagai latar belakang untuk beradu kemampuan dalam cabang Mobile Legends dan PUBG Mobile.
