@@ -1,16 +1,11 @@
-import { Link, router } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuTrigger,
-    DropdownMenuPortal
-} from '@/components/ui/dropdown-menu';
-import { Menu, User, LogOut, LayoutDashboard } from 'lucide-react';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuPortal, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { UserType } from '@/types/user';
-import { useEffect, useState, useRef } from 'react';
-import { route } from 'ziggy-js';
+import { Link, router } from '@inertiajs/react';
+import { LayoutDashboard, LogOut, Menu, User } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { route } from 'ziggy-js';
 
 interface NavItem {
     title: string;
@@ -31,8 +26,8 @@ export function Navbar({ logo, items = [], user, isRegistrationClosed = false, s
     const dropdownTriggerRef = useRef<HTMLButtonElement>(null);
     const dropdownContentRef = useRef<HTMLDivElement>(null);
     // Memisahkan item Register dari items lainnya
-    const navigationItems = items.filter(item => item.title !== 'Register');
-    const registerItem = items.find(item => item.title === 'Register');
+    const navigationItems = items.filter((item) => item.title !== 'Register');
+    const registerItem = items.find((item) => item.title === 'Register');
     const currentPath = window.location.pathname;
 
     useEffect(() => {
@@ -48,11 +43,11 @@ export function Navbar({ logo, items = [], user, isRegistrationClosed = false, s
     useEffect(() => {
         if (isDropdownOpen && dropdownTriggerRef.current && dropdownContentRef.current) {
             const triggerRect = dropdownTriggerRef.current.getBoundingClientRect();
-            
+
             // Calculate position
             const top = triggerRect.bottom + 5;
             const right = window.innerWidth - triggerRect.right;
-            
+
             dropdownContentRef.current.style.position = 'fixed';
             dropdownContentRef.current.style.top = `${top}px`;
             dropdownContentRef.current.style.right = `${right}px`;
@@ -63,7 +58,7 @@ export function Navbar({ logo, items = [], user, isRegistrationClosed = false, s
         // Jika link adalah FAQ atau Contact
         if (title === 'FAQ' || title === 'Contact') {
             e.preventDefault();
-            
+
             // Jika bukan di halaman home, arahkan ke home dulu
             if (window.location.pathname !== '/') {
                 router.visit('/', {
@@ -99,7 +94,7 @@ export function Navbar({ logo, items = [], user, isRegistrationClosed = false, s
                 onSuccess: () => {
                     // Reset scroll position setelah navigasi
                     window.scrollTo(0, 0);
-                }
+                },
             });
         }
     };
@@ -124,23 +119,21 @@ export function Navbar({ logo, items = [], user, isRegistrationClosed = false, s
     console.log('Navbar Data Role:', user?.data.name);
 
     return (
-        <nav 
-            className={`fixed top-0 left-0 right-0 z-[999] transform-gpu transition-all duration-300 ${
-                isScrolled 
-                    ? 'bg-white/95 backdrop-blur-md shadow-sm translate-y-0' 
-                    : 'bg-transparent translate-y-0'
+        <nav
+            className={`fixed top-0 right-0 left-0 z-[999] transform-gpu transition-all duration-500 ${
+                isScrolled ? 'navbar-scrolled translate-y-0' : 'navbar-transparent translate-y-0'
             }`}
             style={{
                 willChange: 'transform, opacity, background-color',
-                backfaceVisibility: 'hidden'
+                backfaceVisibility: 'hidden',
             }}
         >
-            <div className="max-w-[1350px] mx-auto px-4 md:px-8 lg:px-12 py-4">
+            <div className="mx-auto max-w-[1350px] px-4 py-4 md:px-8 lg:px-12">
                 <div className="flex items-center justify-between">
                     {/* Logo Section */}
                     <div className="w-[180px] flex-shrink-0 transition-transform duration-300 hover:scale-105">
-                        <Link 
-                            href={route('home')} 
+                        <Link
+                            href={route('home')}
                             onClick={(e) => {
                                 if (window.location.pathname === '/') {
                                     e.preventDefault();
@@ -156,95 +149,100 @@ export function Navbar({ logo, items = [], user, isRegistrationClosed = false, s
                     {/* Desktop Navigation - Centered */}
                     <div className="hidden flex-grow justify-center md:flex">
                         {/* Center Navigation Links */}
-                        <div className="flex items-center justify-center space-x-12 w-full max-w-2xl">
-                            {navigationItems.map((item) => (
-                                <Link
-                                    key={item.title}
-                                    href={item.title === 'FAQ' ? '#faq' : item.title === 'Contact' ? '#contact' : item.href}
-                                    onClick={(e) => handleNavigation(e, item.title === 'FAQ' ? '#faq' : item.title === 'Contact' ? '#contact' : item.href, item.title)}
-                                    className={`relative px-2 py-1 text-[15px] font-medium transition-all duration-300 
-                                        ${isScrolled ? 'text-gray-700' : 'text-gray-800'} 
-                                        hover:text-red-600 group overflow-hidden`}
-                                >
-                                    {item.title}
-                                    <span className={`absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-red-500 to-red-600
-                                        transform origin-left transition-all duration-300 ease-out
-                                        translate-x-[-100%] group-hover:translate-x-0
-                                        ${currentPath === item.href ? 'translate-x-0' : ''}`}>
-                                    </span>
-                                </Link>
-                            ))}
+                        <div className="flex w-full max-w-2xl items-center justify-center space-x-12">
+                            {navigationItems.map((item) => {
+                                const isActive = currentPath === item.href;
+                                return (
+                                    <Link
+                                        key={item.title}
+                                        href={item.title === 'FAQ' ? '#faq' : item.title === 'Contact' ? '#contact' : item.href}
+                                        onClick={(e) =>
+                                            handleNavigation(
+                                                e,
+                                                item.title === 'FAQ' ? '#faq' : item.title === 'Contact' ? '#contact' : item.href,
+                                                item.title,
+                                            )
+                                        }
+                                        className={`nav-link group relative overflow-hidden px-2 py-1 text-[15px] font-medium ${
+                                            isActive ? 'active' : ''
+                                        }`}
+                                    >
+                                        {item.title}
+                                        <span
+                                            className="absolute bottom-0 left-0 h-0.5 w-full origin-left transform transition-all duration-300 ease-out"
+                                            style={{
+                                                background: 'linear-gradient(to right, var(--color-teal), var(--color-teal-light))',
+                                                transform: isActive ? 'translateX(0)' : 'translateX(-100%)',
+                                            }}
+                                            onMouseEnter={(e) => (e.currentTarget.style.transform = 'translateX(0)')}
+                                        ></span>
+                                        <span
+                                            className="absolute bottom-0 left-0 h-0.5 w-full translate-x-[-100%] transform transition-all duration-300 ease-out group-hover:translate-x-0"
+                                            style={{
+                                                background: 'linear-gradient(to right, var(--color-teal), var(--color-teal-light))',
+                                            }}
+                                        ></span>
+                                    </Link>
+                                );
+                            })}
                         </div>
                     </div>
 
                     {/* Action Button or User Icon */}
-                    <div className="w-[180px] hidden md:flex justify-end flex-shrink-0">
+                    <div className="hidden w-[180px] flex-shrink-0 justify-end md:flex">
                         {user ? (
                             <div>
-                                <button 
+                                <button
                                     ref={dropdownTriggerRef}
                                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                                    className="flex items-center justify-center w-10 h-10 rounded-full 
-                                        bg-gradient-to-r from-[#ba0000] to-[#ba0000]/90 text-white
-                                        shadow-md hover:shadow-lg transform hover:-translate-y-0.5
-                                        transition-all duration-300 hover:from-[#ba0000]/90 hover:to-[#ba0000]
-                                        focus:outline-none focus:ring-2 focus:ring-[#ba0000]/20 focus:ring-offset-2"
+                                    className="flex h-10 w-10 transform items-center justify-center rounded-full bg-gradient-to-r from-[#ba0000] to-[#ba0000]/90 text-white shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:from-[#ba0000]/90 hover:to-[#ba0000] hover:shadow-lg focus:ring-2 focus:ring-[#ba0000]/20 focus:ring-offset-2 focus:outline-none"
                                 >
                                     <User className="h-5 w-5" />
                                 </button>
 
-                                {isDropdownOpen && createPortal(
-                                    <div 
-                                        ref={dropdownContentRef}
-                                        className="w-56 bg-white/95 backdrop-blur-md rounded-xl shadow-lg border border-gray-100/50 p-2 z-[1000]"
-                                        onClick={(e) => e.stopPropagation()}
-                                    >
-                                        <div className="px-2 py-1.5">
-                                            <p className="text-sm font-medium text-gray-900 truncate">
-                                                {user.data.name}
-                                            </p>
-                                            <p className="text-xs text-gray-500 truncate">
-                                                {user.data.roles?.map(role => role.name).join(', ')}
-                                            </p>
-                                        </div>
-                                        <div className="my-2 h-px bg-gray-100/50"></div>
-                                        <Link
-                                            href={
-                                                user.data.roles?.some(role => role.name === 'admin' || role.name === 'super_admin')
-                                                    ? route('admin.dashboard')
-                                                    : route('dashboard')
-                                            }
-                                            className="flex items-center gap-2 px-2 py-1.5 text-sm text-gray-700 rounded-lg
-                                                hover:bg-[#ba0000]/5 hover:text-[#ba0000] cursor-pointer
-                                                transition-colors duration-200"
+                                {isDropdownOpen &&
+                                    createPortal(
+                                        <div
+                                            ref={dropdownContentRef}
+                                            className="z-[1000] w-56 rounded-xl border border-gray-100/50 bg-white/95 p-2 shadow-lg backdrop-blur-md"
+                                            onClick={(e) => e.stopPropagation()}
                                         >
-                                            <LayoutDashboard className="h-4 w-4" />
-                                            Dashboard
-                                        </Link>
-                                        <Link
-                                            href={route('logout')}
-                                            method="post"
-                                            as="button"
-                                            className="flex items-center gap-2 px-2 py-1.5 text-sm text-gray-700 rounded-lg
-                                                hover:bg-[#ba0000]/5 hover:text-[#ba0000] cursor-pointer
-                                                transition-colors duration-200 w-full"
-                                        >
-                                            <LogOut className="h-4 w-4" />
-                                            Logout
-                                        </Link>
-                                    </div>,
-                                    document.body
-                                )}
+                                            <div className="px-2 py-1.5">
+                                                <p className="truncate text-sm font-medium text-gray-900">{user.data.name}</p>
+                                                <p className="truncate text-xs text-gray-500">
+                                                    {user.data.roles?.map((role) => role.name).join(', ')}
+                                                </p>
+                                            </div>
+                                            <div className="my-2 h-px bg-gray-100/50"></div>
+                                            <Link
+                                                href={
+                                                    user.data.roles?.some((role) => role.name === 'admin' || role.name === 'super_admin')
+                                                        ? route('admin.dashboard')
+                                                        : route('dashboard')
+                                                }
+                                                className="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-1.5 text-sm text-gray-700 transition-colors duration-200 hover:bg-[#ba0000]/5 hover:text-[#ba0000]"
+                                            >
+                                                <LayoutDashboard className="h-4 w-4" />
+                                                Dashboard
+                                            </Link>
+                                            <Link
+                                                href={route('logout')}
+                                                method="post"
+                                                as="button"
+                                                className="flex w-full cursor-pointer items-center gap-2 rounded-lg px-2 py-1.5 text-sm text-gray-700 transition-colors duration-200 hover:bg-[#ba0000]/5 hover:text-[#ba0000]"
+                                            >
+                                                <LogOut className="h-4 w-4" />
+                                                Logout
+                                            </Link>
+                                        </div>,
+                                        document.body,
+                                    )}
                             </div>
                         ) : (
                             registerItem && (
                                 <button
                                     type="button"
-                                    className="inline-flex items-center px-6 py-2.5 font-semibold rounded-lg
-                                        bg-gradient-to-r from-[#ba0000] to-[#ba0000]/90 text-white
-                                        shadow-md hover:shadow-lg transform hover:-translate-y-0.5
-                                        transition-all duration-300 hover:from-[#ba0000]/90 hover:to-[#ba0000]
-                                        disabled:opacity-60 disabled:cursor-not-allowed"
+                                    className="btn-navy inline-flex items-center rounded-lg px-6 py-2.5 text-sm font-semibold shadow-md disabled:cursor-not-allowed disabled:opacity-60"
                                     disabled={isRegistrationClosed}
                                     onClick={(e) => {
                                         if (isRegistrationClosed) {
@@ -262,31 +260,27 @@ export function Navbar({ logo, items = [], user, isRegistrationClosed = false, s
                     </div>
 
                     {/* Add click outside handler */}
-                    {isDropdownOpen && createPortal(
-                        <div 
-                            className="fixed inset-0 z-[999]"
-                            onClick={() => setIsDropdownOpen(false)}
-                        />, document.body
-                    )}
+                    {isDropdownOpen &&
+                        createPortal(<div className="fixed inset-0 z-[999]" onClick={() => setIsDropdownOpen(false)} />, document.body)}
 
                     {/* Mobile Menu */}
                     <div className="md:hidden">
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                                <Button 
-                                    variant="ghost" 
+                                <Button
+                                    variant="ghost"
                                     size="icon"
-                                    className={`rounded-lg hover:bg-gray-100/50 transition-all duration-300 ${
-                                        isScrolled ? 'text-gray-700' : 'text-gray-800'
+                                    className={`rounded-lg transition-all duration-300 ${
+                                        isScrolled ? 'text-gray-700 hover:bg-gray-100/50' : 'text-white hover:bg-white/10'
                                     }`}
                                 >
-                                    <Menu className="w-6 h-6" />
+                                    <Menu className="h-6 w-6" />
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuPortal>
-                                <DropdownMenuContent 
-                                    align="end" 
-                                    className="w-72 bg-white rounded-xl shadow-lg border border-gray-100/50 p-3"
+                                <DropdownMenuContent
+                                    align="end"
+                                    className="w-72 rounded-xl border border-gray-100/50 bg-white p-3 shadow-lg"
                                     sideOffset={5}
                                     alignOffset={5}
                                     avoidCollisions={true}
@@ -296,7 +290,7 @@ export function Navbar({ logo, items = [], user, isRegistrationClosed = false, s
                                         right: '1rem',
                                         top: '4rem',
                                         transform: 'none',
-                                        willChange: 'transform'
+                                        willChange: 'transform',
                                     }}
                                 >
                                     <div className="space-y-1">
@@ -304,57 +298,54 @@ export function Navbar({ logo, items = [], user, isRegistrationClosed = false, s
                                             <Link
                                                 key={item.title}
                                                 href={item.title === 'FAQ' ? '#faq' : item.title === 'Contact' ? '#contact' : item.href}
-                                                onClick={(e) => handleNavigation(e, item.title === 'FAQ' ? '#faq' : item.title === 'Contact' ? '#contact' : item.href, item.title)}
-                                                className={`block px-4 py-3 text-[15px] rounded-lg transition-all duration-300 
-                                                    ${currentPath === item.href 
-                                                        ? 'bg-[#ba0000]/5 text-[#ba0000] font-semibold' 
+                                                onClick={(e) =>
+                                                    handleNavigation(
+                                                        e,
+                                                        item.title === 'FAQ' ? '#faq' : item.title === 'Contact' ? '#contact' : item.href,
+                                                        item.title,
+                                                    )
+                                                }
+                                                className={`block rounded-lg px-4 py-3 text-[15px] transition-all duration-300 ${
+                                                    currentPath === item.href
+                                                        ? 'bg-[#ba0000]/5 font-semibold text-[#ba0000]'
                                                         : 'text-gray-700 hover:bg-[#ba0000]/5 hover:text-[#ba0000]'
-                                                    }`}
+                                                }`}
                                             >
                                                 {item.title}
                                             </Link>
                                         ))}
                                         {user ? (
                                             <>
-                                                <div className="px-4 py-3 border-t border-gray-100/50">
-                                                    <p className="text-sm font-medium text-gray-900 truncate">
-                                                        {user.data.name}
-                                                    </p>
-                                                    <p className="text-xs text-gray-500 truncate">
-                                                        {user.data.roles?.map(role => role.name).join(', ')}
+                                                <div className="border-t border-gray-100/50 px-4 py-3">
+                                                    <p className="truncate text-sm font-medium text-gray-900">{user.data.name}</p>
+                                                    <p className="truncate text-xs text-gray-500">
+                                                        {user.data.roles?.map((role) => role.name).join(', ')}
                                                     </p>
                                                 </div>
                                                 <Link
                                                     href={
-                                                        user.data.roles?.some(role => role.name === 'admin' || role.name === 'super_admin')
+                                                        user.data.roles?.some((role) => role.name === 'admin' || role.name === 'super_admin')
                                                             ? route('admin.dashboard')
                                                             : route('dashboard')
                                                     }
-                                                    className="flex items-center gap-2 px-4 py-3 text-[15px] rounded-lg
-                                                        bg-[#ba0000]/5 text-[#ba0000] font-semibold
-                                                        hover:bg-[#ba0000]/10 transition-all duration-300"
+                                                    className="flex items-center gap-2 rounded-lg bg-[#ba0000]/5 px-4 py-3 text-[15px] font-semibold text-[#ba0000] transition-all duration-300 hover:bg-[#ba0000]/10"
                                                 >
-                                                    <LayoutDashboard className="w-5 h-5" /> Dashboard
+                                                    <LayoutDashboard className="h-5 w-5" /> Dashboard
                                                 </Link>
                                                 <Link
                                                     href={route('logout')}
                                                     method="post"
                                                     as="button"
-                                                    className="flex items-center gap-2 px-4 py-3 text-[15px] rounded-lg
-                                                        text-gray-700 hover:bg-[#ba0000]/5 hover:text-[#ba0000]
-                                                        transition-all duration-300"
+                                                    className="flex items-center gap-2 rounded-lg px-4 py-3 text-[15px] text-gray-700 transition-all duration-300 hover:bg-[#ba0000]/5 hover:text-[#ba0000]"
                                                 >
-                                                    <LogOut className="w-5 h-5" /> Logout
+                                                    <LogOut className="h-5 w-5" /> Logout
                                                 </Link>
                                             </>
                                         ) : (
                                             registerItem && (
                                                 <button
                                                     type="button"
-                                                    className="block px-4 py-3 mt-2 text-[15px] font-semibold text-center text-white rounded-lg
-                                                        bg-gradient-to-r from-[#ba0000] to-[#ba0000]/90
-                                                        hover:from-[#ba0000]/90 hover:to-[#ba0000] transition-all duration-300
-                                                        disabled:opacity-60 disabled:cursor-not-allowed"
+                                                    className="btn-navy mt-2 block w-full rounded-lg px-4 py-3 text-center text-[15px] font-semibold transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-60"
                                                     disabled={isRegistrationClosed}
                                                     onClick={(e) => {
                                                         if (isRegistrationClosed) {
