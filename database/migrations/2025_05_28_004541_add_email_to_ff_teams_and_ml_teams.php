@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::table('ff_teams', function (Blueprint $table) {
+        Schema::table('pubg_teams', function (Blueprint $table) {
             $table->string('email')->after('team_name')->nullable();
         });
 
@@ -18,7 +18,7 @@ return new class extends Migration {
 
     public function down(): void
     {
-        Schema::table('ff_teams', function (Blueprint $table) {
+        Schema::table('pubg_teams', function (Blueprint $table) {
             $table->dropColumn('email');
         });
 

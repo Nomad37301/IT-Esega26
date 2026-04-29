@@ -150,7 +150,7 @@ export default function Home() {
         },
         {
             question: 'Game apa saja yang dimainkan dalam turnamen ini?',
-            answer: 'Turnamen ini menghadirkan game-game populer seperti Mobile Legends dan Free Fire.',
+            answer: 'Turnamen ini menghadirkan game-game populer seperti Mobile Legends dan PUBG.',
         },
         {
             question: 'Berapa total prize pool IT-ESEGA?',
@@ -677,7 +677,7 @@ export default function Home() {
                                     fee: 'Rp 100.000',
                                 },
                                 {
-                                    title: 'Free Fire',
+                                    title: 'PUBG',
                                     slots: '48 SLOTS',
                                     type: 'SINGLE SLOT',
                                     scope: 'NATIONAL COMPETITION',
@@ -874,7 +874,7 @@ export default function Home() {
                                             <h3 className="text-section-title mb-3 text-4xl font-bold sm:text-5xl">Rp 12.000.000</h3>
                                             <div className="flex items-center justify-center gap-2 text-gray-600">
                                                 <span className="text-2xl">🏆</span>
-                                                <p className="text-sm">Mobile Legends & Free Fire</p>
+                                                <p className="text-sm">Mobile Legends & PUBG</p>
                                             </div>
                                         </div>
                                         <Link

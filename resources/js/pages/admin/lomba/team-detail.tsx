@@ -52,7 +52,7 @@ const TeamDetailPage: React.FC<Props> = ({ team }) => {
   const [editForm, setEditForm] = useState({
     team_name: team.name,
     status: team.status as 'pending' | 'verified' | 'rejected',
-    slot_type: team.slot_type || (team.game === 'Free Fire' ? 'single' : ''),
+    slot_type: team.slot_type || (team.game === 'PUBG' ? 'single' : ''),
   });
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [paymentFile, setPaymentFile] = useState<File | null>(null);
@@ -98,7 +98,7 @@ const TeamDetailPage: React.FC<Props> = ({ team }) => {
     if (confirm(`Anda akan mengubah status tim dari "${team.status}" menjadi "${selectedStatus}". Apakah Anda yakin ingin melanjutkan?`)) {
       setIsProcessing(true);
       try {
-        await axios.put(`/secure-admin-essega/teams/${team.game === 'Mobile Legends' ? 'ml' : 'ff'}/${team.id}/status`, {
+        await axios.put(`/secure-admin-essega/teams/${team.game === 'Mobile Legends' ? 'ml' : 'pubg'}/${team.id}/status`, {
           status: selectedStatus
         });
         
@@ -135,7 +135,7 @@ const TeamDetailPage: React.FC<Props> = ({ team }) => {
       }
       
       const response = await axios.post(
-        `/api/teams/${team.game === 'Mobile Legends' ? 'ml' : 'ff'}/${team.id}?_method=PUT`, 
+        `/api/teams/${team.game === 'Mobile Legends' ? 'ml' : 'pubg'}/${team.id}?_method=PUT`, 
         formData,
         {
           headers: {
@@ -195,7 +195,7 @@ const TeamDetailPage: React.FC<Props> = ({ team }) => {
   const handleDeleteTeam = async () => {
     setIsDeleting(true);
     try {
-      const response = await axios.delete(`/api/teams/${team.game === 'Mobile Legends' ? 'ml' : 'ff'}/${team.id}`);
+      const response = await axios.delete(`/api/teams/${team.game === 'Mobile Legends' ? 'ml' : 'pubg'}/${team.id}`);
       
       toast.success(`Tim ${team.name} berhasil dihapus beserta semua pemainnya.`);
       setIsDeleteDialogOpen(false);

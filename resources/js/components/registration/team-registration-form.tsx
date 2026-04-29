@@ -15,7 +15,7 @@ import LoadingScreen from "@/components/ui/loading-screen"
 
 export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }: TeamRegistrationFormProps) {
     const isML = gameType === "ml"
-    const gameTitle = isML ? "Mobile Legends" : "Free Fire"
+    const gameTitle = isML ? "Mobile Legends" : "PUBG"
     const registrationFee = "Rp 100.000"
 
     const [formErrors, setFormErrors] = useState<{
@@ -82,7 +82,7 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
             return
         }
 
-        // Pastikan slot type adalah 'single' untuk Free Fire
+        // Pastikan slot type adalah 'single' untuk PUBG
         if (!isML) {
             setData("slot_type", "single")
         }
@@ -420,7 +420,7 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
                                                                 <Label className="text-sm font-medium text-gray-900 flex items-center gap-1.5">
                                                                     <span>Single Slot</span>
                                                                 </Label>
-                                                                <p className="text-xs text-gray-600 mt-1">Free Fire hanya tersedia dalam format Single Slot</p>
+                                                                <p className="text-xs text-gray-600 mt-1">PUBG hanya tersedia dalam format Single Slot</p>
                                                                 <div className="mt-2 bg-red-50 px-3 py-1.5 rounded-md inline-block">
                                                                     <p className="text-sm font-medium text-red-600">Rp 100.000</p>
                                                                 </div>

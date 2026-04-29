@@ -4,9 +4,9 @@ namespace App\Exports;
 
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
-use App\Models\FF_Participant;
+use App\Models\PUBG_Participant;
 
-class FFPlayersExport implements FromCollection, WithHeadings
+class PUBGPlayersExport implements FromCollection, WithHeadings
 {
     protected $data;
     
@@ -20,7 +20,7 @@ class FFPlayersExport implements FromCollection, WithHeadings
     */
     public function collection()
     {
-        return $this->data ?? FF_Participant::all();
+        return $this->data ?? PUBG_Participant::all();
     }
 
     public function headings(): array

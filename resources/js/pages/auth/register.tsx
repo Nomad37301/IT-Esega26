@@ -16,7 +16,7 @@ import { AlertCircle } from 'lucide-react';
 
 export default function RegisterPage() {
     const [step, setStep] = useState(1)
-    const [gameType, setGameType] = useState<"ml" | "ff">("ml")
+    const [gameType, setGameType] = useState<"ml" | "pubg">("ml")
     const [teamData, setTeamData] = useState<TeamData>({
         id: null,
         team_name: "",
@@ -49,7 +49,7 @@ export default function RegisterPage() {
         const urlGameType = urlParams.get('game_type');
         
         if (urlGameType) {
-            setGameType(urlGameType as "ml" | "ff");
+            setGameType(urlGameType as "ml" | "pubg");
         }
         
         if (urlParams.get('step') === '2') {
@@ -119,7 +119,7 @@ export default function RegisterPage() {
                     total_slots: number;
                     used_slots: number;
                 }) => ({
-                    game_type: slot.competition_name === 'Mobile Legends' ? 'ml' : 'ff',
+                    game_type: slot.competition_name === 'Mobile Legends' ? 'ml' : 'pubg',
                     total_slots: slot.total_slots,
                     used_slots: slot.used_slots,
                     registered_teams: `${slot.used_slots} Teams`
@@ -134,7 +134,7 @@ export default function RegisterPage() {
         }
     };
 
-    const handleGameSelect = (game: "ml" | "ff") => {
+    const handleGameSelect = (game: "ml" | "pubg") => {
         setGameType(game)
         setStep(2)
     }
@@ -206,7 +206,7 @@ export default function RegisterPage() {
             // Shortcut: Ctrl+Shift+F untuk truncate FF
             if (e.ctrlKey && e.shiftKey && e.key === 'F') {
                 e.preventDefault();
-                adminTruncateTeams('ff');
+                adminTruncateTeams('pubg');
             }
         };
         

@@ -5,13 +5,13 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class FFParticipantResource extends JsonResource
+class PUBGParticipantResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
         return [
             'id' => $this->id,
-            'ff_team_id' => $this->ff_team_id,
+            'pubg_team_id' => $this->pubg_team_id,
             'name' => $this->name,
             'nickname' => $this->nickname,
             'id_server' => $this->id_server,

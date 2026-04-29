@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 use App\Http\Controllers\PageController;
 use App\Exports\MLPlayersExport;
-use App\Exports\FFPlayersExport;
+use App\Exports\PUBGPlayersExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 // Route::get('/', function () {
@@ -33,9 +33,9 @@ Route::get('/bracket/mobile-legends', function () {
     return Inertia::render('bracketml');
 })->name('bracket.ml');
 
-Route::get('/bracket/free-fire', function () {
-    return Inertia::render('bracketff');
-})->name('bracket.ff');
+Route::get('/bracket/pubg', function () {
+    return Inertia::render('bracketpubg');
+})->name('bracket.pubg');
 
 Route::get('/bracket/mobile-legends/day2-3', function () {
     return Inertia::render('bracketml2');
@@ -46,13 +46,13 @@ Route::middleware('guest')->group(function () {
     Route::post('/team-registration', [TeamRegistrationController::class, 'store'])->name('team-registration.store');
 
     Route::post('/player-registration', [PlayerRegistrationController::class, 'store'])->name('player-registration.store');
-    Route::post('/player-registration-ff', [PlayerRegistrationController::class, 'storeFF'])->name('player-registration-ff.store');
+    Route::post('/player-registration-pubg', [PlayerRegistrationController::class, 'storePUBG'])->name('player-registration-pubg.store');
 
     Route::get('/player-registration-ml/form/{encryptedTeamName}', [PlayerRegistrationController::class, 'showRegistrationForm'])
         ->name('player-registration.form');
 
-    Route::get('/player-registration-ff/form/{encryptedTeamName}', [PlayerRegistrationController::class, 'showRegistrationFormFF'])
-        ->name('player-registration-ff.form');
+    Route::get('/player-registration-pubg/form/{encryptedTeamName}', [PlayerRegistrationController::class, 'showRegistrationFormPUBG'])
+        ->name('player-registration-pubg.form');
 
     // Tambahkan route untuk menghapus tim yang belum selesai didaftarkan
     Route::post('/delete-incomplete-team', [IncompleteTeamController::class, 'destroy'])->name('delete-incomplete-team');
@@ -73,7 +73,7 @@ Route::get('/test-mail', function () {
 });
 
 // API Routes for Player Data
-Route::get('/api/ff-players', [TeamPlayerController::class, 'getFFPlayers']);
+Route::get('/api/pubg-players', [TeamPlayerController::class, 'getPUBGPlayers']);
 Route::get('/api/ml-players', [TeamPlayerController::class, 'getMLPlayers']);
 
 // API Routes for Player Management
@@ -107,18 +107,18 @@ Route::middleware(['auth', 'role:super_admin|admin'])->prefix('secure-admin-esse
     // Rute untuk export data
     Route::get('export/teams', [TeamPlayerController::class, 'exportTeams'])->name('admin.export.teams');
     Route::get('export/all-players', [TeamPlayerController::class, 'exportAllPlayers'])->name('admin.export.all-players');
-    Route::get('export/ff-players', [TeamPlayerController::class, 'ffPlayer'])->name('admin.export.ff-players');
+    Route::get('export/pubg-players', [TeamPlayerController::class, 'pubgPlayer'])->name('admin.export.pubg-players');
     Route::get('export/ml-players', [TeamPlayerController::class, 'mlPlayer'])->name('admin.export.ml-players');
 
     // Tambahkan rute untuk export ZIP dengan semua data dan file
     Route::get('export/all-files-data', [TeamPlayerController::class, 'exportFilesAndData'])->name('admin.export.all-files-data');
 
     // Tambahkan rute yang langsung match dengan URL yang dipanggil oleh frontend
-    Route::get('export/FFplayers', [TeamPlayerController::class, 'ffPlayer']);
+    Route::get('export/PUBGplayers', [TeamPlayerController::class, 'pubgPlayer']);
     Route::get('export/MLplayers', [TeamPlayerController::class, 'mlPlayer']);
 
     // Rute lama (untuk kompatibilitas)
-    Route::get('testff', [TeamPlayerController::class, 'ffPlayer'])->name('ffPlayer.list');
+    Route::get('testpubg', [TeamPlayerController::class, 'pubgPlayer'])->name('pubgPlayer.list');
     Route::get('testml', [TeamPlayerController::class, 'mlPlayer'])->name('mlPlayer.list');
 
     Route::post('logout/admin/it-esega', [AuthenticatedSessionControllerAdmin::class, 'destroy'])

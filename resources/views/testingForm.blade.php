@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="{{ route('ff-regis') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('pubg-regis') }}" method="post" enctype="multipart/form-data">
         @csrf
         <h1>Team</h1>
         <input type="text" name="team_name">

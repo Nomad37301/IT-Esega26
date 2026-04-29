@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreFFPlayerRegistrationRequest extends FormRequest
+class StorePUBGPlayerRegistrationRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -20,7 +20,7 @@ class StoreFFPlayerRegistrationRequest extends FormRequest
             'phone' => 'required|string|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
             'email' => 'required|email',
             'role' => 'required|in:ketua,anggota,cadangan',
-            'team_id' => 'required|exists:ff_teams,id',
+            'team_id' => 'required|exists:pubg_teams,id',
         ];
     }
 
@@ -29,8 +29,8 @@ class StoreFFPlayerRegistrationRequest extends FormRequest
         return [
             'name.required' => 'Nama lengkap wajib diisi.',
             'name.max' => 'Nama lengkap maksimal 255 karakter.',
-            'id.required' => 'Free Fire ID wajib diisi.',
-            'id.max' => 'Free Fire ID maksimal 50 karakter.',
+            'id.required' => 'PUBG ID wajib diisi.',
+            'id.max' => 'PUBG ID maksimal 50 karakter.',
             'nickname.required' => 'Nickname wajib diisi.',
             'nickname.max' => 'Nickname maksimal 50 karakter.',
             'phone.required' => 'Nomor telepon wajib diisi.',

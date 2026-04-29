@@ -55,7 +55,7 @@ export function TeamOverview({ totalTeams, totalPlayers, achievementsTotal, winr
         if (!teamToDelete) return;
         
         try {
-            const game = teamToDelete.game === 'Free Fire' ? 'ff' : 'ml';
+            const game = teamToDelete.game === 'PUBG' ? 'pubg' : 'ml';
             const response = await axios.delete(`/api/teams/${game}/${teamToDelete.id}`);
             
             // Cek apakah ada informasi redirect dari backend
@@ -234,7 +234,7 @@ export function TeamOverview({ totalTeams, totalPlayers, achievementsTotal, winr
                                                 <DropdownMenuSeparator />
                                                 <DropdownMenuItem asChild>
                                                     <Link
-                                                        href={`/secure-admin-essega/teams/${team.game === "Free Fire" ? "ff" : "ml"}/${team.id}`}
+                                                        href={`/secure-admin-essega/teams/${team.game === "PUBG" ? "pubg" : "ml"}/${team.id}`}
                                                         className="flex items-center cursor-pointer"
                                                     >
                                                         <Edit className="mr-2 h-4 w-4" />

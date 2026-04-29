@@ -11,19 +11,19 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
 import { Progress } from "@/components/ui/progress"
-// import { FFPlayerForm } from "@/components/registration/ml-player-form"
+// import { PUBGPlayerForm } from "@/components/registration/ml-player-form"
 import { AlertCircle, PlusCircle, X, Users, Trophy, HelpCircle, ChevronLeft, CheckCircle2 } from "lucide-react"
-import { useProgressFF } from "@/hooks/use-progress-ff"
-import { useFFPlayers } from "@/hooks/use-ff-player"
-import type { FFPlayer, PlayerRegistrationFormProps } from "@/types/register"
-import { FFPlayerForm } from "@/components/registration/ff-player-form"
+import { useProgressPUBG } from "@/hooks/use-progress-pubg"
+import { usePUBGPlayers } from "@/hooks/use-pubg-player"
+import type { PUBGPlayer, PlayerRegistrationFormProps } from "@/types/register"
+import { PUBGPlayerForm } from "@/components/registration/pubg-player-form"
 import LoadingScreen from "@/components/ui/loading-screen"
 import SuccessDialog from "@/components/ui/success-dialog"
 import axios from "axios"
 
 export default function PlayerRegistrationForm({ teamData, gameType }: PlayerRegistrationFormProps) {
-    const isFF = gameType === "ff"
-    const gameTitle = isFF ? "Free Fire" : "Mobile Legends"
+    const isPUBG = gameType === "pubg"
+    const gameTitle = isPUBG ? "PUBG" : "Mobile Legends"
     const minPlayers = 4
     const maxPlayers = 6
 
@@ -43,10 +43,10 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
     }
 
     const [formData, setFormData] = useState<{
-        ff_players: FFPlayer[];
+        pubg_players: PUBGPlayer[];
         team_id: number;
     }>({
-        ff_players: [],
+        pubg_players: [],
         team_id: teamData.id ?? 0,
     })
 
@@ -64,32 +64,32 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
     const [successMessage, setSuccessMessage] = useState("")
     const [isBackButtonLoading, setIsBackButtonLoading] = useState(false)
 
-    const progress = useProgressFF(formData.ff_players, minPlayers)
+    const progress = useProgressPUBG(formData.pubg_players, minPlayers)
 
     const hasLoadedPlayersFromStorage = useRef(false)
 
     useEffect(() => {
         if (!hasLoadedPlayersFromStorage.current) {
-            const saved = localStorage.getItem("ff_players_data")
-            if (saved && formData.ff_players.length === 0) {
+            const saved = localStorage.getItem("pubg_players_data")
+            if (saved && formData.pubg_players.length === 0) {
                 try {
                     const parsed = JSON.parse(saved)
-                    if (Array.isArray(parsed)) setFormData(prev => ({ ...prev, ff_players: parsed }))
+                    if (Array.isArray(parsed)) setFormData(prev => ({ ...prev, pubg_players: parsed }))
                 } catch (e) {
                     console.error("Failed to parse saved players", e)
                 }
             }
             hasLoadedPlayersFromStorage.current = true
         }
-    }, [formData.ff_players])
+    }, [formData.pubg_players])
 
     useEffect(() => {
-        localStorage.setItem("ff_players_data", JSON.stringify(formData.ff_players))
-    }, [formData.ff_players])
+        localStorage.setItem("pubg_players_data", JSON.stringify(formData.pubg_players))
+    }, [formData.pubg_players])
 
-    const { addPlayer, deletePlayer } = useFFPlayers(
-        { ff_players: formData.ff_players },
-        (key: "ff_players", value: FFPlayer[]) => setFormData(prev => ({ ...prev, [key]: value })),
+    const { addPlayer, deletePlayer } = usePUBGPlayers(
+        { pubg_players: formData.pubg_players },
+        (key: "pubg_players", value: PUBGPlayer[]) => setFormData(prev => ({ ...prev, [key]: value })),
         teamData.id
     )
 
@@ -101,19 +101,19 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
     
     const handlePlayerChange = (
         index: number,
-        field: keyof FFPlayer,
+        field: keyof PUBGPlayer,
         value: string | number | File | null | undefined
     ) => {
         const newValue = value !== null && value !== undefined ? value : ""
         
         // Update the form data first
-        const updatedPlayers = formData.ff_players.map((player, i) =>
+        const updatedPlayers = formData.pubg_players.map((player, i) =>
             i === index ? { ...player, [field]: newValue } : player
         )
         
         setFormData(prev => ({
             ...prev,
-            ff_players: updatedPlayers
+            pubg_players: updatedPlayers
         }))
         
         if (field === 'no_hp' && typeof newValue === 'string' && newValue.trim() !== '') {
@@ -147,7 +147,7 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
         const teamId = teamData.id
     
         // Validasi jumlah pemain
-        if (formData.ff_players.length < minPlayers) {
+        if (formData.pubg_players.length < minPlayers) {
             setShowValidationError(true)
             setAlertMessage(`Minimal harus ada ${minPlayers} pemain.`)
             setTimeout(() => {
@@ -157,7 +157,7 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
         }
 
         // Validasi ketua tim
-        const ketuaCount = formData.ff_players.filter(player => player.role === 'ketua').length;
+        const ketuaCount = formData.pubg_players.filter(player => player.role === 'ketua').length;
         if (ketuaCount === 0) {
             setShowValidationError(true)
             setAlertMessage("Tim harus memiliki satu Ketua. Silakan pilih salah satu pemain sebagai Ketua.")
@@ -175,7 +175,7 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
         }
 
         // Validasi jumlah cadangan
-        const cadanganCount = formData.ff_players.filter(player => player.role === 'cadangan').length;
+        const cadanganCount = formData.pubg_players.filter(player => player.role === 'cadangan').length;
         if (cadanganCount > 2) {
             setShowValidationError(true)
             setAlertMessage("Tim hanya boleh memiliki maksimal 2 pemain Cadangan. Silakan periksa kembali peran pemain.")
@@ -186,7 +186,7 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
         }
 
         // Validasi field wajib untuk semua pemain
-        const invalidPlayers = formData.ff_players.map((player, index) => {
+        const invalidPlayers = formData.pubg_players.map((player, index) => {
             const errors = [];
             
             // Cek field wajib
@@ -213,7 +213,7 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
         }
 
         // Validasi format email
-        const invalidEmailPlayers = formData.ff_players.map((player, index) => {
+        const invalidEmailPlayers = formData.pubg_players.map((player, index) => {
             if (!player.email) return null;
             
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -232,8 +232,8 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
         }
         
         // Validasi foto dan tanda tangan
-        const playersWithoutFoto = formData.ff_players.filter(player => !player.foto);
-        const playersWithoutTandaTangan = formData.ff_players.filter(player => !player.tanda_tangan);
+        const playersWithoutFoto = formData.pubg_players.filter(player => !player.foto);
+        const playersWithoutTandaTangan = formData.pubg_players.filter(player => !player.tanda_tangan);
 
         if (playersWithoutFoto.length > 0) {
             setShowValidationError(true)
@@ -260,35 +260,35 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
         try {
             const submitData = new FormData()
             submitData.append('team_id', teamId.toString())
-            submitData.append('ff_team_id', teamId.toString())
+            submitData.append('pubg_team_id', teamId.toString())
 
-            formData.ff_players.forEach((player: FFPlayer, index: number) => {
-                submitData.append(`ff_players[${index}][name]`, player.name || '')
-                submitData.append(`ff_players[${index}][nickname]`, player.nickname || '')
-                submitData.append(`ff_players[${index}][id_server]`, player.id_server || '')
-                submitData.append(`ff_players[${index}][no_hp]`, player.no_hp || '')
-                submitData.append(`ff_players[${index}][email]`, player.email || '')
-                submitData.append(`ff_players[${index}][alamat]`, player.alamat || '')
-                submitData.append(`ff_players[${index}][ff_team_id]`, teamId.toString())
-                submitData.append(`ff_players[${index}][role]`, player.role || 'anggota')
+            formData.pubg_players.forEach((player: PUBGPlayer, index: number) => {
+                submitData.append(`pubg_players[${index}][name]`, player.name || '')
+                submitData.append(`pubg_players[${index}][nickname]`, player.nickname || '')
+                submitData.append(`pubg_players[${index}][id_server]`, player.id_server || '')
+                submitData.append(`pubg_players[${index}][no_hp]`, player.no_hp || '')
+                submitData.append(`pubg_players[${index}][email]`, player.email || '')
+                submitData.append(`pubg_players[${index}][alamat]`, player.alamat || '')
+                submitData.append(`pubg_players[${index}][pubg_team_id]`, teamId.toString())
+                submitData.append(`pubg_players[${index}][role]`, player.role || 'anggota')
 
                 if (player.foto instanceof File) {
-                    submitData.append(`ff_players_${index}_foto`, player.foto)
+                    submitData.append(`pubg_players_${index}_foto`, player.foto)
                 }
                 if (player.tanda_tangan instanceof File) {
-                    submitData.append(`ff_players_${index}_tanda_tangan`, player.tanda_tangan)
+                    submitData.append(`pubg_players_${index}_tanda_tangan`, player.tanda_tangan)
                 }
             })
 
             submitData.append('game_type', gameType)
 
-            router.post(route("player-registration-ff.store"), submitData, {
+            router.post(route("player-registration-pubg.store"), submitData, {
                 onSuccess: () => {
                     clearInterval(progressInterval);
                     
                     setTimeout(() => {
-                        setFormData(prev => ({ ...prev, ff_players: [] }))
-                        localStorage.removeItem("ff_players_data")
+                        setFormData(prev => ({ ...prev, pubg_players: [] }))
+                        localStorage.removeItem("pubg_players_data")
                         setShowLoadingScreen(false)
                         setShowSuccessDialog(true)
                     }, 3000);
@@ -317,8 +317,8 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
     }
 
     const addNewPlayer = () => {
-        if (formData.ff_players.length < maxPlayers) {
-            const playerNumber = formData.ff_players.length + 1;
+        if (formData.pubg_players.length < maxPlayers) {
+            const playerNumber = formData.pubg_players.length + 1;
             addPlayer()
             // Tambahkan alert sukses saat menambahkan pemain
             setSuccessMessage(`Pemain #${playerNumber} berhasil ditambahkan!`)
@@ -362,7 +362,7 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
             
             // Simpan ID tim yang akan dihapus ke localStorage agar dapat digunakan kembali
             const teamIdToSave = teamData.id?.toString() || "";
-            console.log("Saving FF team ID to localStorage:", {
+            console.log("Saving PUBG team ID to localStorage:", {
                 id: teamIdToSave,
                 gameType: gameType,
                 idType: typeof teamData.id
@@ -386,7 +386,7 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
             .then(() => {
                 console.log("Data tim berhasil dihapus dari database, ID disimpan untuk digunakan kembali");
                 // Hapus data pemain dari localStorage
-                localStorage.removeItem("ff_players_data")
+                localStorage.removeItem("pubg_players_data")
                 
                 // Arahkan ke halaman registrasi tim dengan parameter game_type 
                 window.location.href = route('register') + '?step=2&game_type=' + gameType;
@@ -394,7 +394,7 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
             .catch((error) => {
                 console.error("Error deleting team data:", error)
                 // Hapus data pemain dari localStorage
-                localStorage.removeItem("ff_players_data")
+                localStorage.removeItem("pubg_players_data")
                 
                 // Tetap arahkan ke halaman registrasi tim
                 window.location.href = route('register') + '?step=2&game_type=' + gameType;
@@ -405,7 +405,7 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
             })
         } else {
             // Jika tidak ada team_id, hanya hapus data dari localStorage
-            localStorage.removeItem("ff_players_data")
+            localStorage.removeItem("pubg_players_data")
             
             // Arahkan ke halaman registrasi tim
             window.location.href = route('register') + '?step=2&game_type=' + gameType;
@@ -426,9 +426,9 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
     useEffect(() => {
         // Menambahkan beberapa state history untuk mencegah navigasi back langsung
         // Tambahkan state untuk halaman saat ini
-        window.history.pushState({ page: 'ff-player-registration' }, "", window.location.href);
+        window.history.pushState({ page: 'pubg-player-registration' }, "", window.location.href);
         // Tambahkan lagi satu state yang sama untuk membuat back button lebih handal
-        window.history.pushState({ page: 'ff-player-registration' }, "", window.location.href);
+        window.history.pushState({ page: 'pubg-player-registration' }, "", window.location.href);
         
         // Menangani tombol back di browser
         const handlePopState = (e: PopStateEvent) => {
@@ -436,12 +436,12 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
             const state = e.state;
             
             // Jika state tidak ada atau bukan dari halaman kita, tampilkan dialog
-            if (!state || state.page === 'ff-player-registration') {
+            if (!state || state.page === 'pubg-player-registration') {
                 // Tampilkan dialog konfirmasi
                 setBackDialogOpen(true);
                 
                 // Tambahkan kembali state untuk mencegah navigasi langsung jika user cancel
-                window.history.pushState({ page: 'ff-player-registration' }, "", window.location.href);
+                window.history.pushState({ page: 'pubg-player-registration' }, "", window.location.href);
             }
         };
         
@@ -451,7 +451,7 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
         // Tambahkan event beforeunload untuk mencegah refresh atau menutup tab secara tidak sengaja
         const handleBeforeUnload = (e: BeforeUnloadEvent) => {
             // Hanya jika form belum di-submit
-            if (formData.ff_players.length > 0 && !showSuccessDialog) {
+            if (formData.pubg_players.length > 0 && !showSuccessDialog) {
                 const message = "Data pemain Anda akan hilang jika Anda meninggalkan halaman ini.";
                 e.returnValue = message;
                 return message;
@@ -465,7 +465,7 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
             window.removeEventListener("popstate", handlePopState);
             window.removeEventListener("beforeunload", handleBeforeUnload);
         };
-    }, [formData.ff_players.length, showSuccessDialog]);
+    }, [formData.pubg_players.length, showSuccessDialog]);
 
     return (
         <>
@@ -598,7 +598,7 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
                                             <div className="flex items-center gap-2 sm:gap-4 w-full md:w-auto justify-between md:justify-end">
                                                 <div className="flex items-center gap-1 sm:gap-2 bg-white/10 px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-base">
                                                     <Users className="w-3 h-3 sm:w-5 sm:h-5" />
-                                                    <span className="font-medium">{formData.ff_players.length}/{maxPlayers}</span>
+                                                    <span className="font-medium">{formData.pubg_players.length}/{maxPlayers}</span>
                                                 </div>
                                                 <div className="flex items-center gap-1 sm:gap-2 bg-white/10 px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-base">
                                                     <Trophy className="w-3 h-3 sm:w-5 sm:h-5" />
@@ -613,7 +613,7 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
                                             <div className="flex items-center gap-2">
                                                 <span className="text-xs sm:text-sm font-medium text-gray-600">Registration Progress</span>
                                                 <Badge className={themeColors.badge}>
-                                                    {formData.ff_players.length}/{minPlayers}
+                                                    {formData.pubg_players.length}/{minPlayers}
                                                 </Badge>
                                             </div>
                                             <span className="text-xs sm:text-sm font-medium text-gray-600">{Math.round(progress)}%</span>
@@ -630,7 +630,7 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
                                         <form onSubmit={handleSubmit} encType="multipart/form-data">
                                             <div className="space-y-4 sm:space-y-8">
                                                 <AnimatePresence>
-                                                    {formData.ff_players.map((player, index) => (
+                                                    {formData.pubg_players.map((player, index) => (
                                                         <motion.div
                                                             key={index}
                                                             initial={{ opacity: 0, y: 20 }}
@@ -641,11 +641,11 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
                                                             className="mb-6"
                                                         >
                                                             <div className={themeColors.section}>
-                                                                <FFPlayerForm
+                                                                <PUBGPlayerForm
                                                                     player={player}
                                                                     index={index}
                                                                     errorsBE={{}}
-                                                                    allPlayers={formData.ff_players}
+                                                                    allPlayers={formData.pubg_players}
                                                                     onChange={(idx, field, val) => handlePlayerChange(idx, field, val)}
                                                                     onDelete={() => openDeleteDialog(index)}
                                                                 />
@@ -658,16 +658,16 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
                                                     <Button
                                                         type="button"
                                                         onClick={addNewPlayer}
-                                                        disabled={formData.ff_players.length >= maxPlayers}
+                                                        disabled={formData.pubg_players.length >= maxPlayers}
                                                         className={`${themeColors.secondary} w-full sm:w-auto text-xs sm:text-sm py-1.5 sm:py-2`}
                                                     >
                                                         <PlusCircle className="mr-1 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4" />
-                                                        Add Player {formData.ff_players.length < maxPlayers && `(${formData.ff_players.length}/${maxPlayers})`}
+                                                        Add Player {formData.pubg_players.length < maxPlayers && `(${formData.pubg_players.length}/${maxPlayers})`}
                                                     </Button>
 
                                                     <Button
                                                         type="submit"
-                                                        disabled={formData.ff_players.length < minPlayers}
+                                                        disabled={formData.pubg_players.length < minPlayers}
                                                         className={`w-full sm:w-auto ${themeColors.primary} relative text-xs sm:text-sm py-1.5 sm:py-2`}
                                                     >
                                                         Submit Team Registration
@@ -801,7 +801,7 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
             
             <SuccessDialog
                 isOpen={showSuccessDialog}
-                message="Selamat! Pendaftaran tim dan pemain Free Fire telah berhasil. Tim Anda telah terdaftar dalam kompetisi IT-ESEGA 2025. Silahkan tunggu informasi selanjutnya dari panitia."
+                message="Selamat! Pendaftaran tim dan pemain PUBG telah berhasil. Tim Anda telah terdaftar dalam kompetisi IT-ESEGA 2025. Silahkan tunggu informasi selanjutnya dari panitia."
                 title="Pendaftaran Berhasil!"
                 buttonText="Kembali ke Beranda"
                 onClose={handleSuccessDialogClose}

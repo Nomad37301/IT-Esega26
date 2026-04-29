@@ -82,8 +82,8 @@ Route::prefix('debug')->group(function() {
                 'count' => $teams->count(),
                 'data' => $teams
             ]);
-        } else if ($type === 'ff') {
-            $teams = \App\Models\FF_Team::all();
+        } else if ($type === 'pubg') {
+            $teams = \App\Models\PUBG_Team::all();
             return response()->json([
                 'success' => true,
                 'count' => $teams->count(),
@@ -91,13 +91,13 @@ Route::prefix('debug')->group(function() {
             ]);
         } else {
             $mlTeams = \App\Models\ML_Team::all();
-            $ffTeams = \App\Models\FF_Team::all();
+            $pubgTeams = \App\Models\PUBG_Team::all();
             return response()->json([
                 'success' => true,
                 'ml_teams_count' => $mlTeams->count(),
-                'ff_teams_count' => $ffTeams->count(),
+                'pubg_teams_count' => $pubgTeams->count(),
                 'ml_teams' => $mlTeams,
-                'ff_teams' => $ffTeams
+                'pubg_teams' => $pubgTeams
             ]);
         }
     });
@@ -116,7 +116,7 @@ Route::prefix('debug')->group(function() {
         ]);
         
         \App\Models\CompetitionSlot::create([
-            'competition_name' => 'ff',
+            'competition_name' => 'pubg',
             'total_slots' => 48,
             'used_slots' => 0,
             'is_active' => true
@@ -142,18 +142,18 @@ Route::prefix('debug')->group(function() {
 // API untuk Team Management
 Route::prefix('teams')->group(function () {
     // Get teams
-    Route::get('/ff', [TeamPlayerController::class, 'getFFTeams']);
+    Route::get('/pubg', [TeamPlayerController::class, 'getPUBGTeams']);
     Route::get('/ml', [TeamPlayerController::class, 'getMLTeams']);
     
     // Filter teams
-    Route::get('/ff/filter', [TeamPlayerController::class, 'filterTeams']);
+    Route::get('/pubg/filter', [TeamPlayerController::class, 'filterTeams']);
     Route::get('/ml/filter', [TeamPlayerController::class, 'filterTeams']);
     
     // Update and delete teams
-    Route::put('/ff/{id}', [TeamPlayerController::class, 'updateTeam']);
+    Route::put('/pubg/{id}', [TeamPlayerController::class, 'updateTeam']);
     Route::put('/ml/{id}', [TeamPlayerController::class, 'updateTeam']);
-    Route::delete('/ff/{id}', function($id) {
-        return app()->call([app(TeamPlayerController::class), 'deleteTeam'], ['game' => 'ff', 'id' => $id]);
+    Route::delete('/pubg/{id}', function($id) {
+        return app()->call([app(TeamPlayerController::class), 'deleteTeam'], ['game' => 'pubg', 'id' => $id]);
     });
     Route::delete('/ml/{id}', function($id) {
         return app()->call([app(TeamPlayerController::class), 'deleteTeam'], ['game' => 'ml', 'id' => $id]);
@@ -163,18 +163,18 @@ Route::prefix('teams')->group(function () {
 // API untuk Player Management
 Route::prefix('players')->group(function () {
     // Get players by team
-    Route::get('/ff/{team_id}', [TeamPlayerController::class, 'getFFPlayersByTeam']);
+    Route::get('/pubg/{team_id}', [TeamPlayerController::class, 'getPUBGPlayersByTeam']);
     Route::get('/ml/{team_id}', [TeamPlayerController::class, 'getMLPlayersByTeam']);
     
     // Update and delete players
-    Route::put('/ff/{id}', [TeamPlayerController::class, 'updatePlayer']);
+    Route::put('/pubg/{id}', [TeamPlayerController::class, 'updatePlayer']);
     Route::put('/ml/{id}', [TeamPlayerController::class, 'updatePlayer']);
-    Route::delete('/ff/{id}', [TeamPlayerController::class, 'deletePlayer']);
+    Route::delete('/pubg/{id}', [TeamPlayerController::class, 'deletePlayer']);
     Route::delete('/ml/{id}', [TeamPlayerController::class, 'deletePlayer']);
 });
 
-// Get all FF players
-Route::get('/ff-players', [TeamPlayerController::class, 'getFFPlayers']);
+// Get all PUBG players
+Route::get('/pubg-players', [TeamPlayerController::class, 'getPUBGPlayers']);
 
 // Get all ML players 
 Route::get('/ml-players', [TeamPlayerController::class, 'getMLPlayers']);

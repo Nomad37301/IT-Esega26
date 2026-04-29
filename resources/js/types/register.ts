@@ -4,7 +4,7 @@ export interface TeamData {
     proof_of_payment: File | null
     team_logo: File | null
     email: string
-    game_type?: "ml" | "ff"
+    game_type?: "ml" | "pubg"
     slot_type?: "single" | "double"
     teamIdToReuse?: number | null
 }
@@ -26,9 +26,9 @@ export interface MLPlayer {
     updated_at?: string;
 }
 
-export interface FFPlayer {
+export interface PUBGPlayer {
     id: string;
-    ff_team_id?: number | null;
+    pubg_team_id?: number | null;
     name: string;
     nickname: string;
     id_server: string;
@@ -42,11 +42,11 @@ export interface FFPlayer {
     updated_at?: string;
 }
 
-export interface PlayerFFFormProps {
-    player: FFPlayer;
-    allPlayers: FFPlayer[];
+export interface PlayerPUBGFormProps {
+    player: PUBGPlayer;
+    allPlayers: PUBGPlayer[];
     index: number;
-    onChange: <K extends keyof FFPlayer>(index: number, field: K, value: FFPlayer[K]) => void;
+    onChange: <K extends keyof PUBGPlayer>(index: number, field: K, value: PUBGPlayer[K]) => void;
     onDelete: () => void;
     errorsBE: Record<string, string>;
 }
@@ -60,10 +60,10 @@ export interface PlayerFormProps {
     errorsBE: Record<string, string>;
 }
 
-export interface FFPlayerFormProps {
-    player: FFPlayer
+export interface PUBGPlayerFormProps {
+    player: PUBGPlayer
     index: number
-    onChange: <K extends keyof FFPlayer>(index: number, field: K, value: FFPlayer[K]) => void
+    onChange: <K extends keyof PUBGPlayer>(index: number, field: K, value: PUBGPlayer[K]) => void
     onDelete: () => void
 }
 
@@ -75,20 +75,20 @@ export interface GameStats {
 }
 
 export interface GameSelectionFormProps {
-    onGameSelect: (game: "ml" | "ff") => void;
+    onGameSelect: (game: "ml" | "pubg") => void;
     gameStats?: GameStats[];
 }
 
 export interface TeamRegistrationFormProps {
     teamData: TeamData
-    gameType: "ml" | "ff"
+    gameType: "ml" | "pubg"
     onSubmit: (data: TeamData) => void
     resetStep?: () => void
 }
 
 export interface PlayerRegistrationFormProps {
     teamData: TeamData;
-    gameType: 'ml' | 'ff';
+    gameType: 'ml' | 'pubg';
 }
 
 export interface QRCodeSectionProps {
@@ -96,7 +96,7 @@ export interface QRCodeSectionProps {
     description: string
     instructions: string[]
     amount?: string
-    gameType: "ml" | "ff"
+    gameType: "ml" | "pubg"
     slotType?: "single" | "double"
     resetStep?: () => void
 }

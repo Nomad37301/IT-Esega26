@@ -46,7 +46,7 @@ const BracketFF: React.FC = () => {
                     {/* Header */}
                     <div className="text-center mb-12">
                         <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-                            <span className="text-red-600">IT-ESEGA</span> Free Fire
+                            <span className="text-red-600">IT-ESEGA</span> PUBG
                             <br />
                             <span className="text-3xl md:text-4xl text-gray-800">Tournament Bracket</span>
                         </h1>
@@ -57,7 +57,7 @@ const BracketFF: React.FC = () => {
                     <Card className="border-2 border-gray-300 shadow-xl bg-white w-full">
                         <CardHeader className="bg-gray-50 border-b border-gray-200">
                             <CardTitle className="text-center text-2xl font-bold text-gray-900">
-                                <span className="text-red-600">IT-ESEGA</span> Free Fire Table Point
+                                <span className="text-red-600">IT-ESEGA</span> PUBG Table Point
                             </CardTitle>
                         </CardHeader>
                         <CardContent className="p-6">

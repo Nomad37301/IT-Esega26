@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\FFPlayerRequest;
+use App\Http\Requests\PUBGPlayerRequest;
 use App\Http\Requests\StorePlayerMLRegistrationRequest;
-use App\Models\FF_Team;
-use App\Models\FF_Participant;
+use App\Models\PUBG_Team;
+use App\Models\PUBG_Participant;
 use App\Models\ML_Participant;
 use App\Models\ML_Team;
 use Illuminate\Http\Request;
@@ -137,52 +137,52 @@ class PlayerRegistrationController extends Controller
     }
 
 
-    public function showRegistrationFormFF($encryptedTeamName)
+    public function showRegistrationFormPUBG($encryptedTeamName)
     {
         try {
             $teamName = decrypt($encryptedTeamName);
 
-            $team = FF_Team::where('team_name', $teamName)->firstOrFail();
+            $team = PUBG_Team::where('team_name', $teamName)->firstOrFail();
             
-            Log::info('Showing FF registration form', ['team_id' => $team->id, 'team_name' => $team->team_name]);
+            Log::info('Showing PUBG registration form', ['team_id' => $team->id, 'team_name' => $team->team_name]);
 
         } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
-            Log::error('Invalid encrypted FF team name', ['error' => $e->getMessage()]);
+            Log::error('Invalid encrypted PUBG team name', ['error' => $e->getMessage()]);
             abort(403, 'This URL is no longer valid or was tampered with.');
         }
 
-        return Inertia::render('player-regis/ff-player-registration-form', [
+        return Inertia::render('player-regis/pubg-player-registration-form', [
             'teamData' => $team,
-            'gameType' => 'ff',
+            'gameType' => 'pubg',
         ]);
     }
 
-    public function storeFF(FFPlayerRequest $request)
+    public function storePUBG(PUBGPlayerRequest $request)
     {
         $validated = $request->validated();
         
-        Log::info('Processing FF team registration', [
+        Log::info('Processing PUBG team registration', [
             'team_id' => $validated['team_id'] ?? 'not provided',
-            'player_count' => count($validated['ff_players'] ?? [])
+            'player_count' => count($validated['pubg_players'] ?? [])
         ]);
         
         $teamId = $validated['team_id'];
-        $team = FF_Team::findOrFail($teamId);
+        $team = PUBG_Team::findOrFail($teamId);
         $teamSlug = Str::slug($team->team_name);
 
         // Buat folder player jika belum ada
-        $playerBasePath = "FF_teams/{$teamId}_{$teamSlug}/players";
+        $playerBasePath = "PUBG_teams/{$teamId}_{$teamSlug}/players";
         
         // Gunakan Storage facade untuk membuat direktori
         if (!Storage::disk('public')->exists($playerBasePath)) {
             Storage::disk('public')->makeDirectory($playerBasePath, 0777, true);
         }
 
-        foreach ($validated['ff_players'] as $index => $player) {
+        foreach ($validated['pubg_players'] as $index => $player) {
             try {
                 $photoPath = null;
-                if ($request->hasFile("ff_players_{$index}_foto")) {
-                    $file = $request->file("ff_players_{$index}_foto");
+                if ($request->hasFile("pubg_players_{$index}_foto")) {
+                    $file = $request->file("pubg_players_{$index}_foto");
                     if ($file && $file->isValid()) {
                         $photoExtension = $file->getClientOriginalExtension();
                         $photoFileName = "player_{$index}_foto.{$photoExtension}";
@@ -191,8 +191,8 @@ class PlayerRegistrationController extends Controller
                 }
 
                 $signaturePath = null;
-                if ($request->hasFile("ff_players_{$index}_tanda_tangan")) {
-                    $file = $request->file("ff_players_{$index}_tanda_tangan");
+                if ($request->hasFile("pubg_players_{$index}_tanda_tangan")) {
+                    $file = $request->file("pubg_players_{$index}_tanda_tangan");
                     if ($file && $file->isValid()) {
                         $signatureExtension = $file->getClientOriginalExtension();
                         $signatureFileName = "player_{$index}_ttd.{$signatureExtension}";
@@ -200,16 +200,16 @@ class PlayerRegistrationController extends Controller
                     }
                 }
 
-                Log::info("Processing FF player {$index}", [
-                    'has_foto' => $request->hasFile("ff_players_{$index}_foto"),
-                    'has_tanda_tangan' => $request->hasFile("ff_players_{$index}_tanda_tangan"),
+                Log::info("Processing PUBG player {$index}", [
+                    'has_foto' => $request->hasFile("pubg_players_{$index}_foto"),
+                    'has_tanda_tangan' => $request->hasFile("pubg_players_{$index}_tanda_tangan"),
                     'foto_path' => $photoPath,
                     'tanda_tangan_path' => $signaturePath,
                     'player_data' => $player
                 ]);
 
-                $participant = FF_Participant::create([
-                    'ff_team_id' => $teamId,
+                $participant = PUBG_Participant::create([
+                    'pubg_team_id' => $teamId,
                     'name' => $player['name'],
                     'nickname' => $player['nickname'],
                     'id_server' => $player['id_server'],
@@ -221,13 +221,13 @@ class PlayerRegistrationController extends Controller
                     'role' => $player['role']
                 ]);
                 
-                Log::info("FF player saved", [
+                Log::info("PUBG player saved", [
                     'player_id' => $participant->id,
                     'name' => $participant->name,
                     'team_id' => $teamId
                 ]);
             } catch (\Exception $e) {
-                Log::error("Error saving FF player {$index}", [
+                Log::error("Error saving PUBG player {$index}", [
                     'error' => $e->getMessage(),
                     'file' => $e->getFile(),
                     'line' => $e->getLine()

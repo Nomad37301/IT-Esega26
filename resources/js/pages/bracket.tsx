@@ -50,9 +50,9 @@ const Bracket: React.FC = () => {
             link: '/bracket/mobile-legends',
         },
         {
-            title: 'Free Fire',
-            summary: "Check out the Free Fire bracket and see who's advancing. Live updates and results.",
-            link: '/bracket/free-fire',
+            title: 'PUBG',
+            summary: "Check out the PUBG bracket and see who's advancing. Live updates and results.",
+            link: '/bracket/pubg',
         },
     ];
 

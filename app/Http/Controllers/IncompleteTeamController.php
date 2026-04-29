@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ML_Team;
-use App\Models\FF_Team;
+use App\Models\PUBG_Team;
 use App\Models\ML_Participant;
-use App\Models\FF_Participant;
+use App\Models\PUBG_Participant;
 use App\Models\CompetitionSlot;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
@@ -18,7 +18,7 @@ class IncompleteTeamController extends Controller
     {
         $validated = $request->validate([
             'team_id' => 'required',
-            'game_type' => 'required|in:ml,ff',
+            'game_type' => 'required|in:ml,pubg',
         ]);
 
         $teamId = $validated['team_id'];
@@ -64,16 +64,16 @@ class IncompleteTeamController extends Controller
                 $team->delete();
             }
         } else {
-            // Untuk FF, tipe slot selalu single
+            // Untuk PUBG, tipe slot selalu single
             $slotType = 'single';
             $slotCount = 1;
             $releaseSlot = true;
             
-            // Hapus pemain FF
-            $players = FF_Participant::where('ff_team_id', $teamId)->get();
+            // Hapus pemain PUBG
+            $players = PUBG_Participant::where('pubg_team_id', $teamId)->get();
             
             // Ambil data tim
-            $team = FF_Team::find($teamId);
+            $team = PUBG_Team::find($teamId);
             
             if ($team) {
                 foreach ($players as $player) {
@@ -87,7 +87,7 @@ class IncompleteTeamController extends Controller
                 }
                 
                 // Hapus semua pemain
-                FF_Participant::where('ff_team_id', $teamId)->delete();
+                PUBG_Participant::where('pubg_team_id', $teamId)->delete();
                 
                 // Hapus logo tim jika ada
                 if ($team->team_logo) {
@@ -107,7 +107,7 @@ class IncompleteTeamController extends Controller
             if ($gameType === 'ml') {
                 $competitionNames = ['mobile-legends', 'mobilelegends', 'ml', 'Mobile Legends', 'Mobile-Legends'];
             } else {
-                $competitionNames = ['free-fire', 'freefire', 'ff', 'Free Fire', 'Free-Fire'];
+                $competitionNames = ['pubg', 'PUBG', 'pubg-mobile', 'PUBG Mobile'];
             }
             
             Log::debug("Mencoba mengembalikan slot dengan beberapa nama kompetisi", [
@@ -190,17 +190,17 @@ class IncompleteTeamController extends Controller
                 Log::info('Truncated ML_Team table and reset auto_increment');
             }
             
-            if ($gameType === 'ff' || $gameType === 'all') {
-                // Hapus semua relasi ke FF_Team terlebih dahulu
-                FF_Participant::query()->delete();
+            if ($gameType === 'pubg' || $gameType === 'all') {
+                // Hapus semua relasi ke PUBG_Team terlebih dahulu
+                PUBG_Participant::query()->delete();
                 
                 // Gunakan query builder untuk reset auto_increment
-                DB::statement('ALTER TABLE ff_teams AUTO_INCREMENT = 1');
+                DB::statement('ALTER TABLE pubg_teams AUTO_INCREMENT = 1');
                 
                 // Hapus semua data tim
-                FF_Team::query()->delete();
+                PUBG_Team::query()->delete();
                 
-                Log::info('Truncated FF_Team table and reset auto_increment');
+                Log::info('Truncated PUBG_Team table and reset auto_increment');
             }
             
             // Reset competition slots jika diminta
@@ -210,7 +210,7 @@ class IncompleteTeamController extends Controller
                     ->update(['used_slots' => 0]);
                     
                 DB::table('competition_slots')
-                    ->where('competition_name', 'Free Fire')
+                    ->where('competition_name', 'PUBG')
                     ->update(['used_slots' => 0]);
                     
                 Log::info('Reset competition slots to 0');
@@ -300,13 +300,13 @@ class IncompleteTeamController extends Controller
                         ]);
                     }
                 }
-            } elseif ($gameType === 'ff') {
+            } elseif ($gameType === 'pubg') {
                 // Ambil data tim
-                $team = FF_Team::find($teamId);
+                $team = PUBG_Team::find($teamId);
                 
                 if ($team) {
-                    // Hapus pemain FF
-                    $players = FF_Participant::where('ff_team_id', $teamId)->get();
+                    // Hapus pemain PUBG
+                    $players = PUBG_Participant::where('pubg_team_id', $teamId)->get();
                     
                     foreach ($players as $player) {
                         // Hapus file foto dan tanda tangan jika ada
@@ -319,7 +319,7 @@ class IncompleteTeamController extends Controller
                     }
                     
                     // Hapus semua pemain
-                    FF_Participant::where('ff_team_id', $teamId)->delete();
+                    PUBG_Participant::where('pubg_team_id', $teamId)->delete();
                     
                     // Hapus logo tim jika ada
                     if ($team->team_logo) {
@@ -330,14 +330,14 @@ class IncompleteTeamController extends Controller
                     $team->delete();
                     
                     // Update slot kompetisi
-                    $slot = CompetitionSlot::where('competition_name', 'Free Fire')->first();
+                    $slot = CompetitionSlot::where('competition_name', 'PUBG')->first();
                     if ($slot) {
-                        // Untuk FF, jumlah tim = jumlah slot
-                        $slot->used_slots = FF_Team::count();
+                        // Untuk PUBG, jumlah tim = jumlah slot
+                        $slot->used_slots = PUBG_Team::count();
                         $slot->save();
                         
                         Log::info('Competition slot updated after incomplete team cleanup', [
-                            'competition' => 'Free Fire',
+                            'competition' => 'PUBG',
                             'new_used_slots' => $slot->used_slots
                         ]);
                     }

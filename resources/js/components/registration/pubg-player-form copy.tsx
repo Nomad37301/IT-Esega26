@@ -2,10 +2,10 @@
 
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
-import type { FFPlayer, PlayerFormProps } from "@/types/register"
+import type { PUBGPlayer, PlayerFormProps } from "@/types/register"
 
-export function FFPlayerForm({ player, index, onChange }: PlayerFormProps) {
-    const ffPlayer = player as FFPlayer
+export function PUBGPlayerForm({ player, index, onChange }: PlayerFormProps) {
+    const pubgPlayer = player as PUBGPlayer
 
     return (
         <div className="border border-gray-200 rounded-xl p-6 bg-gray-50">
@@ -17,7 +17,7 @@ export function FFPlayerForm({ player, index, onChange }: PlayerFormProps) {
                     </Label>
                     <Input
                         id={`ff-name-${index}`}
-                        value={ffPlayer.name}
+                        value={pubgPlayer.name}
                         onChange={(e) => onChange(index, "name", e.target.value)}
                         required
                         placeholder="Player's full name"
@@ -27,14 +27,14 @@ export function FFPlayerForm({ player, index, onChange }: PlayerFormProps) {
 
                 <div>
                     <Label htmlFor={`ff-id-${index}`} className="block text-sm font-medium text-gray-700 mb-1">
-                        Free Fire ID
+                        PUBG ID
                     </Label>
                     <Input
                         id={`ff-id-${index}`}
-                        value={ffPlayer.id}
+                        value={pubgPlayer.id}
                         onChange={(e) => onChange(index, "id", e.target.value)}
                         required
-                        placeholder="Free Fire ID"
+                        placeholder="PUBG ID"
                         className="bg-white text-slate-900 border-gray-200 rounded-lg"
                     />
                 </div>
@@ -45,7 +45,7 @@ export function FFPlayerForm({ player, index, onChange }: PlayerFormProps) {
                     </Label>
                     <Input
                         id={`ff-nickname-${index}`}
-                        value={ffPlayer.nickname}
+                        value={pubgPlayer.nickname}
                         onChange={(e) => onChange(index, "nickname", e.target.value)}
                         required
                         placeholder="In-game nickname"
@@ -59,7 +59,7 @@ export function FFPlayerForm({ player, index, onChange }: PlayerFormProps) {
                     </Label>
                     <Input
                         id={`ff-phone-${index}`}
-                        value={ffPlayer.phone}
+                        value={pubgPlayer.phone}
                         onChange={(e) => onChange(index, "phone", e.target.value)}
                         required
                         placeholder="Phone number"
@@ -74,7 +74,7 @@ export function FFPlayerForm({ player, index, onChange }: PlayerFormProps) {
                     <Input
                         id={`ff-email-${index}`}
                         type="email"
-                        value={ffPlayer.email}
+                        value={pubgPlayer.email}
                         onChange={(e) => onChange(index, "email", e.target.value)}
                         required
                         placeholder="Email address"

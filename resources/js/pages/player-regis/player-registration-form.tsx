@@ -22,7 +22,7 @@ import axios from "axios"
 
 export default function PlayerRegistrationForm({ teamData, gameType }: PlayerRegistrationFormProps) {
     const isML = gameType === "ml"
-    const gameTitle = isML ? "Mobile Legends" : "Free Fire"
+    const gameTitle = isML ? "Mobile Legends" : "PUBG"
     const minPlayers = 5
     const maxPlayers = 7
 

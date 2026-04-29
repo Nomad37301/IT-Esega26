@@ -37,7 +37,7 @@ const DEFAULT_SLOTS: CompetitionSlot[] = [
     },
     {
         id: 2,
-        competition_name: "Free Fire",
+        competition_name: "PUBG",
         total_slots: 48,
         used_slots: 18,
         is_active: true,

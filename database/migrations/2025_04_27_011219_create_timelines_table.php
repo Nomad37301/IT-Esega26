@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->dateTime('due_date')->nullable();
             $table->dateTime('end_date')->nullable();
             $table->boolean('status')->default(true);
-            $table->enum('category', ['mobile_legend', 'free_fire', 'valorant', 'pubgm', 'opening', 'closing'])->default('mobile_legend');
+            $table->enum('category', ['mobile_legend', 'pubg', 'valorant', 'pubgm', 'opening', 'closing'])->default('mobile_legend');
             $table->softDeletes();
             $table->timestamps();
         });

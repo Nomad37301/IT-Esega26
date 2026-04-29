@@ -23,7 +23,7 @@ export function GameSelectionForm({ onGameSelect, gameStats: initialGameStats }:
                     total_slots: number;
                     used_slots: number;
                 }) => ({
-                    game_type: slot.competition_name === 'Mobile Legends' ? 'ml' : 'ff',
+                    game_type: slot.competition_name === 'Mobile Legends' ? 'ml' : 'pubg',
                     total_slots: slot.total_slots,
                     used_slots: slot.used_slots,
                     registered_teams: `${slot.used_slots} Teams`
@@ -88,8 +88,8 @@ export function GameSelectionForm({ onGameSelect, gameStats: initialGameStats }:
             isDisabled: getSlotRemaining('ml') <= 0
         },
         {
-            id: "ff",
-            title: "Free Fire",
+            id: "pubg",
+            title: "PUBG",
             slots: "48 SLOT",
             type: "SINGLE SLOT ONLY",
             scope: "NATIONAL COMPETITION",
@@ -102,11 +102,11 @@ export function GameSelectionForm({ onGameSelect, gameStats: initialGameStats }:
             textColor: "text-orange-600",
             bgColor: "bg-orange-100",
             fee: "Rp 100.000",
-            status: getSlotRemaining('ff') > 0 ? "Available" : "Closed",
-            statusColor: getSlotRemaining('ff') > 0 ? "bg-green-500" : "bg-red-500",
-            totalSlots: gameStats?.find((g: GameStats) => g.game_type === 'ff')?.total_slots || 48,
-            teams: gameStats?.find((g: GameStats) => g.game_type === 'ff')?.registered_teams || "0 Teams",
-            isDisabled: getSlotRemaining('ff') <= 0
+            status: getSlotRemaining('pubg') > 0 ? "Available" : "Closed",
+            statusColor: getSlotRemaining('pubg') > 0 ? "bg-green-500" : "bg-red-500",
+            totalSlots: gameStats?.find((g: GameStats) => g.game_type === 'pubg')?.total_slots || 48,
+            teams: gameStats?.find((g: GameStats) => g.game_type === 'pubg')?.registered_teams || "0 Teams",
+            isDisabled: getSlotRemaining('pubg') <= 0
         }
     ]
 
@@ -126,7 +126,7 @@ export function GameSelectionForm({ onGameSelect, gameStats: initialGameStats }:
                             className={`relative rounded-xl overflow-hidden transition-all duration-300 border border-gray-100 group
                                 ${game.isDisabled ? 'cursor-not-allowed' : 'cursor-pointer hover:shadow-xl'}`}
                             whileHover={!game.isDisabled ? { scale: 1.02, y: -4 } : {}}
-                            onClick={() => !game.isDisabled && onGameSelect(game.id as "ml" | "ff")}
+                            onClick={() => !game.isDisabled && onGameSelect(game.id as "ml" | "pubg")}
                         >
                             {game.isDisabled && (
                                 <div className="absolute inset-0 bg-black/60 backdrop-blur-[1px] flex items-center justify-center z-10">
@@ -228,7 +228,7 @@ export function GameSelectionForm({ onGameSelect, gameStats: initialGameStats }:
                                         <div className="bg-white p-3 rounded-lg border border-red-200 text-center mt-3">
                                             <div className="text-xs text-gray-500 mb-1">Single Slot Only</div>
                                             <div className="text-red-600 font-bold">{game.fee}</div>
-                                            <div className="text-xs text-gray-500 mt-1">Free Fire hanya tersedia dalam format Single Slot</div>
+                                            <div className="text-xs text-gray-500 mt-1">PUBG hanya tersedia dalam format Single Slot</div>
                                         </div>
                                     )}
                                 </div>

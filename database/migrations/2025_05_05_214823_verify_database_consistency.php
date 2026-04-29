@@ -50,15 +50,15 @@ return new class extends Migration
                 }
             }
 
-            // Memperbaiki tabel ff_teams jika ada masalah
-            if (Schema::hasTable('FF_Team')) {
-                Log::warning('Found inconsistent table name: FF_Team, renaming to ff_teams');
-                DB::statement('RENAME TABLE `FF_Team` TO `ff_teams`');
+            // Memperbaiki tabel pubg_teams jika ada masalah
+            if (Schema::hasTable('PUBG_Team')) {
+                Log::warning('Found inconsistent table name: PUBG_Team, renaming to pubg_teams');
+                DB::statement('RENAME TABLE `PUBG_Team` TO `pubg_teams`');
             }
 
-            if (!Schema::hasTable('ff_teams')) {
-                Log::info('Creating ff_teams table');
-                Schema::create('ff_teams', function (Blueprint $table) {
+            if (!Schema::hasTable('pubg_teams')) {
+                Log::info('Creating pubg_teams table');
+                Schema::create('pubg_teams', function (Blueprint $table) {
                     $table->id();
                     $table->string('team_name')->unique(); // Nama tim
                     $table->string('team_logo')->nullable(); // Logo tim
@@ -93,17 +93,17 @@ return new class extends Migration
                 });
             }
 
-            // Memperbaiki tabel ff_participants jika ada masalah
-            if (Schema::hasTable('FF_Participant')) {
-                Log::warning('Found inconsistent table name: FF_Participant, renaming to ff_participants');
-                DB::statement('RENAME TABLE `FF_Participant` TO `ff_participants`');
+            // Memperbaiki tabel pubg_participants jika ada masalah
+            if (Schema::hasTable('PUBG_Participant')) {
+                Log::warning('Found inconsistent table name: PUBG_Participant, renaming to pubg_participants');
+                DB::statement('RENAME TABLE `PUBG_Participant` TO `pubg_participants`');
             }
 
-            if (!Schema::hasTable('ff_participants')) {
-                Log::info('Creating ff_participants table');
-                Schema::create('ff_participants', function (Blueprint $table) {
+            if (!Schema::hasTable('pubg_participants')) {
+                Log::info('Creating pubg_participants table');
+                Schema::create('pubg_participants', function (Blueprint $table) {
                     $table->id();
-                    $table->foreignId('ff_team_id')->constrained('ff_teams')->onDelete('cascade');
+                    $table->foreignId('pubg_team_id')->constrained('pubg_teams')->onDelete('cascade');
                     $table->string('name'); // Nama asli peserta
                     $table->string('nickname'); // Nickname di game
                     $table->string('id_server')->nullable(); // ID Server
@@ -118,15 +118,15 @@ return new class extends Migration
                 });
             }
             
-            // Tambahkan kolom status jika belum ada di table ml_participants atau ff_participants
+            // Tambahkan kolom status jika belum ada di table ml_participants atau pubg_participants
             if (Schema::hasTable('ml_participants') && !Schema::hasColumn('ml_participants', 'status')) {
                 Schema::table('ml_participants', function (Blueprint $table) {
                     $table->enum('status', ['pending', 'verified', 'rejected'])->default('pending');
                 });
             }
             
-            if (Schema::hasTable('ff_participants') && !Schema::hasColumn('ff_participants', 'status')) {
-                Schema::table('ff_participants', function (Blueprint $table) {
+            if (Schema::hasTable('pubg_participants') && !Schema::hasColumn('pubg_participants', 'status')) {
+                Schema::table('pubg_participants', function (Blueprint $table) {
                     $table->enum('status', ['pending', 'verified', 'rejected'])->default('pending');
                 });
             }
