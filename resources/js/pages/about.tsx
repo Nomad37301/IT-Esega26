@@ -111,8 +111,8 @@ export default function About() {
                     <Navbar
                         user={user}
                         logo={
-                            <div className="flex items-center justify-start">
-                                <img src="/Images/LogoEsega25.png" alt="IT-ESEGA-25 Logo" className="h-18 w-auto object-contain" />
+                            <div className="border-none flex items-center justify-start">
+                                <img src="/Images/LogoEsega25.png" alt="IT-ESEGA-26 Logo" className="h-18 w-auto object-contain" />
                             </div>
                         }
                         items={navItems}
@@ -127,7 +127,7 @@ export default function About() {
                             <div className="absolute inset-0 bg-white"></div>
 
                             {/* Gradient Overlay */}
-                            <div className="absolute inset-0 bg-gradient-to-b from-white via-red-50/40 to-red-100/30"></div>
+                            <div className="absolute inset-0 bg-gradient-to-b from-white via-blue-50/40 to-blue-100/30"></div>
 
                             {/* Cross Blob - Top Left */}
                             <div className="pointer-events-none absolute top-24 -left-12 h-28 w-28 opacity-5">
@@ -142,7 +142,7 @@ export default function About() {
                                     }}
                                     className="h-full w-full"
                                 >
-                                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="h-full w-full fill-red-500">
+                                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="h-full w-full fill-primary">
                                         <path d="M85,40 h30 v45 h45 v30 h-45 v45 h-30 v-45 h-45 v-30 h45 z" />
                                     </svg>
                                 </motion.div>
@@ -161,7 +161,7 @@ export default function About() {
                                     }}
                                     className="h-full w-full"
                                 >
-                                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="h-full w-full fill-red-500">
+                                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="h-full w-full fill-primary">
                                         <path d="M85,40 h30 v45 h45 v30 h-45 v45 h-30 v-45 h-45 v-30 h45 z" />
                                     </svg>
                                 </motion.div>
@@ -170,24 +170,31 @@ export default function About() {
                             {/* Content Container */}
                             <div className="relative max-w-[1350px] mx-auto px-4 md:px-8 lg:px-12 pt-28 md:pt-36 pb-16 md:pb-24">
                                 <div className="text-center" data-aos="fade-up">
-                                    <h2 className="mb-6 sm:mb-8 text-3xl sm:text-5xl font-bold text-[#333]">
-                                        About <span className="text-red-600">IT-ESEGA</span>
-                                    </h2>
+                                    <h1 className="pt-24 font-demarus text-[3.5rem] leading-[0.8] font-medium sm:-mb-24 sm:text-[8.5rem]">
+                                        <span className="bg-[linear-gradient(135deg,#a8d8ea_0%,#c8eefc_40%,#7ec8e3_70%,#4EAAC5_100%)] bg-clip-text  [-webkit-background-clip:text] [-webkit-text-fill-color:transparent]">
+                                            About IT-ESEGA
+                                        </span>
+                                    </h1>
+
                                     <div className="max-w-4xl mx-auto">
                                         <p className="mb-8 text-base sm:text-lg text-[#333] leading-relaxed px-4 sm:px-0">
-                                            IT-ESEGA(Information Technology Electronic Sport Based On Excellent Games) merupakan ajang tahunan bergengsi yang diselenggarakan oleh Himpunan Mahasiswa Teknologi Informasi, Universitas Udayana. Kompetisi ini mempertemukan para gamers dari berbagai kalangan dalam dua cabang E-Sport populer, yaitu Mobile Legends dan Free Fire. IT-ESEGA hadir sebagai representasi semangat kolaborasi, sportivitas, serta wadah untuk mengembangkan potensi, menjalin komunitas, dan mendorong lahirnya atlet E-Sport berbakat yang siap bersaing di tingkat nasional hingga internasional.
+                                            IT-ESEGA 2026 adalah ajang kompetisi E-Sports tahunan yang diselenggarakan oleh Himpunan Mahasiswa Teknologi Informasi Universitas Udayana. Kompetisi ini mempertemukan para gamer dari berbagai latar belakang untuk beradu kemampuan dalam cabang Mobile Legends dan PUBG Mobile.
+                                        </p>
+                                        <p className="mb-8 text-base sm:text-lg text-[#333] leading-relaxed px-4 sm:px-0">
+                                            Di tengah atmosfer persaingan yang membara, IT-ESEGA 2026 menjadi panggung untuk menguji ketajaman strategi, kekompakan tim, dan sportivitas sejati. Setiap pertandingan menjadi arena pembuktian, tempat lahirnya talenta yang siap melangkah lebih jauh dan meninggalkan jejak di dunia E-Sports.
                                         </p>
                                     </div>
                                 </div>
 
                                 {/* Vision, Mission, Values Cards */}
                                 <div className="mt-12 grid grid-cols-1 gap-6 sm:mt-16 sm:gap-8 md:grid-cols-3" data-aos="fade-up">
-                                    <div className="rounded-xl border border-red-100 bg-white p-8 shadow-lg transition-all duration-300 hover:shadow-xl">
+                                    {/* Vision */}
+                                    <div className="rounded-xl border border-secondary bg-white p-8 shadow-lg transition-all duration-300 hover:shadow-xl">
                                         <div className="mb-6 flex justify-center">
-                                            <div className="rounded-full bg-red-100 p-4">
+                                            <div className="rounded-full bg-blue-100 p-4">
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
-                                                    className="h-8 w-8 text-red-600"
+                                                    className="h-8 w-8 text-primary"
                                                     fill="none"
                                                     viewBox="0 0 24 24"
                                                     stroke="currentColor"
@@ -207,17 +214,18 @@ export default function About() {
                                                 </svg>
                                             </div>
                                         </div>
-                                        <h3 className="mb-4 text-center text-xl font-semibold text-red-600">Visi</h3>
+                                        <h3 className="mb-4 text-center text-xl font-semibold text-primary">Visi</h3>
                                         <p className="text-center leading-relaxed text-gray-600">
                                             Menjadi platform utama yang mempertemukan dan mengembangkan bakat esports.
                                         </p>
                                     </div>
-                                    <div className="rounded-xl border border-red-100 bg-white p-8 shadow-lg transition-all duration-300 hover:shadow-xl">
+                                    {/* mission */}
+                                    <div className="rounded-xl border border-secondary bg-white p-8 shadow-lg transition-all duration-300 hover:shadow-xl">
                                         <div className="mb-6 flex justify-center">
-                                            <div className="rounded-full bg-red-100 p-4">
+                                            <div className="rounded-full bg-blue-100 p-4">
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
-                                                    className="h-8 w-8 text-red-600"
+                                                    className="h-8 w-8 text-primary"
                                                     fill="none"
                                                     viewBox="0 0 24 24"
                                                     stroke="currentColor"
@@ -231,18 +239,19 @@ export default function About() {
                                                 </svg>
                                             </div>
                                         </div>
-                                        <h3 className="mb-4 text-center text-xl font-semibold text-red-600">Misi</h3>
+                                        <h3 className="mb-4 text-center text-xl font-semibold text-primary">Misi</h3>
                                         <p className="text-center leading-relaxed text-gray-600">
                                             Menyelenggarakan kompetisi berkualitas tinggi yang mendorong sportivitas dan profesionalisme dalam
                                             esports.
                                         </p>
                                     </div>
-                                    <div className="rounded-xl border border-red-100 bg-white p-8 shadow-lg transition-all duration-300 hover:shadow-xl">
+                                    {/* Values */}
+                                    <div className="rounded-xl border border-secondary bg-white p-8 shadow-lg transition-all duration-300 hover:shadow-xl">
                                         <div className="mb-6 flex justify-center">
-                                            <div className="rounded-full bg-red-100 p-4">
+                                            <div className="rounded-full bg-blue-100 p-4">
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
-                                                    className="h-8 w-8 text-red-600"
+                                                    className="h-8 w-8 text-primary"
                                                     fill="none"
                                                     viewBox="0 0 24 24"
                                                     stroke="currentColor"
@@ -256,7 +265,7 @@ export default function About() {
                                                 </svg>
                                             </div>
                                         </div>
-                                        <h3 className="mb-4 text-center text-xl font-semibold text-red-600">Nilai</h3>
+                                        <h3 className="mb-4 text-center text-xl font-semibold text-primary">Nilai</h3>
                                         <p className="text-center leading-relaxed text-gray-600">
                                             Integritas, Sportivitas, Inovasi, dan Kebersamaan dalam setiap aspek kompetisi.
                                         </p>
@@ -271,7 +280,7 @@ export default function About() {
                             <div className="absolute inset-0 bg-white"></div>
 
                             {/* Gradient Overlay */}
-                            <div className="absolute inset-0 bg-gradient-to-b from-red-100/30 via-white to-red-50/40"></div>
+                            <div className="absolute inset-0 bg-gradient-to-b from-blue-100/30 via-white to-blue-50/40"></div>
 
                             {/* Cross Blob - Top Right Mascot */}
                             <div className="pointer-events-none absolute top-20 right-16 h-24 w-24 opacity-5">
@@ -286,7 +295,7 @@ export default function About() {
                                     }}
                                     className="h-full w-full"
                                 >
-                                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="h-full w-full fill-red-500">
+                                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="h-full w-full fill-primary">
                                         <path d="M85,40 h30 v45 h45 v30 h-45 v45 h-30 v-45 h-45 v-30 h45 z" />
                                     </svg>
                                 </motion.div>
@@ -305,7 +314,7 @@ export default function About() {
                                     }}
                                     className="h-full w-full"
                                 >
-                                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="h-full w-full fill-red-500">
+                                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="h-full w-full fill-primary">
                                         <path d="M85,40 h30 v45 h45 v30 h-45 v45 h-30 v-45 h-45 v-30 h45 z" />
                                     </svg>
                                 </motion.div>
@@ -314,36 +323,27 @@ export default function About() {
                             {/* Content Container */}
                             <div className="relative mx-auto max-w-[1350px] px-4 py-16 md:px-8 md:py-24 lg:px-12">
                                 <div className="grid grid-cols-1 items-center gap-8 sm:gap-12 md:grid-cols-2">
+                                    {/* Deskripsi Mascot */}
                                     <div className="order-2 md:order-1" data-aos="fade-right">
                                         <h2 className="mb-4 text-3xl font-bold text-[#333] sm:mb-6 sm:text-4xl">
-                                            About Our <span className="text-red-600">Mascot</span>
+                                            About Our <span className="text-section-title">Mascot</span>
                                         </h2>
-                                        <div className="mb-6 h-1 w-20 rounded-full bg-red-600 sm:mb-8 sm:w-24"></div>
+                                        <div className="mb-6 h-1 w-20 rounded-full bg-primary sm:mb-8 sm:w-24"></div>
                                         <div className="space-y-4 text-gray-600 sm:space-y-6">
                                             <div>
-                                                <h3 className="mb-4 text-2xl font-semibold text-red-600">[VALDRON]</h3>
+                                                <h3 className="mb-4 text-2xl font-semibold text-primary">[POLARIX]</h3>
                                                 <p className="mb-6 leading-relaxed">
-                                                    VALDRON adalah simbol dari kekuatan yang tak terhentikan untuk memimpin pertempuran dan
-                                                    menghancurkan batasan. Maskot ini menjadi pemantik semangat, pengobar ambisi, dan penakluk segala
-                                                    rintangan mewakili keberanian untuk keluar dari batas yang dimiliki dan membebaskan potensi
-                                                    terbaik daslam setiap jiwa kompetitor.
-                                                </p>
-                                            </div>
-
-                                            <div>
-                                                <p className="mb-6 leading-relaxed">
-                                                    Desain maskot kami menggabungkan unsur gaming modern dengan sentuhan teknologi futuristik. Warna
-                                                    merah yang dominan melambangkan semangat dan energi yang membara, sementara elemen teknologi yang
-                                                    menyatu dalam desainnya mencerminkan inovasi dan kemajuan yang menjadi inti dari IT-ESEGA.
+                                                    “POLARIX” adalah simbol kecerdasan yang tajam, ketangguhan yang tak mudah runtuh, dan presisi dalam setiap langkah di tengah dunia digital yang terus bergerak cepat. Ia mencerminkan cara berpikir yang strategis, tindakan yang terukur, serta kemampuan untuk beradaptasi di setiap perubahan. Polarix menjadi pengingat untuk terus bertumbuh, melampaui batas diri, dan menjaga standar terbaik dalam setiap proses.
                                                 </p>
                                             </div>
                                         </div>
                                     </div>
+                                    {/* Gambar Mascot */}
                                     <div className="order-1 flex justify-center md:order-2" data-aos="fade-left">
                                         <div className="relative">
                                             <div className="absolute"></div>
                                             <motion.img 
-                                                src="/Images/MascotEsega25.png" 
+                                                src="/Images/MascotEsega26.png" 
                                                 alt="IT-ESEGA Mascot" 
                                                 className="relative w-auto h-[300px] sm:h-[600px] object-contain"
                                                 animate={{
@@ -367,7 +367,7 @@ export default function About() {
                             <div className="absolute inset-0 bg-white"></div>
 
                             {/* Gradient Overlay */}
-                            <div className="absolute inset-0 bg-gradient-to-b from-white via-red-50/40 to-red-100/30"></div>
+                            <div className="absolute inset-0 bg-gradient-to-b from-white via-blue-50/40 to-blue-100/30"></div>
 
                             {/* Cross Blob - Top Left */}
                             <div className="absolute left-20 top-16 w-24 h-24 opacity-5 pointer-events-none">
@@ -382,7 +382,7 @@ export default function About() {
                                     }}
                                     className="w-full h-full"
                                 >
-                                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full h-full fill-red-500">
+                                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full h-full fill-primary">
                                         <path d="M85,40 h30 v45 h45 v30 h-45 v45 h-30 v-45 h-45 v-30 h45 z"/>
                                     </svg>
                                 </motion.div>
@@ -401,7 +401,7 @@ export default function About() {
                                     }}
                                     className="w-full h-full"
                                 >
-                                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full h-full fill-red-500">
+                                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full h-full fill-primary">
                                         <path d="M85,40 h30 v45 h45 v30 h-45 v45 h-30 v-45 h-45 v-30 h45 z"/>
                                     </svg>
                                 </motion.div>
@@ -435,14 +435,14 @@ export default function About() {
                                     </div>
                                     <div data-aos="fade-left">
                                         <h2 className="mb-4 sm:mb-6 text-3xl sm:text-4xl font-bold text-[#333]">
-                                            About Our <span className="text-red-600">Logo</span>
+                                            About Our <span className="text-section-title">Logo</span>
                                         </h2>
-                                        <div className="w-20 sm:w-24 h-1 bg-red-600 rounded-full mb-6 sm:mb-8"></div>
+                                        <div className="w-20 sm:w-24 h-1 bg-primary rounded-full mb-6 sm:mb-8"></div>
                                         <div className="space-y-4 sm:space-y-6 text-gray-600">
                                             <div>
-                                                <h3 className="text-2xl font-semibold text-red-600 mb-4">IT-ESEGA 2025</h3>
+                                                <h3 className="text-2xl font-semibold text-secondary mb-4">IT-ESEGA 2026</h3>
                                                 <p className="leading-relaxed mb-6 text-base">
-                                                    Logo IT-ESEGA 2025 menghadirkan kombinasi warna merah, emas, dan perak yang melambangkan semangat, kejayaan, dan kekuatan. Perisai menunjukan identitas yang kokoh, sementara sayap tajam dan bintang emas menjadi lambang kebebasan serta ambisi.
+                                                    Logo IT-ESEGA 2026 mengusung gradasi biru yang mencerminkan ketenangan, kepercayaan, dan ketajaman dalam mengambil keputusan. Perisai melambangkan ketahanan yang kokoh, dipadukan dengan sayap sebagai simbol kecepatan dan ambisi untuk melesat melampaui batas. Elemen api di puncak menghadirkan semangat yang terus menyala, merepresentasikan harmoni antara stabilitas, strategi, dan dorongan untuk unggul di dunia E-Sports.
                                                 </p>
                                             </div>
 
