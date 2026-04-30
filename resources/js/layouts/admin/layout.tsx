@@ -36,6 +36,8 @@ export default function AuthenticatedAdminLayout({ children, user, headerTitle, 
             setActiveItem('players');
         } else if (url.includes('timeline')) {
             setActiveItem('timeline');
+        } else if (url.includes('brackets')) {
+            setActiveItem('brackets');
         }
     }, [url]);
 

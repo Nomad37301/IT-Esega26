@@ -92,6 +92,12 @@ Route::middleware(['auth', 'role:super_admin|admin'])->prefix('secure-admin-esse
     Route::resource('admins', AdminUserController::class);
     Route::resource('timeline', TimelineController::class);
     Route::resource('players', TeamPlayerController::class);
+    Route::resource('brackets', App\Http\Controllers\Admin\BracketManagementController::class)->names([
+        'index' => 'admin.brackets.index',
+        'store' => 'admin.brackets.store',
+        'update' => 'admin.brackets.update',
+        'destroy' => 'admin.brackets.destroy',
+    ]);
 
     // Rute Tim dan Pemain
     Route::get('teams/{game}/{id}', [TeamPlayerController::class, 'showTeam'])->name('admin.teams.show');
