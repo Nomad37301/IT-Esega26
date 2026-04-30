@@ -16,9 +16,21 @@ const navItems = [
     { title: 'Register', href: route('register') },
 ];
 
-const BracketML: React.FC = () => {
-    const { user } = usePage<{ user: { data: UserType } }>().props;
+interface Bracket {
+    id: number;
+    game_name: string;
+    stage_name: string;
+    group_name: string | null;
+    bracket_url: string;
+    order_position: number;
+}
 
+interface Props {
+    user: { data: UserType };
+    brackets: Bracket[];
+}
+
+const BracketML: React.FC<Props> = ({ user, brackets }) => {
     // State untuk kontrol registration closed popup
     const [showClosedPopup, setShowClosedPopup] = useState(false);
     const isRegistrationClosed = true; // Set registration sebagai closed
@@ -53,53 +65,39 @@ const BracketML: React.FC = () => {
                         <div className="w-24 h-1 bg-red-600 rounded-full mx-auto"></div>
                     </div>
 
-                    {/* Bracket Grid - 2 Columns Layout */}
+                    {/* Bracket Grid - Dynamic Columns Layout */}
                     <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-                        {Array.from({ length: 16 }, (_, index) => {
-                            const groupLetter = String.fromCharCode(65 + index);
-                            const groupIframes: Record<string, string> = {
-                                A: 'https://challonge.com/A_ITESEGA2025/module',
-                                B: 'https://challonge.com/B_ITESEGA2025/module',
-                                C: 'https://challonge.com/C_ITESEGA2025/module',
-                                D: 'https://challonge.com/D_ITESEGA2025/module',
-                                E: 'https://challonge.com/E_ITESEGA2025/module',
-                                F: 'https://challonge.com/F_ITESEGA2025/module',
-                                G: 'https://challonge.com/G_ITESEGA2025/module',
-                                H: 'https://challonge.com/H_ITESEGA2025/module',
-                                I: 'https://challonge.com/I_ITESEGA2025/module',
-                                J: 'https://challonge.com/J_ITESEGA2025/module',
-                                K: 'https://challonge.com/K_ITESEGA2025/module',
-                                L: 'https://challonge.com/L_ITESEGA2025/module',
-                                M: 'https://challonge.com/M_ITESEGA2025/module',
-                                N: 'https://challonge.com/N_ITESEGA2025/module',
-                                O: 'https://challonge.com/O_ITESEGA2025/module',
-                                P: 'https://challonge.com/P_ITESEGA2025/module',
-                            };
-
-                            return (
-                                <Card key={index} className="w-full transition-shadow duration-300 bg-white border-2 border-gray-300 shadow-lg hover:shadow-xl">
+                        {brackets.length > 0 ? (
+                            brackets.map((bracket) => (
+                                <Card key={bracket.id} className="w-full transition-shadow duration-300 bg-white border-2 border-gray-300 shadow-lg hover:shadow-xl">
                                     <CardHeader className="border-b border-gray-200 bg-gray-50">
                                         <CardTitle className="text-xl font-bold text-center text-gray-900">
-                                            <span className="text-red-600">Group {groupLetter}</span>
+                                            <span className="text-red-600">
+                                                {bracket.group_name ? `Group ${bracket.group_name}` : bracket.stage_name}
+                                            </span>
                                         </CardTitle>
                                     </CardHeader>
                                     <CardContent className="p-6">
                                         <div className="w-full overflow-hidden bg-white border-2 border-gray-300 rounded-lg shadow-inner">
                                             <iframe
-                                                src={groupIframes[groupLetter] || ''}
+                                                src={bracket.bracket_url}
                                                 width="100%"
                                                 height="500"
                                                 frameBorder="0"
                                                 scrolling="auto"
                                                 className="w-full"
-                                                title={`Challonge Tournament Bracket Group ${groupLetter}`}
+                                                title={`Challonge Tournament Bracket ${bracket.group_name || bracket.stage_name}`}
                                                 style={{ display: 'block' }}
                                             />
                                         </div>
                                     </CardContent>
                                 </Card>
-                            );
-                        })}
+                            ))
+                        ) : (
+                            <div className="col-span-full text-center py-20">
+                                <p className="text-gray-500 text-lg">Belum ada bracket yang tersedia saat ini.</p>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

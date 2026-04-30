@@ -29,13 +29,8 @@ Route::get('/bracket', function () {
     return Inertia::render('bracket');
 })->name('bracket');
 
-Route::get('/bracket/mobile-legends', function () {
-    return Inertia::render('bracketml');
-})->name('bracket.ml');
-
-Route::get('/bracket/free-fire', function () {
-    return Inertia::render('bracketff');
-})->name('bracket.ff');
+Route::get('/bracket/mobile-legends', [App\Http\Controllers\BracketController::class, 'indexML'])->name('bracket.ml');
+Route::get('/bracket/free-fire', [App\Http\Controllers\BracketController::class, 'indexFF'])->name('bracket.ff');
 
 Route::get('/bracket/mobile-legends/day2-3', function () {
     return Inertia::render('bracketml2');
