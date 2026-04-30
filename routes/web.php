@@ -32,9 +32,7 @@ Route::get('/bracket', function () {
 Route::get('/bracket/mobile-legends', [App\Http\Controllers\BracketController::class, 'indexML'])->name('bracket.ml');
 Route::get('/bracket/free-fire', [App\Http\Controllers\BracketController::class, 'indexFF'])->name('bracket.ff');
 
-Route::get('/bracket/mobile-legends/day2-3', function () {
-    return Inertia::render('bracketml2');
-})->name('bracket.ml2');
+Route::get('/bracket/mobile-legends/day2-3', [App\Http\Controllers\BracketController::class, 'indexML2'])->name('bracket.ml2');
 
 
 Route::middleware('guest')->group(function () {

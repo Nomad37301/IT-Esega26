@@ -9,17 +9,33 @@ use Illuminate\Http\Request;
 class BracketController extends Controller
 {
     /**
-     * Menampilkan halaman bracket untuk Mobile Legends.
+     * Menampilkan halaman bracket untuk Mobile Legends Day 1.
      */
     public function indexML()
     {
-        // Ambil semua data bracket yang aktif untuk ML, diurutkan berdasarkan position
         $brackets = Bracket::where('game_name', 'ML')
+            ->where('stage_name', 'LIKE', '%Day 1%')
             ->where('is_active', true)
             ->orderBy('order_position', 'asc')
             ->get();
 
         return Inertia::render('bracketml', [
+            'brackets' => $brackets
+        ]);
+    }
+
+    /**
+     * Menampilkan halaman bracket untuk Mobile Legends Day 2 & Grand Final.
+     */
+    public function indexML2()
+    {
+        $brackets = Bracket::where('game_name', 'ML')
+            ->where('stage_name', 'NOT LIKE', '%Day 1%')
+            ->where('is_active', true)
+            ->orderBy('order_position', 'asc')
+            ->get();
+
+        return Inertia::render('bracketml2', [
             'brackets' => $brackets
         ]);
     }

@@ -16,9 +16,21 @@ const navItems = [
     { title: 'Register', href: route('register') },
 ];
 
-const BracketML2: React.FC = () => {
-    const { user } = usePage<{ user: { data: UserType } }>().props;
+interface Bracket {
+    id: number;
+    game_name: string;
+    stage_name: string;
+    group_name: string | null;
+    bracket_url: string;
+    order_position: number;
+}
 
+interface Props {
+    user: { data: UserType };
+    brackets: Bracket[];
+}
+
+const BracketML2: React.FC<Props> = ({ user, brackets }) => {
     // State untuk kontrol registration closed popup
     const [showClosedPopup, setShowClosedPopup] = useState(false);
     const isRegistrationClosed = true; // Set registration sebagai closed
@@ -53,28 +65,38 @@ const BracketML2: React.FC = () => {
                         <div className="w-24 h-1 bg-red-600 rounded-full mx-auto"></div>
                     </div>
 
-                    {/* Bracket Container - Full Width */}
-                    <Card className="border-2 border-gray-300 shadow-xl bg-white w-full">
-                        <CardHeader className="bg-gray-50 border-b border-gray-200">
-                            <CardTitle className="text-center text-2xl font-bold text-gray-900">
-                                <span className="text-red-600">IT-ESEGA</span> Mobile Legends Bracket
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent className="p-6">
-                            <div className="w-full border-2 border-gray-300 rounded-lg overflow-hidden bg-white shadow-inner">
-                                <iframe
-                                    src="https://challonge.com/PO_ITESEGA2025/module"
-                                    width="100%"
-                                    height="700"
-                                    frameBorder="0"
-                                    scrolling="auto"
-                                    className="w-full"
-                                    title="Challonge Tournament Playoff Bracket"
-                                    style={{ display: 'block' }}
-                                />
+                    {/* Bracket Grid - Dynamic Columns Layout */}
+                    <div className="grid grid-cols-1 gap-8">
+                        {brackets.length > 0 ? (
+                            brackets.map((bracket) => (
+                                <Card key={bracket.id} className="border-2 border-gray-300 shadow-xl bg-white w-full">
+                                    <CardHeader className="bg-gray-50 border-b border-gray-200">
+                                        <CardTitle className="text-center text-2xl font-bold text-gray-900">
+                                            <span className="text-red-600">IT-ESEGA</span> {bracket.stage_name}
+                                        </CardTitle>
+                                    </CardHeader>
+                                    <CardContent className="p-6">
+                                        <div className="w-full border-2 border-gray-300 rounded-lg overflow-hidden bg-white shadow-inner">
+                                            <iframe
+                                                src={bracket.bracket_url}
+                                                width="100%"
+                                                height="700"
+                                                frameBorder="0"
+                                                scrolling="auto"
+                                                className="w-full"
+                                                title={`Tournament Bracket - ${bracket.stage_name}`}
+                                                style={{ display: 'block' }}
+                                            />
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            ))
+                        ) : (
+                            <div className="text-center py-20 bg-white rounded-xl border-2 border-gray-300">
+                                <p className="text-gray-500 text-lg">Belum ada bracket Playoff yang tersedia saat ini.</p>
                             </div>
-                        </CardContent>
-                    </Card>
+                        )}
+                    </div>
                 </div>
             </div>
             <Footer 
