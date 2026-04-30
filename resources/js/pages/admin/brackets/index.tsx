@@ -47,7 +47,6 @@ export default function BracketManagementPage() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // @ts-ignore - route is global from Ziggy
         const url = editingBracket ? route('admin.brackets.update', editingBracket.id) : route('admin.brackets.store');
         
         if (editingBracket) {
@@ -111,7 +110,7 @@ export default function BracketManagementPage() {
                 <header className="mb-8 flex justify-between items-center">
                     <div>
                         <h1 className="text-3xl font-bold">Bracket Management</h1>
-                        <p className="text-gray-400">Manage tournament brackets and external links dynamically.</p>
+                        <p className="text-gray-400">Manage tournament brackets and external links.</p>
                     </div>
                     <Button onClick={openAddForm} className="bg-red-600 hover:bg-red-700">
                         <PlusCircle className="mr-2 h-4 w-4" />
@@ -151,7 +150,7 @@ export default function BracketManagementPage() {
                                                         {bracket.order_position}
                                                     </TableCell>
                                                     <TableCell className="font-medium">
-                                                        <span className={`px-2 py-1 rounded text-[10px] font-bold ${bracket.game_name === 'ML' ? 'bg-blue-900/30 text-blue-400 border border-blue-800' : 'bg-orange-900/30 text-orange-400 border border-orange-800'}`}>
+                                                        <span className={`px-2 py-1 rounded text-[12px] font-bold`}>
                                                             {bracket.game_name}
                                                         </span>
                                                     </TableCell>
@@ -160,16 +159,16 @@ export default function BracketManagementPage() {
                                                         {bracket.group_name && <div className="text-[10px] uppercase tracking-wider text-gray-500">Group {bracket.group_name}</div>}
                                                     </TableCell>
                                                     <TableCell className="text-center">
-                                                        <div className="flex justify-center gap-2">
+                                                        <div className="flex justify-center gap-1">
                                                             <a href={bracket.bracket_url} target="_blank" rel="noreferrer">
                                                                 <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-400 hover:text-white hover:bg-zinc-800">
                                                                     <ExternalLink className="h-4 w-4" />
                                                                 </Button>
                                                             </a>
-                                                            <Button onClick={() => openEditForm(bracket)} variant="ghost" size="icon" className="h-8 w-8 text-teal-400 hover:text-teal-300 hover:bg-teal-900/20">
+                                                            <Button onClick={() => openEditForm(bracket)} variant="ghost" size="icon" className="h-8 w-8 text-white hover:bg-zinc-800">
                                                                 <Edit2 className="h-4 w-4" />
                                                             </Button>
-                                                            <Button onClick={() => handleDelete(bracket.id)} variant="ghost" size="icon" className="h-8 w-8 text-red-400 hover:text-red-300 hover:bg-red-900/20">
+                                                            <Button onClick={() => handleDelete(bracket.id)} variant="ghost" size="icon" className="h-8 w-8 text-white hover:bg-zinc-800">
                                                                 <Trash2 className="h-4 w-4" />
                                                             </Button>
                                                         </div>

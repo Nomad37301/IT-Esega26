@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class BracketController extends Controller
 {
     /**
-     * Menampilkan halaman bracket untuk Mobile Legends Day 1.
+     * Displaying the bracket page for Mobile Legends Day 1
      */
     public function indexML()
     {
@@ -25,7 +25,7 @@ class BracketController extends Controller
     }
 
     /**
-     * Menampilkan halaman bracket untuk Mobile Legends Day 2 & Grand Final.
+     * Displaying the bracket page for Mobile Legends Day 2 & Grand Final.
      */
     public function indexML2()
     {
@@ -41,7 +41,7 @@ class BracketController extends Controller
     }
 
     /**
-     * Menampilkan halaman bracket untuk Free Fire.
+     * Displaying the bracket page for Free Fire.
      */
     public function indexFF()
     {
@@ -56,7 +56,7 @@ class BracketController extends Controller
     }
 
     /**
-     * (Opsional) Method untuk menyimpan data baru dari Admin.
+     * (Optional) Method for saving new data from the Admin.
      */
     public function store(Request $request)
     {
