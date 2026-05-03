@@ -13,7 +13,7 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import type { UserType } from '@/types/user';
-import { CalendarClock, Home, Layers, Settings, Users } from 'lucide-react';
+import { CalendarClock, Home, Layers, Settings, Users, Trophy } from 'lucide-react';
 
 import { Link } from '@inertiajs/react';
 import { UserProfile } from './user-profile';
@@ -54,6 +54,12 @@ export default function SidebarNav({ activeItem, setActiveItem, user }: SidebarN
             label: 'Team & Player Management',
             icon: Layers,
             link: route('players.index'),
+        },
+        {
+            id: 'brackets',
+            label: 'Bracket Management',
+            icon: Trophy,
+            link: route('admin.brackets.index'),
         },
     ];
 

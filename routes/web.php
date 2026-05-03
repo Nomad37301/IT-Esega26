@@ -29,17 +29,10 @@ Route::get('/bracket', function () {
     return Inertia::render('bracket');
 })->name('bracket');
 
-Route::get('/bracket/mobile-legends', function () {
-    return Inertia::render('bracketml');
-})->name('bracket.ml');
+Route::get('/bracket/mobile-legends', [App\Http\Controllers\BracketController::class, 'indexML'])->name('bracket.ml');
+Route::get('/bracket/free-fire', [App\Http\Controllers\BracketController::class, 'indexFF'])->name('bracket.ff');
 
-Route::get('/bracket/free-fire', function () {
-    return Inertia::render('bracketff');
-})->name('bracket.ff');
-
-Route::get('/bracket/mobile-legends/day2-3', function () {
-    return Inertia::render('bracketml2');
-})->name('bracket.ml2');
+Route::get('/bracket/mobile-legends/day2-3', [App\Http\Controllers\BracketController::class, 'indexML2'])->name('bracket.ml2');
 
 
 Route::middleware('guest')->group(function () {
@@ -99,6 +92,12 @@ Route::middleware(['auth', 'role:super_admin|admin'])->prefix('secure-admin-esse
     Route::resource('admins', AdminUserController::class);
     Route::resource('timeline', TimelineController::class);
     Route::resource('players', TeamPlayerController::class);
+    Route::resource('brackets', App\Http\Controllers\Admin\BracketManagementController::class)->names([
+        'index' => 'admin.brackets.index',
+        'store' => 'admin.brackets.store',
+        'update' => 'admin.brackets.update',
+        'destroy' => 'admin.brackets.destroy',
+    ]);
 
     // Rute Tim dan Pemain
     Route::get('teams/{game}/{id}', [TeamPlayerController::class, 'showTeam'])->name('admin.teams.show');
