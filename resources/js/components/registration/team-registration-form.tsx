@@ -36,9 +36,7 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
         slot_type: isML ? (teamData.slot_type || "single") : "single",
         teamIdToReuse: teamData.teamIdToReuse || null,
     })
-
-    console.log('game type', gameType);
-    console.log('team id to reuse', data.teamIdToReuse);
+console.log('team id to reuse', data.teamIdToReuse);
 
     const [teamLogoPreview, setTeamLogoPreview] = useState<string | null>(null)
     const [paymentProofPreview, setPaymentProofPreview] = useState<string | null>(null)
@@ -62,10 +60,7 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         setFormErrors({})
-
-        console.log("Submitting form with team ID to reuse:", data.teamIdToReuse);
-
-        // Basic validations
+// Basic validations
         if (!data.team_name.trim() || !data.team_logo || !data.proof_of_payment || !data.email) {
             if (!data.team_name.trim()) {
                 setFormErrors(prev => ({ ...prev, team_name: "Team name is required" }))
@@ -98,8 +93,7 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
             let url = route("team-registration.store");
             if (data.teamIdToReuse) {
                 url = `${url}?team_id_to_reuse=${data.teamIdToReuse}`;
-                console.log("Submitting to URL with query param:", url);
-            }
+}
 
             // Gunakan URL dengan query parameter
             post(url, {
@@ -110,9 +104,7 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
                     // Di sini kita tidak menampilkan success dialog dulu karena user harus 
                     // langsung dialihkan ke registration form player
                     const responseData = response.props as unknown as { id: number | null }
-                    console.log("Response data:", responseData);
-
-                    // Make sure we're passing the complete data
+// Make sure we're passing the complete data
                     const submittedData = {
                         ...data,
                         id: responseData.id || null,
@@ -141,12 +133,9 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
                         setFormErrors(errors);
 
                         // Tambahkan debugging helper
-                        console.log('Errors set in state:', errors);
-
-                        // Log semua error ke konsol untuk debugging
+// Log semua error ke konsol untuk debugging
                         Object.keys(errors).forEach(key => {
-                            console.log(`Error in field ${key}:`, errors[key]);
-                        });
+});
                     }
 
                     // Untuk semua jenis error, beri fokus pada field pertama yang error
@@ -183,11 +172,8 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
     }
 
     // Add logging for props and state changes
-    console.log('Current game type:', gameType)
-    console.log('Team data:', teamData)
-    console.log('Form errors:', formErrors)
-
-    const handleFileChange = (file: File | null, type: "team_logo" | "proof_of_payment") => {
+console.log('Team data:', teamData)
+const handleFileChange = (file: File | null, type: "team_logo" | "proof_of_payment") => {
         if (!file) {
             if (type === "team_logo") {
                 setData("team_logo", null)
@@ -664,3 +650,4 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
         </>
     )
 }
+

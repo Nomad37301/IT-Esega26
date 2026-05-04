@@ -89,13 +89,8 @@ export default function Home() {
     }, [popupInstanceRef]);
 
     // Debugging data timeline
-    console.log('Timeline data dari API:', event);
-
-    // const auth = user;
-
-    console.log('Dari Home', user);
-
-    // console.log(auth?.roles?.[0]?.name)
+// const auth = user;
+// console.log(auth?.roles?.[0]?.name)
 
     useEffect(() => {
         // Jika ada flash success message, tampilkan animasi
@@ -1215,3 +1210,4 @@ export default function Home() {
         </>
     );
 }
+

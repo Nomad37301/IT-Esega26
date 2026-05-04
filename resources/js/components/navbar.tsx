@@ -114,12 +114,8 @@ export function Navbar({ logo, items = [], user, isRegistrationClosed = false, s
 
     //     return route('dashboard');
     // };
-
-    console.log('Navbar props:', { logo, items, user });
-    console.log('Navbar user:', user);
-    console.log('Navbar Data Role:', user?.data.name);
-
-    return (
+console.log('Navbar user:', user);
+return (
         <nav
             className={`fixed top-0 right-0 left-0 z-[999] transform-gpu transition-all duration-500 ${
                 isScrolled ? 'navbar-scrolled translate-y-0' : 'navbar-transparent translate-y-0'
@@ -371,3 +367,4 @@ export function Navbar({ logo, items = [], user, isRegistrationClosed = false, s
         </nav>
     );
 }
+

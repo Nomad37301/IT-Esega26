@@ -24,9 +24,7 @@ export default function AdminUser() {
 
     const auth = user.data;
     const data = admin.data;
-
-    console.log(data);
-    console.log(auth);
+console.log(auth);
     const [showPassword, setShowPassword] = React.useState(false);
     const [editId, setEditId] = React.useState<number | null>(null);
 
@@ -78,8 +76,7 @@ export default function AdminUser() {
     };
 
     const handleDelete = (id: number) => {
-        console.log('id user', id)
-        destroy(route('admins.destroy', id));
+destroy(route('admins.destroy', id));
     };
 
     // const handleRestore = (id: number) => {

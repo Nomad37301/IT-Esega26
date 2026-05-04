@@ -12,9 +12,7 @@ export function QRCodeSection({
     resetStep 
 }: QRCodeSectionProps) {
     // Logging resetStep parameter to prevent "unused" linter error
-    console.log("QR code section has reset step function:", !!resetStep);
-    
-    // State untuk dropdown instruksi
+// State untuk dropdown instruksi
     const [isInstructionsOpen, setIsInstructionsOpen] = useState(false);
     
     // State untuk QR code modal
@@ -199,4 +197,5 @@ export function QRCodeSection({
         </div>
     )
 }
+
 

@@ -211,10 +211,7 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
         try {
             const submitData = new FormData()
             submitData.append('team_id', formData.team_id.toString())
-            
-            console.log('Submitting data:', formData.ml_players)
-            
-            formData.ml_players.forEach((player: MLPlayer, index: number) => {
+formData.ml_players.forEach((player: MLPlayer, index: number) => {
                 submitData.append(`ml_players[${index}][name]`, player.name || '')
                 submitData.append(`ml_players[${index}][nickname]`, player.nickname || '')
                 submitData.append(`ml_players[${index}][id_server]`, player.id_server || '')
@@ -225,19 +222,14 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
                 submitData.append(`ml_players[${index}][role]`, player.role || 'anggota')
                 
                 if (player.foto instanceof File) {
-                    console.log(`Uploading foto for player ${index}:`, player.foto.name)
-                    submitData.append(`ml_players_${index}_foto`, player.foto)
+submitData.append(`ml_players_${index}_foto`, player.foto)
                 }
                 if (player.tanda_tangan instanceof File) {
-                    console.log(`Uploading tanda_tangan for player ${index}:`, player.tanda_tangan.name)
-                    submitData.append(`ml_players_${index}_tanda_tangan`, player.tanda_tangan)
+submitData.append(`ml_players_${index}_tanda_tangan`, player.tanda_tangan)
                 }
             })
-
-            console.log('Form data entries:')
-            for (const [key, value] of submitData.entries()) {
-                console.log(`${key}:`, value instanceof File ? `File: ${value.name}` : value)
-            }
+for (const [key, value] of submitData.entries()) {
+}
 
             submitData.append('game_type', gameType)
 
@@ -357,8 +349,7 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
                 game_type: gameType
             })
             .then(() => {
-                console.log("Data tim berhasil dihapus dari database, ID disimpan untuk digunakan kembali");
-                // Hapus data pemain dari localStorage
+// Hapus data pemain dari localStorage
                 localStorage.removeItem("ml_players_data")
                 
                 // Arahkan ke halaman registrasi tim dengan parameter game_type 

@@ -385,8 +385,7 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
                 game_type: gameType
             })
             .then(() => {
-                console.log("Data tim berhasil dihapus dari database, ID disimpan untuk digunakan kembali");
-                // Hapus data pemain dari localStorage
+// Hapus data pemain dari localStorage
                 localStorage.removeItem("pubg_players_data")
                 
                 // Arahkan ke halaman registrasi tim dengan parameter game_type 
@@ -810,3 +809,4 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
         </>
     )
 }
+

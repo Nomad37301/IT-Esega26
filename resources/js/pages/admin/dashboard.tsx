@@ -50,15 +50,15 @@ export default function AdminDashboard() {
                                 <ul className="text-xs text-gray-500 dark:text-gray-400 space-y-1">
                                     <li className="flex items-center gap-1.5">
                                         <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                                        <span><strong>database/</strong> — File Excel (.xlsx) dengan seluruh tabel database (bisa disortir & direkap)</span>
+                                        <span><strong>database/</strong>  EFile Excel (.xlsx) dengan seluruh tabel database (bisa disortir & direkap)</span>
                                     </li>
                                     <li className="flex items-center gap-1.5">
                                         <span className="inline-block w-1.5 h-1.5 rounded-full bg-blue-400"></span>
-                                        <span><strong>uploads/ML_teams/</strong> — Logo tim & bukti pembayaran Mobile Legends</span>
+                                        <span><strong>uploads/ML_teams/</strong>  ELogo tim & bukti pembayaran Mobile Legends</span>
                                     </li>
                                     <li className="flex items-center gap-1.5">
                                         <span className="inline-block w-1.5 h-1.5 rounded-full bg-orange-400"></span>
-                                        <span><strong>uploads/PUBG_teams/</strong> — Logo tim & bukti pembayaran PUBG Mobile</span>
+                                        <span><strong>uploads/PUBG_teams/</strong>  ELogo tim & bukti pembayaran PUBG Mobile</span>
                                     </li>
                                 </ul>
                             </div>
@@ -91,3 +91,4 @@ export default function AdminDashboard() {
         </AuthenticatedAdminLayout>
     );
 }
+

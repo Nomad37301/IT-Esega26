@@ -5,9 +5,7 @@ import { MapPinPlus, YoutubeIcon } from 'lucide-react';
 
 export default function TimelineSection({ timeline }: { timeline: Event[] }) {
     const now = new Date();
-
-    console.log(now);
-    return (
+return (
         <>
             <section className="relative overflow-hidden py-16 md:py-24">
                 <div className="via-primary/5 to-primary/10 absolute inset-0 bg-gradient-to-b from-white"></div>
@@ -199,3 +197,4 @@ export default function TimelineSection({ timeline }: { timeline: Event[] }) {
         </>
     );
 }
+

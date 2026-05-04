@@ -77,9 +77,7 @@ export default function RegisterPage() {
         });
         
         if (lastDeletedTeamId && lastDeletedGameType === urlGameType) {
-            console.log(`Found deleted team ID: ${lastDeletedTeamId} for game type: ${lastDeletedGameType}`);
-            
-            // Gunakan ID tim yang dihapus untuk pendaftaran baru
+// Gunakan ID tim yang dihapus untuk pendaftaran baru
             const parsedId = parseInt(lastDeletedTeamId);
             
             console.log("Parsed team ID:", {
@@ -179,8 +177,7 @@ export default function RegisterPage() {
                 });
                 
                 if (response.data.success) {
-                    console.log('🧹 Database truncated successfully!');
-                    window.location.reload();
+window.location.reload();
                 } else {
                     console.error('Error truncating database:', response.data.message);
                 }
@@ -490,3 +487,4 @@ export default function RegisterPage() {
         </>
     )
 }
+

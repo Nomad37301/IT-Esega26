@@ -23,10 +23,7 @@ export default function AdminTimelinePage() {
     const [editingEvent, setEditingEvent] = React.useState<Event | null>(null);
 
     const events = timelines.data;
-
-    console.log(events)
-
-    const { setData, post, put, delete: destroy, processing, reset } = useForm<Omit<Event, "id">>({
+const { setData, post, put, delete: destroy, processing, reset } = useForm<Omit<Event, "id">>({
         title: '',
         description: '',
         due_date: new Date(),
@@ -156,6 +153,7 @@ export default function AdminTimelinePage() {
         </AuthenticatedAdminLayout>
     );
 }
+
 
 
 

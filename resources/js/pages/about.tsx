@@ -20,9 +20,7 @@ interface NavItem {
 
 export default function About() {
     const { user } = usePage<{ user: { data: UserType } }>().props;
-    console.log('About page is rendering');
-
-    // State untuk kontrol registration closed popup
+// State untuk kontrol registration closed popup
     const [showClosedPopup, setShowClosedPopup] = useState(false);
     const isRegistrationClosed = useRegistrationStatus();
 
@@ -635,3 +633,4 @@ export default function About() {
         </>
     );
 }
+
