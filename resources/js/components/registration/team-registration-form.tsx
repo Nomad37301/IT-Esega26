@@ -254,10 +254,10 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
                     slotType={data.slot_type}
                 />
 
-                <div className="w-full lg:w-3/5 p-4 sm:p-6 lg:p-10 flex items-center justify-center bg-gradient-to-br from-white to-red-50/40 backdrop-blur-sm overflow-y-auto min-h-[calc(100vh-4rem)]">
+                <div className="w-full lg:w-3/5 p-4 sm:p-6 lg:p-10 flex items-center justify-center bg-gradient-to-br from-white to-blue-50/40 backdrop-blur-sm overflow-y-auto min-h-[calc(100vh-4rem)]">
                     <div className="max-w-2xl w-full my-4 sm:my-6">
                         <div className="mb-4 sm:mb-8 text-center space-y-1 sm:space-y-2">
-                            <h1 className="text-xl sm:text-3xl font-bold bg-gradient-to-r from-gray-900 to-red-800 bg-clip-text text-transparent">
+                            <h1 className="text-xl sm:text-3xl font-bold bg-gradient-to-r from-gray-900 to-blue-800 bg-clip-text text-transparent">
                                 {gameTitle} Team Registration
                             </h1>
                             <p className="text-xs sm:text-sm text-gray-600">Lengkapi detail tim Anda untuk melanjutkan pendaftaran</p>
@@ -269,7 +269,7 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
                                     <div className="md:grid gap-4 sm:gap-6 flex flex-col">
                                         <div className="relative space-y-1 sm:space-y-2">
                                             <Label htmlFor="team_name" className="text-xs sm:text-sm font-semibold text-gray-700 flex items-center gap-2">
-                                                <Users className="h-4 w-4 text-red-500" />
+                                                <Users className="h-4 w-4 text-blue-500" />
                                                 <span>Nama Tim</span>
                                             </Label>
                                             <div className="relative">
@@ -281,7 +281,7 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
                                                     onChange={(e) => setData("team_name", e.target.value)}
                                                     placeholder="Masukkan nama tim esports Anda"
                                                     className={`py-4 sm:py-5 bg-white border-gray-200 text-gray-900 text-sm rounded-xl 
-                                                    focus:border-red-500 focus:ring focus:ring-red-500/20 focus:ring-opacity-50
+                                                    focus:border-blue-500 focus:ring focus:ring-blue-500/20 focus:ring-opacity-50
                                                     [&::placeholder]:text-gray-500 [&::placeholder]:text-xs sm:[&::placeholder]:text-sm [&::placeholder]:font-normal
                                                 ${formErrors.team_name ? 'border-red-500' : ''}`}
                                                 />
@@ -307,7 +307,7 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
 
                                         <div className="relative space-y-1 sm:space-y-2">
                                             <Label htmlFor="email" className="text-xs sm:text-sm font-semibold text-gray-700 flex items-center gap-2">
-                                                <MailCheck className="h-4 w-4 text-red-500" />
+                                                <MailCheck className="h-4 w-4 text-blue-500" />
                                                 <span>Email</span>
                                             </Label>
                                             <div className="relative">
@@ -319,7 +319,7 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
                                                     onChange={(e) => setData("email", e.target.value)}
                                                     placeholder="Masukkan alamat email anda untuk menerima konfirmasi pendaftaran"
                                                     className={`py-4 sm:py-5 bg-white border-gray-200 text-gray-900 text-sm rounded-xl 
-                                                    focus:border-red-500 focus:ring focus:ring-red-500/20 focus:ring-opacity-50
+                                                    focus:border-blue-500 focus:ring focus:ring-blue-500/20 focus:ring-opacity-50
                                                     [&::placeholder]:text-gray-500 [&::placeholder]:text-xs sm:[&::placeholder]:text-sm [&::placeholder]:font-normal
                                                     ${formErrors.email ? 'border-red-500' : ''}`}
                                                 />
@@ -333,7 +333,7 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
                                         {isML && (
                                             <div className="mb-6">
                                                 <Label className="text-xs sm:text-sm font-semibold text-gray-700 flex items-center gap-2">
-                                                    <Ticket className="h-4 w-4 text-red-500" />
+                                                    <Ticket className="h-4 w-4 text-blue-500" />
                                                     <span>Tipe Slot</span>
                                                 </Label>
 
@@ -341,18 +341,18 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
                                                     <div
                                                         className={`relative rounded-lg border p-4 cursor-pointer transition-all duration-200 
                                                 ${data.slot_type === 'single'
-                                                                ? 'border-red-600 bg-red-50/50'
-                                                                : 'border-gray-200 hover:border-red-200 hover:bg-red-50/30'}`}
+                                                                ? 'border-blue-600 bg-blue-50/50'
+                                                                : 'border-gray-200 hover:border-blue-200 hover:bg-blue-50/30'}`}
                                                         onClick={() => setData('slot_type', 'single')}
                                                     >
                                                         <div className="flex items-start gap-3">
                                                             <div className={`h-5 w-5 rounded-full border-2 flex-shrink-0 flex items-center justify-center mt-0.5
                                                         ${data.slot_type === 'single'
-                                                                    ? 'border-red-600'
+                                                                    ? 'border-blue-600'
                                                                     : 'border-gray-300'}`}
                                                             >
                                                                 {data.slot_type === 'single' && (
-                                                                    <div className="h-2.5 w-2.5 rounded-full bg-red-600"></div>
+                                                                    <div className="h-2.5 w-2.5 rounded-full bg-blue-600"></div>
                                                                 )}
                                                             </div>
                                                             <div>
@@ -360,8 +360,8 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
                                                                     <span>Single Slot</span>
                                                                 </Label>
                                                                 <p className="text-xs text-gray-600 mt-1">1 Tim, 1 Slot Kompetisi</p>
-                                                                <div className="mt-2 bg-red-50 px-3 py-1.5 rounded-md inline-block">
-                                                                    <p className="text-sm font-medium text-red-600">Rp 100.000</p>
+                                                                <div className="mt-2 bg-blue-50 px-3 py-1.5 rounded-md inline-block">
+                                                                    <p className="text-sm font-medium text-blue-600">Rp 100.000</p>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -370,18 +370,18 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
                                                     <div
                                                         className={`relative rounded-lg border p-4 cursor-pointer transition-all duration-200 
                                                 ${data.slot_type === 'double'
-                                                                ? 'border-red-600 bg-red-50/50'
-                                                                : 'border-gray-200 hover:border-red-200 hover:bg-red-50/30'}`}
+                                                                ? 'border-blue-600 bg-blue-50/50'
+                                                                : 'border-gray-200 hover:border-blue-200 hover:bg-blue-50/30'}`}
                                                         onClick={() => setData('slot_type', 'double')}
                                                     >
                                                         <div className="flex items-start gap-3">
                                                             <div className={`h-5 w-5 rounded-full border-2 flex-shrink-0 flex items-center justify-center mt-0.5
                                                         ${data.slot_type === 'double'
-                                                                    ? 'border-red-600'
+                                                                    ? 'border-blue-600'
                                                                     : 'border-gray-300'}`}
                                                             >
                                                                 {data.slot_type === 'double' && (
-                                                                    <div className="h-2.5 w-2.5 rounded-full bg-red-600"></div>
+                                                                    <div className="h-2.5 w-2.5 rounded-full bg-blue-600"></div>
                                                                 )}
                                                             </div>
                                                             <div>
@@ -389,8 +389,8 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
                                                                     <span>Double Slot</span>
                                                                 </Label>
                                                                 <p className="text-xs text-gray-600 mt-1">1 Tim, 2 Slot Kompetisi</p>
-                                                                <div className="mt-2 bg-red-50 px-3 py-1.5 rounded-md inline-block">
-                                                                    <p className="text-sm font-medium text-red-600">Rp 200.000</p>
+                                                                <div className="mt-2 bg-blue-50 px-3 py-1.5 rounded-md inline-block">
+                                                                    <p className="text-sm font-medium text-blue-600">Rp 200.000</p>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -406,23 +406,23 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
                                         {!isML && (
                                             <div className="mb-6">
                                                 <Label className="text-xs sm:text-sm font-semibold text-gray-700 flex items-center gap-2">
-                                                    <Ticket className="h-4 w-4 text-red-500" />
+                                                    <Ticket className="h-4 w-4 text-blue-500" />
                                                     <span>Informasi Biaya</span>
                                                 </Label>
 
                                                 <div className="mt-3">
-                                                    <div className="relative rounded-lg border border-red-600 bg-red-50/50 p-4">
+                                                    <div className="relative rounded-lg border border-blue-600 bg-blue-50/50 p-4">
                                                         <div className="flex items-start gap-3">
-                                                            <div className="h-5 w-5 rounded-full border-2 border-red-600 flex-shrink-0 flex items-center justify-center mt-0.5">
-                                                                <div className="h-2.5 w-2.5 rounded-full bg-red-600"></div>
+                                                            <div className="h-5 w-5 rounded-full border-2 border-blue-600 flex-shrink-0 flex items-center justify-center mt-0.5">
+                                                                <div className="h-2.5 w-2.5 rounded-full bg-blue-600"></div>
                                                             </div>
                                                             <div>
                                                                 <Label className="text-sm font-medium text-gray-900 flex items-center gap-1.5">
                                                                     <span>Single Slot</span>
                                                                 </Label>
                                                                 <p className="text-xs text-gray-600 mt-1">Free Fire hanya tersedia dalam format Single Slot</p>
-                                                                <div className="mt-2 bg-red-50 px-3 py-1.5 rounded-md inline-block">
-                                                                    <p className="text-sm font-medium text-red-600">Rp 100.000</p>
+                                                                <div className="mt-2 bg-blue-50 px-3 py-1.5 rounded-md inline-block">
+                                                                    <p className="text-sm font-medium text-blue-600">Rp 100.000</p>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -444,7 +444,7 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
                                         <div className="space-y-5">
                                             <div className="space-y-3">
                                                 <Label htmlFor="proof_of_payment" className="text-xs sm:text-sm font-semibold text-gray-700 flex items-center gap-2 mb-2">
-                                                    <Image className="h-4 w-4 text-red-500" />
+                                                    <Image className="h-4 w-4 text-blue-500" />
                                                     <span>Bukti Pembayaran</span>
                                                 </Label>
                                                 <FileUploadField
@@ -491,7 +491,7 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
 
                                             <div className="space-y-3">
                                                 <Label htmlFor="team_logo" className="text-xs sm:text-sm font-semibold text-gray-700 flex items-center gap-2 mb-2">
-                                                    <Image className="h-4 w-4 text-red-500" />
+                                                    <Image className="h-4 w-4 text-blue-500" />
                                                     <span>Logo Tim</span>
                                                 </Label>
                                                 <FileUploadField
@@ -541,9 +541,9 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
                                             <Button
                                                 type="submit"
                                                 disabled={processing}
-                                                className={`w-full py-4 sm:py-5 md:py-6 bg-gradient-to-r from-red-600 to-red-500 hover:from-red-700 hover:to-red-600
+                                                className={`w-full py-4 sm:py-5 md:py-6 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600
                                         text-white rounded-xl font-medium text-sm sm:text-base md:text-lg transition-all duration-300 
-                                            shadow-[0_0_15px_rgba(220,38,38,0.3)] hover:shadow-[0_0_25px_rgba(220,38,38,0.5)]
+                                            shadow-[0_0_15px_rgba(37,99,235,0.3)] hover:shadow-[0_0_25px_rgba(37,99,235,0.5)]
                                         flex items-center justify-center gap-1 sm:gap-2 relative overflow-hidden group`}
                                             >
                                                 <span className="relative z-10 flex items-center gap-1 sm:gap-2">
@@ -562,14 +562,14 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
                 {/* Emergency Contact Button */}
                 <button
                     onClick={handleEmergencyContact}
-                    className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 bg-white hover:bg-red-50 text-red-600 p-2 sm:p-3 md:p-4 rounded-full
-                shadow-[0_4px_20px_-3px_rgba(0,0,0,0.1)] hover:shadow-[0_8px_25px_-5px_rgba(220,38,38,0.3)]
-                transform hover:scale-110 transition-all duration-300 group z-50 border border-red-200"
+                    className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 bg-white hover:bg-blue-50 text-blue-600 p-2 sm:p-3 md:p-4 rounded-full
+                shadow-[0_4px_20px_-3px_rgba(0,0,0,0.1)] hover:shadow-[0_8px_25px_-5px_rgba(37,99,235,0.3)]
+                transform hover:scale-110 transition-all duration-300 group z-50 border border-blue-200"
                     title="Butuh bantuan? Hubungi panitia"
                 >
                     <div className="relative">
                         <HelpCircle className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
-                        <span className="absolute -top-1 -right-1 w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-3 md:h-3 bg-red-500 rounded-full border-2 border-white animate-pulse"></span>
+                        <span className="absolute -top-1 -right-1 w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-3 md:h-3 bg-blue-500 rounded-full border-2 border-white animate-pulse"></span>
                     </div>
                     <span className="sr-only">Hubungi Panitia</span>
                 </button>

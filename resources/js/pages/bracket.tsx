@@ -59,7 +59,7 @@ const Bracket: React.FC = () => {
     return (
         <>
             <div className="home relative min-h-screen overflow-hidden">
-                <Head title="Tournament Brackets | IT-ESEGA 2025" />
+                <Head title="Tournament Brackets | IT-ESEGA 2026" />
                 {/* Background Layer */}
                 <div className="absolute inset-0 bg-white"></div>
                 {/* Gradient Overlay */}
@@ -198,7 +198,7 @@ const Bracket: React.FC = () => {
                                 </Dialog.Title>
                                 <div className="mt-2">
                                     <p className="text-sm text-gray-500">
-                                        Mohon maaf, pendaftaran untuk IT-ESEGA 2025 sudah ditutup. Pastikan untuk mengikuti kami di media sosial
+                                        Mohon maaf, pendaftaran untuk IT-ESEGA 2026 sudah ditutup. Pastikan untuk mengikuti kami di media sosial
                                         untuk informasi lebih lanjut tentang event mendatang.
                                     </p>
                                 </div>

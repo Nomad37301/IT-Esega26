@@ -73,7 +73,7 @@ export function FileUploadField({
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
                 className={`relative group cursor-pointer transition-all duration-300
-                    ${value ? 'bg-red-50/50 border-red-200' : 'bg-gray-50/80 hover:bg-gray-50 border-gray-200 hover:border-red-200'}
+                    ${value ? 'bg-blue-50/50 border-blue-200' : 'bg-gray-50/80 hover:bg-gray-50 border-gray-200 hover:border-blue-200'}
                     border-2 border-dashed rounded-xl overflow-hidden`}
                 onDragOver={handleDragOver}
                 onDrop={handleDrop}
@@ -97,11 +97,11 @@ export function FileUploadField({
                                 className="group cursor-pointer flex flex-col items-center gap-3"
                             >
                                 <div className="relative">
-                                    <div className="absolute inset-0 bg-red-100 rounded-full scale-150 opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
-                                    <Upload className="h-10 w-10 text-red-500 transition-transform duration-300 group-hover:scale-110" />
+                                    <div className="absolute inset-0 bg-blue-100 rounded-full scale-150 opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
+                                    <Upload className="h-10 w-10 text-blue-500 transition-transform duration-300 group-hover:scale-110" />
                                 </div>
                                 <div className="flex flex-col items-center gap-1">
-                                    <span className="text-sm font-semibold text-red-600 group-hover:text-red-700">
+                                    <span className="text-sm font-semibold text-blue-600 group-hover:text-blue-700">
                                         Klik untuk upload
                                     </span>
                                     <span className="text-sm text-gray-500">atau drag and drop</span>
@@ -112,8 +112,8 @@ export function FileUploadField({
                     ) : (
                         <div className="flex items-center justify-between">
                             <div className="flex items-center space-x-3">
-                                <div className="p-2 bg-red-100 rounded-lg">
-                                    <File className="h-5 w-5 text-red-600" />
+                                <div className="p-2 bg-blue-100 rounded-lg">
+                                    <File className="h-5 w-5 text-blue-600" />
                                 </div>
                                 <div className="flex flex-col items-start">
                                     <span className="text-sm font-medium text-gray-900 truncate max-w-[200px]">
@@ -127,9 +127,9 @@ export function FileUploadField({
                             <button
                                 type="button"
                                 onClick={handleRemoveClick}
-                                className="p-1.5 hover:bg-red-100 rounded-full transition-colors duration-200"
+                                className="p-1.5 hover:bg-blue-100 rounded-full transition-colors duration-200"
                             >
-                                <X className="h-5 w-5 text-red-500" />
+                                <X className="h-5 w-5 text-blue-500" />
                             </button>
                         </div>
                     )}

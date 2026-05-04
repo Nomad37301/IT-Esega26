@@ -20,6 +20,7 @@ export default function RegisterPage() {
     const [teamData, setTeamData] = useState<TeamData>({
         id: null,
         team_name: "",
+        email: "",
         proof_of_payment: null,
         team_logo: null,
     })
@@ -152,6 +153,7 @@ export default function RegisterPage() {
         setTeamData({
             id: null,
             team_name: "",
+            email: "",
             proof_of_payment: null,
             team_logo: null,
         })
@@ -321,13 +323,13 @@ export default function RegisterPage() {
             
             <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 overflow-y-auto">
                 {/* Navigation Container */}
-                <div className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-red-100 shadow-sm">
+                <div className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-blue-100 shadow-sm">
                     <div className="max-w-[1350px] mx-auto px-4 md:px-6 lg:px-8">
                         <div className="flex items-center justify-between h-16">
                             {/* Back Button */}
                             <motion.button
                                 onClick={handleBack}
-                                className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-gray-700 hover:text-red-600 rounded-lg transition-colors duration-300"
+                                className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-gray-700 hover:text-blue-600 rounded-lg transition-colors duration-300"
                                 initial={{ opacity: 0, x: -20 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{ duration: 0.3 }}
@@ -355,14 +357,14 @@ export default function RegisterPage() {
                                             <div
                                                 className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition-colors duration-300 ${
                                                     s <= step 
-                                                        ? 'bg-gradient-to-br from-red-600 to-red-500 text-white shadow-md shadow-red-100' 
+                                                        ? 'bg-gradient-to-br from-blue-600 to-blue-500 text-white shadow-md shadow-blue-100' 
                                                         : 'bg-gray-100 text-gray-400 border border-gray-200'
                                                     }`}
                                             >
                                                 <span className="text-xs font-semibold">{s}</span>
                                             </div>
                                             {index < 2 && (
-                                                <div className={`w-5 sm:w-8 h-0.5 ${s < step ? 'bg-red-500' : 'bg-gray-200'}`}></div>
+                                                <div className={`w-5 sm:w-8 h-0.5 ${s < step ? 'bg-blue-500' : 'bg-gray-200'}`}></div>
                                             )}
                                         </div>
                                     ))}
@@ -370,9 +372,9 @@ export default function RegisterPage() {
                                 <div className="hidden md:block">
                                     <div className="flex items-center gap-2">
                                         <span className="text-xs font-medium text-gray-700">Step</span>
-                                        <span className="text-xs font-semibold text-red-600">{step}</span>
+                                        <span className="text-xs font-semibold text-blue-600">{step}</span>
                                         <span className="text-xs font-medium text-gray-700">dari</span>
-                                        <span className="text-xs font-semibold text-red-600">3</span>
+                                        <span className="text-xs font-semibold text-blue-600">3</span>
                                         <span className="text-xs text-gray-500">
                                             {step === 1 ? '(Pilih Game)' : step === 2 ? '(Data Tim)' : '(Konfirmasi)'}
                                         </span>
@@ -390,7 +392,7 @@ export default function RegisterPage() {
                             <div className="absolute inset-0 bg-white"></div>
                             
                             {/* Gradient Overlay */}
-                            <div className="absolute inset-0 bg-gradient-to-b from-white via-red-50/40 to-red-100/30"></div>
+                            <div className="absolute inset-0 bg-gradient-to-b from-white via-blue-50/40 to-blue-100/30"></div>
 
                             {/* Cross Blob - Top Left */}
                             <div className="absolute -left-12 top-24 w-28 h-28 opacity-5 pointer-events-none">
@@ -405,7 +407,7 @@ export default function RegisterPage() {
                                     }}
                                     className="w-full h-full"
                                 >
-                                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full h-full fill-red-500">
+                                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full h-full fill-blue-500">
                                         <path d="M85,40 h30 v45 h45 v30 h-45 v45 h-30 v-45 h-45 v-30 h45 z"/>
                                     </svg>
                                 </motion.div>
@@ -424,7 +426,7 @@ export default function RegisterPage() {
                                     }}
                                     className="w-full h-full"
                                 >
-                                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full h-full fill-red-500">
+                                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full h-full fill-blue-500">
                                         <path d="M85,40 h30 v45 h45 v30 h-45 v45 h-30 v-45 h-45 v-30 h45 z"/>
                                     </svg>
                                 </motion.div>
@@ -434,9 +436,9 @@ export default function RegisterPage() {
                             <div className="relative z-10 max-w-[1350px] mx-auto px-4 md:px-6 lg:px-8 py-6 flex flex-col justify-center min-h-[calc(100vh-4rem)]">
                                 <div className="text-center mb-6">
                                     <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-gray-800 mb-3" data-aos="fade-down">
-                                        Pilih <span className="text-red-600">Game</span>
+                                        Pilih <span className="text-blue-600">Game</span>
                                     </h2>
-                                    <div className="w-16 sm:w-20 h-1 bg-red-600 mx-auto rounded-full mb-3" data-aos="fade-down" data-aos-delay="50"></div>
+                                    <div className="w-16 sm:w-20 h-1 bg-blue-600 mx-auto rounded-full mb-3" data-aos="fade-down" data-aos-delay="50"></div>
                                     <p className="text-gray-500 font-medium tracking-wide text-sm sm:text-base" data-aos="fade-down" data-aos-delay="100">
                                         ― Pilih game untuk melanjutkan ke langkah berikutnya ―
                                     </p>
@@ -477,7 +479,7 @@ export default function RegisterPage() {
                             <div className="pt-2">
                                 <button
                                     onClick={resetStep}
-                                    className="mt-2 px-5 py-2.5 sm:px-6 sm:py-3 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-lg hover:from-red-700 hover:to-red-600 transition-colors duration-300 font-medium shadow-md hover:shadow-lg text-sm sm:text-base"
+                                    className="mt-2 px-5 py-2.5 sm:px-6 sm:py-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-lg hover:from-blue-700 hover:to-blue-600 transition-colors duration-300 font-medium shadow-md hover:shadow-lg text-sm sm:text-base"
                                 >
                                     Daftarkan Tim Lain
                                 </button>

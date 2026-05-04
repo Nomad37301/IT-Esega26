@@ -117,7 +117,7 @@ const defaultLogo = (
 );
 
 // Default description
-const defaultDescription = "Information Technology Electronic Sport Based On Excellent Games 2025";
+const defaultDescription = "Information Technology Electronic Sport Based On Excellent Games 2026";
 
 export function Footer({ customDescription, customSections, customSocialMedia, customLogo, isRegistrationClosed = false, setShowClosedPopup }: FooterProps) {
     const currentYear = new Date().getFullYear();

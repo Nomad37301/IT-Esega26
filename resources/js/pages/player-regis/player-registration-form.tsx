@@ -27,14 +27,14 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
     const maxPlayers = 7
 
     const themeColors = {
-        primary: "bg-red-600 hover:bg-red-700 text-white",
-        secondary: "bg-red-500/10 text-red-600 hover:bg-red-500/20",
-        badge: "bg-red-100 text-red-800",
-        progress: "bg-red-600",
-        progressBg: "bg-red-100",
-        border: "border-red-200",
-        text: "text-red-600",
-        gradient: "bg-gradient-to-r from-red-600 to-red-800",
+        primary: "bg-blue-600 hover:bg-blue-700 text-white",
+        secondary: "bg-blue-500/10 text-blue-600 hover:bg-blue-500/20",
+        badge: "bg-blue-100 text-blue-800",
+        progress: "bg-blue-600",
+        progressBg: "bg-blue-100",
+        border: "border-blue-200",
+        text: "text-blue-600",
+        gradient: "bg-gradient-to-r from-blue-600 to-blue-800",
         alert: "bg-red-600/90 border-red-200",
         success: "bg-green-600 border-green-200 shadow-md",
         card: "bg-white shadow-lg rounded-xl border border-gray-100",
@@ -443,12 +443,12 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
             <Head title={`${gameTitle} Player Registration`} />
 
             <div className="min-h-screen bg-white py-6 sm:py-12 px-3 sm:px-4">
-                <div className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-red-100 shadow-sm">
+                <div className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-blue-100 shadow-sm">
                     <div className="max-w-[1350px] mx-auto px-3 md:px-8 lg:px-12">
                         <div className="flex items-center justify-between h-14 sm:h-16">
                             <motion.button
                                 onClick={handleBack}
-                                className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-gray-700 hover:text-red-600 rounded-lg transition-colors duration-300"
+                                className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-gray-700 hover:text-blue-600 rounded-lg transition-colors duration-300"
                                 initial={{ opacity: 0, x: -20 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{ duration: 0.3 }}
@@ -464,16 +464,16 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
                                             <div
                                                 className={`w-7 h-7 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-colors duration-300 ${
                                                     s < 3 
-                                                        ? 'bg-gradient-to-br from-red-600 to-red-500 text-white shadow-lg shadow-red-200' 
+                                                        ? 'bg-gradient-to-br from-blue-600 to-blue-500 text-white shadow-lg shadow-blue-200' 
                                                         : s === 3
-                                                        ? 'bg-gradient-to-br from-red-600 to-red-500 text-white shadow-lg shadow-red-200'
-                                                        : 'bg-red-100 text-red-400'
+                                                        ? 'bg-gradient-to-br from-blue-600 to-blue-500 text-white shadow-lg shadow-blue-200'
+                                                        : 'bg-blue-100 text-blue-400'
                                                 }`}
                                             >
                                                 <span className="text-xs sm:text-sm font-semibold">{s}</span>
                                             </div>
                                             {index < 2 && (
-                                                <div className="w-4 sm:w-8 h-0.5 bg-red-200"></div>
+                                                <div className="w-4 sm:w-8 h-0.5 bg-blue-200"></div>
                                             )}
                                         </div>
                                     ))}
@@ -481,9 +481,9 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
                                 <div className="hidden md:block">
                                     <div className="flex items-center gap-2">
                                         <span className="text-sm font-medium text-gray-700">Step</span>
-                                        <span className="text-sm font-semibold text-red-600">3</span>
+                                        <span className="text-sm font-semibold text-blue-600">3</span>
                                         <span className="text-sm font-medium text-gray-700">of</span>
-                                        <span className="text-sm font-semibold text-red-600">3</span>
+                                        <span className="text-sm font-semibold text-blue-600">3</span>
                                     </div>
                                 </div>
                             </div>
@@ -727,7 +727,7 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
                                         </Button>
                                         <Button 
                                             onClick={handleConfirmBack} 
-                                            className="text-xs sm:text-sm bg-red-600 hover:bg-red-700 text-white font-normal px-3 sm:px-4 py-1 sm:py-2 h-auto transition-all duration-200"
+                                            className="text-xs sm:text-sm bg-blue-600 hover:bg-blue-700 text-white font-normal px-3 sm:px-4 py-1 sm:py-2 h-auto transition-all duration-200"
                                             disabled={isBackButtonLoading}
                                         >
                                             {isBackButtonLoading ? (
@@ -751,14 +751,14 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
 
                 <button
                     onClick={handleEmergencyContact}
-                    className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 bg-white hover:bg-[#ba0000]/10 text-[#ba0000] p-3 sm:p-4 rounded-full
-                    shadow-[0_4px_20px_-3px_rgba(0,0,0,0.1)] hover:shadow-[0_8px_25px_-5px_rgba(186,0,0,0.2)]
-                    transform hover:scale-110 transition-all duration-300 group z-50 border border-[#ba0000]/20"
+                    className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 bg-white hover:bg-blue-50 text-blue-600 p-3 sm:p-4 rounded-full
+                    shadow-[0_4px_20px_-3px_rgba(0,0,0,0.1)] hover:shadow-[0_8px_25px_-5px_rgba(37,99,235,0.3)]
+                    transform hover:scale-110 transition-all duration-300 group z-50 border border-blue-200"
                     title="Need help? Contact committee"
                 >
                     <div className="relative">
                         <HelpCircle className="w-4 h-4 sm:w-6 sm:h-6" />
-                        <span className="absolute -top-1 -right-1 w-2 h-2 sm:w-3 sm:h-3 bg-red-500 rounded-full border-2 border-white animate-pulse"></span>
+                        <span className="absolute -top-1 -right-1 w-2 h-2 sm:w-3 sm:h-3 bg-blue-500 rounded-full border-2 border-white animate-pulse"></span>
                     </div>
                     <span className="sr-only">Contact Committee</span>
                 </button>

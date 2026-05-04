@@ -190,11 +190,11 @@ export function FFPlayerForm({ player, index, onChange, onDelete, allPlayers, er
     }
 
     return (
-        <div className="border border-red-100 rounded-xl p-5 sm:p-6 w-full bg-white">
+        <div className="border border-blue-100 rounded-xl p-5 sm:p-6 w-full bg-white">
             <div className="flex justify-between items-start mb-4 sm:mb-6">
                 <div className="flex items-center gap-3 sm:gap-4">
-                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-red-50 flex items-center justify-center border border-red-100">
-                        <span className="text-red-700 font-bold text-base sm:text-lg">{index + 1}</span>
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-blue-50 flex items-center justify-center border border-blue-100">
+                        <span className="text-blue-700 font-bold text-base sm:text-lg">{index + 1}</span>
                     </div>
                     <div>
                         <h3 className="text-lg sm:text-xl font-semibold text-gray-800">Player {index + 1}</h3>
@@ -206,7 +206,7 @@ export function FFPlayerForm({ player, index, onChange, onDelete, allPlayers, er
                     variant="outline"
                     size="icon"
                     onClick={onDelete}
-                    className="w-8 h-8 sm:w-9 sm:h-9 text-red-700 hover:text-red-200 bg-red-50 hover:bg-red-500 border-red-200 transition-all duration-200"
+                    className="w-8 h-8 sm:w-9 sm:h-9 text-blue-700 hover:text-blue-200 bg-blue-50 hover:bg-blue-500 border-blue-200 transition-all duration-200"
                 >
                     <Trash2 className="w-4 h-4 sm:w-5 sm:h-5" />
                 </Button>
@@ -226,7 +226,7 @@ export function FFPlayerForm({ player, index, onChange, onDelete, allPlayers, er
                                 onChange={handleInputChange("name")}
                                 placeholder="Nama lengkap pemain"
                                 className="py-2.5 sm:py-3.5 bg-white border-gray-200 rounded-lg text-gray-900 
-                                           px-4 sm:px-5 text-sm sm:text-base placeholder:text-gray-400 focus:border-red-400 focus:ring-red-200 shadow-sm"
+                                           px-4 sm:px-5 text-sm sm:text-base placeholder:text-gray-400 focus:border-blue-400 focus:ring-blue-200 shadow-sm"
                                 required
                             />
                             {renderError("name")}
@@ -242,7 +242,7 @@ export function FFPlayerForm({ player, index, onChange, onDelete, allPlayers, er
                                 onChange={handleInputChange("nickname")}
                                 placeholder="Nickname in-game"
                                 className="py-2.5 sm:py-3.5 bg-white border-gray-200 rounded-lg text-gray-900 
-                                           px-4 sm:px-5 text-sm sm:text-base placeholder:text-gray-400 focus:border-red-400 focus:ring-red-200 shadow-sm"
+                                           px-4 sm:px-5 text-sm sm:text-base placeholder:text-gray-400 focus:border-blue-400 focus:ring-blue-200 shadow-sm"
                                 required
                             />
                             {renderError("nickname")}
@@ -260,7 +260,7 @@ export function FFPlayerForm({ player, index, onChange, onDelete, allPlayers, er
                                 onChange={handleInputChange("id_server")}
                                 placeholder="Server ID"
                                 className="py-2.5 sm:py-3.5 bg-white border-gray-200 rounded-lg text-gray-900 
-                                           px-4 sm:px-5 text-sm sm:text-base placeholder:text-gray-400 focus:border-red-400 focus:ring-red-200 shadow-sm"
+                                           px-4 sm:px-5 text-sm sm:text-base placeholder:text-gray-400 focus:border-blue-400 focus:ring-blue-200 shadow-sm"
                                 required
                             />
                             {renderError("id_server")}
@@ -303,7 +303,7 @@ export function FFPlayerForm({ player, index, onChange, onDelete, allPlayers, er
                                 placeholder="Email address"
                                 type="email"
                                 className="py-2.5 sm:py-3.5 bg-white border-gray-200 rounded-lg text-gray-900 
-                                           px-4 sm:px-5 text-sm sm:text-base placeholder:text-gray-400 focus:border-red-400 focus:ring-red-200 shadow-sm"
+                                           px-4 sm:px-5 text-sm sm:text-base placeholder:text-gray-400 focus:border-blue-400 focus:ring-blue-200 shadow-sm"
                                 required
                             />
                             {renderError("email")}
@@ -319,7 +319,7 @@ export function FFPlayerForm({ player, index, onChange, onDelete, allPlayers, er
                                 onChange={handleInputChange("no_hp")}
                                 placeholder="Nomor handphone"
                                 className="py-2.5 sm:py-3.5 bg-white border-gray-200 rounded-lg text-gray-900 
-                                           px-4 sm:px-5 text-sm sm:text-base placeholder:text-gray-400 focus:border-red-400 focus:ring-red-200 shadow-sm"
+                                           px-4 sm:px-5 text-sm sm:text-base placeholder:text-gray-400 focus:border-blue-400 focus:ring-blue-200 shadow-sm"
                                 required
                             />
                             {renderError("no_hp")}
@@ -336,7 +336,7 @@ export function FFPlayerForm({ player, index, onChange, onDelete, allPlayers, er
                             onChange={handleInputChange("alamat")}
                             placeholder="Alamat lengkap"
                             className="py-2.5 sm:py-3.5 bg-white border-gray-200 rounded-lg text-gray-900 
-                                       px-4 sm:px-5 text-sm sm:text-base placeholder:text-gray-400 focus:border-red-400 focus:ring-red-200 shadow-sm"
+                                       px-4 sm:px-5 text-sm sm:text-base placeholder:text-gray-400 focus:border-blue-400 focus:ring-blue-200 shadow-sm"
                             required
                         />
                         {renderError("alamat")}
@@ -385,7 +385,7 @@ export function FFPlayerForm({ player, index, onChange, onDelete, allPlayers, er
                                         />
                                         <label
                                             htmlFor={`ml-${field}-${index}`}
-                                            className={`w-full py-1.5 sm:py-2.5 px-2 sm:px-3 bg-red-50/80 hover:bg-red-50 text-red-700 rounded-md border ${errors[field as keyof FFPlayer] ? 'border-red-500' : 'border-gray-200'
+                                            className={`w-full py-1.5 sm:py-2.5 px-2 sm:px-3 bg-blue-50/80 hover:bg-blue-50 text-blue-700 rounded-md border ${errors[field as keyof FFPlayer] ? 'border-red-500' : 'border-gray-200'
                                                 } cursor-pointer transition-colors duration-200 flex items-center gap-1 sm:gap-2 text-xs sm:text-sm min-h-[32px] sm:min-h-[40px]`}
                                         >
                                             <div className="flex items-center gap-1 sm:gap-2 w-full">
@@ -397,8 +397,8 @@ export function FFPlayerForm({ player, index, onChange, onDelete, allPlayers, er
                                                         ? (
                                                             <span className="flex items-center gap-1">
                                                                 <span className="truncate max-w-[80px] sm:max-w-[150px]">{fileNames[field as "foto" | "tanda_tangan"]}</span>
-                                                                <span className="text-red-400 shrink-0">•</span>
-                                                                <span className="text-[9px] sm:text-xs text-red-400 shrink-0">Klik untuk mengganti</span>
+                                                                <span className="text-blue-400 shrink-0">•</span>
+                                                                <span className="text-[9px] sm:text-xs text-blue-400 shrink-0">Klik untuk mengganti</span>
                                                             </span>
                                                         )
                                                         : 'Pilih File'

@@ -77,9 +77,6 @@ export default function AdminUser() {
         });
     };
 
-
-
-
     const handleDelete = (id: number) => {
         console.log('id user', id)
         destroy(route('admins.destroy', id));
@@ -189,7 +186,6 @@ export default function AdminUser() {
             </div>
         </form>
     );
-
 
     return (
         <AuthenticatedAdminLayout title="Admin Management" headerTitle="Admin Management" user={auth}>

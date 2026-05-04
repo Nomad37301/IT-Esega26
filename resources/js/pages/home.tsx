@@ -173,20 +173,20 @@ export default function Home() {
     // Data preorder merch
     const merchData = [
         {
-            title: 'T-Shirt IT-ESEGA 2025',
-            desc: 'Kaos eksklusif IT-ESEGA 25 dengan desain eksklusif, nyaman dipakai, dan cocok untuk semua kalangan. Tunjukkan dukunganmu di event tahun ini!',
-            link: 'https://bit.ly/MerchandiseITESEGA2025',
+            title: 'T-Shirt IT-ESEGA 2026',
+            desc: 'Kaos eksklusif IT-ESEGA 26 dengan desain eksklusif, nyaman dipakai, dan cocok untuk semua kalangan. Tunjukkan dukunganmu di event tahun ini!',
+            link: 'https://forms.gle/AqrAsUc452JHXjN38',
             images: ['/Images/tshirt-merch.png'],
             price: 'Rp 125.000,-',
-            preorder: 'Periode Extend Pre-Order: 5 Juni 2025 – 7 Juli 2025',
+            preorder: 'Periode Pre-Order: 15 April – 17 Mei 2026',
         },
         {
-            title: 'Retro Jersey IT-ESEGA 2025',
-            desc: 'Jersey retro edisi spesial IT-ESEGA 25, desain sporty dan stylish, cocok untuk koleksi maupun dipakai harian. Dapatkan sebelum kehabisan!',
-            link: 'https://bit.ly/RetroJerseyITESEGA2025',
+            title: 'Long Sleeve T-Shirt IT-ESEGA 2026',
+            desc: 'Kaos lengan panjang eksklusif IT-ESEGA 26 dengan desain eksklusif, nyaman dipakai, dan cocok untuk semua kalangan. Tunjukkan dukunganmu di event tahun ini!',
+            link: 'https://forms.gle/AqrAsUc452JHXjN38',
             images: ['/Images/jersey-merch-2.png'],
-            price: 'Rp 150.000,-',
-            preorder: 'Periode Pre-Order: 27 Juni 2025 – 7 Juli 2025',
+            price: 'Rp 125.000,-',
+            preorder: 'Periode Pre-Order: 15 April – 17 Mei 2026',
         },
     ];
 
@@ -577,7 +577,7 @@ export default function Home() {
                                                 <iframe
                                                     className="absolute inset-0 h-full w-full"
                                                     src=""
-                                                    title="How to Register IT-ESEGA 2025"
+                                                    title="How to Register IT-ESEGA 2026"
                                                     frameBorder="0"
                                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                                     allowFullScreen
@@ -804,7 +804,7 @@ export default function Home() {
                                 <div className="absolute right-0 bottom-0 left-0 bg-gradient-to-t from-black/80 to-transparent p-6">
                                     <div className="flex items-center justify-between text-white">
                                         <div>
-                                            <h3 className="mb-2 text-xl font-bold">IT-ESEGA 2025 Official Teaser</h3>
+                                            <h3 className="mb-2 text-xl font-bold">IT-ESEGA 2026 Official Teaser</h3>
                                             <p className="text-sm text-gray-300">Experience the Next Level of Gaming Competition</p>
                                         </div>
                                         <div className="flex items-center space-x-2">
@@ -918,7 +918,7 @@ export default function Home() {
                                     data-aos="fade-up"
                                     data-aos-delay="100"
                                 >
-                                    Temukan jawaban untuk pertanyaan umum tentang IT-ESEGA 2025 dan proses pendaftaran turnamen
+                                    Temukan jawaban untuk pertanyaan umum tentang IT-ESEGA 2026 dan proses pendaftaran turnamen
                                 </p>
                             </div>
 
@@ -1200,7 +1200,7 @@ export default function Home() {
                                 </Dialog.Title>
                                 <div className="mt-2">
                                     <p className="text-sm text-gray-500">
-                                        Mohon maaf, pendaftaran untuk IT-ESEGA 2025 sudah ditutup. Pastikan untuk mengikuti kami di media sosial untuk
+                                        Mohon maaf, pendaftaran untuk IT-ESEGA 2026 sudah ditutup. Pastikan untuk mengikuti kami di media sosial untuk
                                         informasi lebih lanjut tentang event mendatang.
                                     </p>
                                 </div>

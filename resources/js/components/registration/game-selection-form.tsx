@@ -181,16 +181,16 @@ export function GameSelectionForm({ onGameSelect, gameStats: initialGameStats }:
                                 <div className="mb-6">
                                     <div className="flex items-center justify-between mb-2.5">
                                         <div className="flex items-center">
-                                            <Users className="w-4 h-4 text-red-500 mr-1.5" />
+                                            <Users className="w-4 h-4 text-blue-500 mr-1.5" />
                                             <span className="text-sm font-semibold text-gray-700">Slot Tersedia</span>
                                         </div>
-                                        <span className="text-xs font-medium px-3 py-1 bg-red-50 text-red-600 rounded-full">
+                                        <span className="text-xs font-medium px-3 py-1 bg-blue-50 text-blue-600 rounded-full">
                                             {getSlotRemaining(game.id)} dari {game.totalSlots}
                                         </span>
                                     </div>
                                     <div className="h-3 w-full bg-gray-100 rounded-full overflow-hidden">
                                         <div 
-                                            className="h-full bg-gradient-to-r from-red-500 to-red-600 transition-all duration-300"
+                                            className="h-full bg-gradient-to-r from-blue-500 to-blue-600 transition-all duration-300"
                                             style={{width: `${getSlotPercentage(game.id)}%`}}
                                         ></div>
                                     </div>
@@ -207,7 +207,7 @@ export function GameSelectionForm({ onGameSelect, gameStats: initialGameStats }:
                                 {/* Fee Section */}
                                 <div className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-4 mb-5">
                                     <div className="flex items-center mb-1.5">
-                                        <DollarSign className="w-5 h-5 text-red-600 mr-2" />
+                                        <DollarSign className="w-5 h-5 text-blue-600 mr-2" />
                                         <h4 className="text-base font-semibold text-gray-800">Biaya Pendaftaran</h4>
                                     </div>
                                     
@@ -215,37 +215,37 @@ export function GameSelectionForm({ onGameSelect, gameStats: initialGameStats }:
                                         <div className="grid grid-cols-2 gap-3 mt-3">
                                             <div className="bg-white p-3 rounded-lg border border-gray-200 text-center">
                                                 <div className="text-xs text-gray-500 mb-1">Single Slot</div>
-                                                <div className="text-red-600 font-bold">{game.fee}</div>
+                                                <div className="text-blue-600 font-bold">{game.fee}</div>
                                                 <div className="text-xs text-gray-500 mt-1">1 Tim, 1 Slot</div>
                                             </div>
                                             <div className="bg-white p-3 rounded-lg border border-gray-200 text-center">
                                                 <div className="text-xs text-gray-500 mb-1">Double Slot</div>
-                                                <div className="text-red-600 font-bold">Rp 200.000</div>
+                                                <div className="text-blue-600 font-bold">Rp 200.000</div>
                                                 <div className="text-xs text-gray-500 mt-1">1 Tim, 2 Slot</div>
                                             </div>
                                         </div>
                                     ) : (
-                                        <div className="bg-white p-3 rounded-lg border border-red-200 text-center mt-3">
+                                        <div className="bg-white p-3 rounded-lg border border-blue-200 text-center mt-3">
                                             <div className="text-xs text-gray-500 mb-1">Single Slot Only</div>
-                                            <div className="text-red-600 font-bold">{game.fee}</div>
+                                            <div className="text-blue-600 font-bold">{game.fee}</div>
                                             <div className="text-xs text-gray-500 mt-1">Free Fire hanya tersedia dalam format Single Slot</div>
                                         </div>
                                     )}
                                 </div>
 
                                 {/* Date Highlight */}
-                                <div className="mb-6 bg-red-50 border border-red-100 rounded-xl p-4">
+                                <div className="mb-6 bg-blue-50 border border-blue-100 rounded-xl p-4">
                                     <div className="flex items-center mb-1">
-                                        <Calendar className="w-5 h-5 text-red-500 mr-2" />
+                                        <Calendar className="w-5 h-5 text-blue-500 mr-2" />
                                         <h4 className="text-base font-semibold text-gray-800">Tanggal Turnamen</h4>
                                     </div>
-                                    <div className="pl-7 text-sm font-medium text-red-600 mt-1.5">{game.date}</div>
+                                    <div className="pl-7 text-sm font-medium text-blue-600 mt-1.5">{game.date}</div>
                                 </div>
                                 
                                 <div className="mt-5">
                                     <button 
-                                        className="w-full py-4 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-xl 
-                                        font-medium hover:from-red-700 hover:to-red-600 transition-all duration-300 
+                                        className="w-full py-4 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-xl 
+                                        font-medium hover:from-blue-700 hover:to-blue-600 transition-all duration-300 
                                         flex items-center justify-center shadow-md hover:shadow-lg group"
                                     >
                                         <Gamepad2 className="w-4 h-4 mr-2 group-hover:animate-pulse" />
