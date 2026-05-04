@@ -15,7 +15,7 @@ import LoadingScreen from "@/components/ui/loading-screen"
 
 export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }: TeamRegistrationFormProps) {
     const isML = gameType === "ml"
-    const gameTitle = isML ? "Mobile Legends" : "Free Fire"
+    const gameTitle = isML ? "Mobile Legends" : "PUBG Mobile"
     const registrationFee = "Rp 100.000"
 
     const [formErrors, setFormErrors] = useState<{
@@ -82,7 +82,7 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
             return
         }
 
-        // Pastikan slot type adalah 'single' untuk Free Fire
+        // Pastikan slot type adalah 'single' untuk PUBG Mobile
         if (!isML) {
             setData("slot_type", "single")
         }
@@ -103,6 +103,7 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
 
             // Gunakan URL dengan query parameter
             post(url, {
+                preserveScroll: true,
                 onSuccess: (response) => {
                     clearInterval(progressInterval);
 
@@ -254,7 +255,7 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
                     slotType={data.slot_type}
                 />
 
-                <div className="w-full lg:w-3/5 p-4 sm:p-6 lg:p-10 flex items-center justify-center bg-gradient-to-br from-white to-blue-50/40 backdrop-blur-sm overflow-y-auto min-h-[calc(100vh-4rem)]">
+                <div className="w-full lg:w-3/5 p-4 sm:p-6 lg:p-10 flex items-center justify-center bg-gradient-to-br from-white to-secondary/5 backdrop-blur-sm overflow-y-auto min-h-[calc(100vh-4rem)]">
                     <div className="max-w-2xl w-full my-4 sm:my-6">
                         <div className="mb-4 sm:mb-8 text-center space-y-1 sm:space-y-2">
                             <h1 className="text-xl sm:text-3xl font-bold bg-gradient-to-r from-gray-900 to-blue-800 bg-clip-text text-transparent">
@@ -269,7 +270,7 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
                                     <div className="md:grid gap-4 sm:gap-6 flex flex-col">
                                         <div className="relative space-y-1 sm:space-y-2">
                                             <Label htmlFor="team_name" className="text-xs sm:text-sm font-semibold text-gray-700 flex items-center gap-2">
-                                                <Users className="h-4 w-4 text-blue-500" />
+                                                <Users className="h-4 w-4 text-secondary" />
                                                 <span>Nama Tim</span>
                                             </Label>
                                             <div className="relative">
@@ -281,7 +282,7 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
                                                     onChange={(e) => setData("team_name", e.target.value)}
                                                     placeholder="Masukkan nama tim esports Anda"
                                                     className={`py-4 sm:py-5 bg-white border-gray-200 text-gray-900 text-sm rounded-xl 
-                                                    focus:border-blue-500 focus:ring focus:ring-blue-500/20 focus:ring-opacity-50
+                                                    focus:border-secondary focus:ring focus:ring-secondary/20 focus:ring-opacity-50
                                                     [&::placeholder]:text-gray-500 [&::placeholder]:text-xs sm:[&::placeholder]:text-sm [&::placeholder]:font-normal
                                                 ${formErrors.team_name ? 'border-red-500' : ''}`}
                                                 />
@@ -307,7 +308,7 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
 
                                         <div className="relative space-y-1 sm:space-y-2">
                                             <Label htmlFor="email" className="text-xs sm:text-sm font-semibold text-gray-700 flex items-center gap-2">
-                                                <MailCheck className="h-4 w-4 text-blue-500" />
+                                                <MailCheck className="h-4 w-4 text-secondary" />
                                                 <span>Email</span>
                                             </Label>
                                             <div className="relative">
@@ -319,7 +320,7 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
                                                     onChange={(e) => setData("email", e.target.value)}
                                                     placeholder="Masukkan alamat email anda untuk menerima konfirmasi pendaftaran"
                                                     className={`py-4 sm:py-5 bg-white border-gray-200 text-gray-900 text-sm rounded-xl 
-                                                    focus:border-blue-500 focus:ring focus:ring-blue-500/20 focus:ring-opacity-50
+                                                    focus:border-secondary focus:ring focus:ring-secondary/20 focus:ring-opacity-50
                                                     [&::placeholder]:text-gray-500 [&::placeholder]:text-xs sm:[&::placeholder]:text-sm [&::placeholder]:font-normal
                                                     ${formErrors.email ? 'border-red-500' : ''}`}
                                                 />
@@ -333,7 +334,7 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
                                         {isML && (
                                             <div className="mb-6">
                                                 <Label className="text-xs sm:text-sm font-semibold text-gray-700 flex items-center gap-2">
-                                                    <Ticket className="h-4 w-4 text-blue-500" />
+                                                    <Ticket className="h-4 w-4 text-secondary" />
                                                     <span>Tipe Slot</span>
                                                 </Label>
 
@@ -341,18 +342,18 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
                                                     <div
                                                         className={`relative rounded-lg border p-4 cursor-pointer transition-all duration-200 
                                                 ${data.slot_type === 'single'
-                                                                ? 'border-blue-600 bg-blue-50/50'
-                                                                : 'border-gray-200 hover:border-blue-200 hover:bg-blue-50/30'}`}
+                                                                ? 'border-secondary bg-secondary/10'
+                                                                : 'border-gray-200 hover:border-secondary/20 hover:bg-secondary/5'}`}
                                                         onClick={() => setData('slot_type', 'single')}
                                                     >
                                                         <div className="flex items-start gap-3">
                                                             <div className={`h-5 w-5 rounded-full border-2 flex-shrink-0 flex items-center justify-center mt-0.5
                                                         ${data.slot_type === 'single'
-                                                                    ? 'border-blue-600'
+                                                                    ? 'border-secondary'
                                                                     : 'border-gray-300'}`}
                                                             >
                                                                 {data.slot_type === 'single' && (
-                                                                    <div className="h-2.5 w-2.5 rounded-full bg-blue-600"></div>
+                                                                    <div className="h-2.5 w-2.5 rounded-full bg-secondary"></div>
                                                                 )}
                                                             </div>
                                                             <div>
@@ -360,8 +361,11 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
                                                                     <span>Single Slot</span>
                                                                 </Label>
                                                                 <p className="text-xs text-gray-600 mt-1">1 Tim, 1 Slot Kompetisi</p>
-                                                                <div className="mt-2 bg-blue-50 px-3 py-1.5 rounded-md inline-block">
-                                                                    <p className="text-sm font-medium text-blue-600">Rp 100.000</p>
+                                                                <div className="mt-2 bg-secondary/5 px-3 py-1.5 rounded-md inline-block">
+                                                                    <div className="flex justify-center items-center gap-1.5">
+                                                                        <span className="text-xs text-gray-400 line-through">Rp 125.000</span>
+                                                                        <span className="text-sm font-bold text-secondary">Rp 100.000</span>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -370,18 +374,18 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
                                                     <div
                                                         className={`relative rounded-lg border p-4 cursor-pointer transition-all duration-200 
                                                 ${data.slot_type === 'double'
-                                                                ? 'border-blue-600 bg-blue-50/50'
-                                                                : 'border-gray-200 hover:border-blue-200 hover:bg-blue-50/30'}`}
+                                                                ? 'border-secondary bg-secondary/10'
+                                                                : 'border-gray-200 hover:border-secondary/20 hover:bg-secondary/5'}`}
                                                         onClick={() => setData('slot_type', 'double')}
                                                     >
                                                         <div className="flex items-start gap-3">
                                                             <div className={`h-5 w-5 rounded-full border-2 flex-shrink-0 flex items-center justify-center mt-0.5
                                                         ${data.slot_type === 'double'
-                                                                    ? 'border-blue-600'
+                                                                    ? 'border-secondary'
                                                                     : 'border-gray-300'}`}
                                                             >
                                                                 {data.slot_type === 'double' && (
-                                                                    <div className="h-2.5 w-2.5 rounded-full bg-blue-600"></div>
+                                                                    <div className="h-2.5 w-2.5 rounded-full bg-secondary"></div>
                                                                 )}
                                                             </div>
                                                             <div>
@@ -389,8 +393,11 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
                                                                     <span>Double Slot</span>
                                                                 </Label>
                                                                 <p className="text-xs text-gray-600 mt-1">1 Tim, 2 Slot Kompetisi</p>
-                                                                <div className="mt-2 bg-blue-50 px-3 py-1.5 rounded-md inline-block">
-                                                                    <p className="text-sm font-medium text-blue-600">Rp 200.000</p>
+                                                                <div className="mt-2 bg-secondary/5 px-3 py-1.5 rounded-md inline-block">
+                                                                    <div className="flex justify-center items-center gap-1.5">
+                                                                        <span className="text-xs text-gray-400 line-through">Rp 250.000</span>
+                                                                        <span className="text-sm font-bold text-secondary">Rp 200.000</span>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -406,23 +413,26 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
                                         {!isML && (
                                             <div className="mb-6">
                                                 <Label className="text-xs sm:text-sm font-semibold text-gray-700 flex items-center gap-2">
-                                                    <Ticket className="h-4 w-4 text-blue-500" />
+                                                    <Ticket className="h-4 w-4 text-secondary" />
                                                     <span>Informasi Biaya</span>
                                                 </Label>
 
                                                 <div className="mt-3">
-                                                    <div className="relative rounded-lg border border-blue-600 bg-blue-50/50 p-4">
+                                                    <div className="relative rounded-lg border border-secondary bg-secondary/10 p-4">
                                                         <div className="flex items-start gap-3">
-                                                            <div className="h-5 w-5 rounded-full border-2 border-blue-600 flex-shrink-0 flex items-center justify-center mt-0.5">
-                                                                <div className="h-2.5 w-2.5 rounded-full bg-blue-600"></div>
+                                                            <div className="h-5 w-5 rounded-full border-2 border-secondary flex-shrink-0 flex items-center justify-center mt-0.5">
+                                                                <div className="h-2.5 w-2.5 rounded-full bg-secondary"></div>
                                                             </div>
                                                             <div>
                                                                 <Label className="text-sm font-medium text-gray-900 flex items-center gap-1.5">
                                                                     <span>Single Slot</span>
                                                                 </Label>
-                                                                <p className="text-xs text-gray-600 mt-1">Free Fire hanya tersedia dalam format Single Slot</p>
-                                                                <div className="mt-2 bg-blue-50 px-3 py-1.5 rounded-md inline-block">
-                                                                    <p className="text-sm font-medium text-blue-600">Rp 100.000</p>
+                                                                <p className="text-xs text-gray-600 mt-1">PUBG Mobile hanya tersedia dalam format Single Slot</p>
+                                                                <div className="mt-2 bg-secondary/5 px-3 py-1.5 rounded-md inline-block">
+                                                                    <div className="flex justify-center items-center gap-1.5">
+                                                                        <span className="text-xs text-gray-400 line-through">Rp 125.000</span>
+                                                                        <span className="text-sm font-bold text-secondary">Rp 100.000</span>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -444,7 +454,7 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
                                         <div className="space-y-5">
                                             <div className="space-y-3">
                                                 <Label htmlFor="proof_of_payment" className="text-xs sm:text-sm font-semibold text-gray-700 flex items-center gap-2 mb-2">
-                                                    <Image className="h-4 w-4 text-blue-500" />
+                                                    <Image className="h-4 w-4 text-secondary" />
                                                     <span>Bukti Pembayaran</span>
                                                 </Label>
                                                 <FileUploadField
@@ -491,7 +501,7 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
 
                                             <div className="space-y-3">
                                                 <Label htmlFor="team_logo" className="text-xs sm:text-sm font-semibold text-gray-700 flex items-center gap-2 mb-2">
-                                                    <Image className="h-4 w-4 text-blue-500" />
+                                                    <Image className="h-4 w-4 text-secondary" />
                                                     <span>Logo Tim</span>
                                                 </Label>
                                                 <FileUploadField
@@ -541,7 +551,7 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
                                             <Button
                                                 type="submit"
                                                 disabled={processing}
-                                                className={`w-full py-4 sm:py-5 md:py-6 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600
+                                                className={`w-full py-4 sm:py-5 md:py-6 bg-gradient-to-r from-secondary to-secondary/90 hover:from-secondary/90 hover:to-secondary/90
                                         text-white rounded-xl font-medium text-sm sm:text-base md:text-lg transition-all duration-300 
                                             shadow-[0_0_15px_rgba(37,99,235,0.3)] hover:shadow-[0_0_25px_rgba(37,99,235,0.5)]
                                         flex items-center justify-center gap-1 sm:gap-2 relative overflow-hidden group`}
@@ -562,14 +572,14 @@ export function TeamRegistrationForm({ teamData, gameType, onSubmit, resetStep }
                 {/* Emergency Contact Button */}
                 <button
                     onClick={handleEmergencyContact}
-                    className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 bg-white hover:bg-blue-50 text-blue-600 p-2 sm:p-3 md:p-4 rounded-full
+                    className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 bg-white hover:bg-secondary/5 text-secondary p-2 sm:p-3 md:p-4 rounded-full
                 shadow-[0_4px_20px_-3px_rgba(0,0,0,0.1)] hover:shadow-[0_8px_25px_-5px_rgba(37,99,235,0.3)]
-                transform hover:scale-110 transition-all duration-300 group z-50 border border-blue-200"
+                transform hover:scale-110 transition-all duration-300 group z-50 border border-secondary/20"
                     title="Butuh bantuan? Hubungi panitia"
                 >
                     <div className="relative">
                         <HelpCircle className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
-                        <span className="absolute -top-1 -right-1 w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-3 md:h-3 bg-blue-500 rounded-full border-2 border-white animate-pulse"></span>
+                        <span className="absolute -top-1 -right-1 w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-3 md:h-3 bg-secondary rounded-full border-2 border-white animate-pulse"></span>
                     </div>
                     <span className="sr-only">Hubungi Panitia</span>
                 </button>

@@ -13,6 +13,16 @@ body {
     scroll-behavior: smooth;
 }
 
+::selection {
+    background-color: rgba(77, 122, 140, 0.3);
+    color: inherit;
+}
+
+.font-demarus::selection,
+.font-demarus *::selection {
+    background-color: rgba(77, 122, 140, 0.3);
+}
+
 @theme {
     --font-sans:
         'Poppins', 'Akira', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
@@ -92,48 +102,48 @@ body {
     --card-foreground: #252525;
     --popover: #ffffff;
     --popover-foreground: #252525;
-    --primary: #1e4c7a;
+    --primary: #4D7A8C;
     --primary-foreground: #ffffff;
-    --section-title: #447089;
-    --secondary: #447089;
+    --section-title: #4D7A8C;
+    --secondary: #4D7A8C;
     --secondary-foreground: #252525;
-    --muted: #fef2f2;
+    --muted: #eff6ff;
     --muted-foreground: #252525;
-    --accent: #ef4444;
+    --accent: #7D95A0;
     --accent-foreground: #ffffff;
     --destructive: #dc2626;
     --destructive-foreground: #ffffff;
-    --border: #3b82f6;
-    --input: #3b82f6;
-    --ring: #3b82f6;
-    --chart-1: #ef4444;
-    --chart-2: #dc2626;
+    --border: #4D7A8C;
+    --input: #4D7A8C;
+    --ring: #4D7A8C;
+    --chart-1: #4D7A8C;
+    --chart-2: #7D95A0;
     --chart-3: #252525;
-    --chart-4: #fef2f2;
-    --chart-5: #ef4444;
+    --chart-4: #eff6ff;
+    --chart-5: #4D7A8C;
     --radius: 0.625rem;
     --sidebar: #252525;
     --sidebar-foreground: #ffffff;
-    --sidebar-primary: #ef4444;
+    --sidebar-primary: #4D7A8C;
     --sidebar-primary-foreground: #ffffff;
-    --sidebar-accent: #dc2626;
+    --sidebar-accent: #7D95A0;
     --sidebar-accent-foreground: #ffffff;
-    --sidebar-border: #ef4444;
-    --sidebar-ring: #ef4444;
+    --sidebar-border: #4D7A8C;
+    --sidebar-ring: #4D7A8C;
     --custom: #333;
 
     /* ============================================
        Design Color System - IT-ESEGA 2026
        ============================================ */
     /* Navy Blue - Tombol utama & Register button */
-    --color-navy: #1e4c7a;
-    --color-navy-dark: #163a5f;
-    --color-navy-light: #2a6099;
+    --color-navy: #4D7A8C;
+    --color-navy-dark: #3a5c69;
+    --color-navy-light: #7D95A0;
 
     /* Teal / Aqua - Active nav link & accent */
-    --color-teal: #4eaac5;
-    --color-teal-dark: #3a8fa8;
-    --color-teal-light: #6dc4dc;
+    --color-teal: #7D95A0;
+    --color-teal-dark: #4D7A8C;
+    --color-teal-light: #9ab0b9;
 
     /* Hero Section Colors */
     --hero-overlay: rgba(10, 20, 35, 0.6);
@@ -150,63 +160,37 @@ body {
 .dark {
     --background: #252525;
     --foreground: #ffffff;
-    --foreground: #ffffff;
     --card: #252525;
-    --card-foreground: #ffffff;
     --card-foreground: #ffffff;
     --popover: #252525;
     --popover-foreground: #ffffff;
-    --primary: #234773;
+    --primary: #4D7A8C;
     --primary-foreground: #ffffff;
-    --secondary: #dc2626;
-    --secondary-foreground: #ffffff;
-    --popover-foreground: #ffffff;
-    --primary: #234773;
-    --primary-foreground: #ffffff;
-    --secondary: #dc2626;
+    --secondary: #4D7A8C;
     --secondary-foreground: #ffffff;
     --muted: #252525;
     --muted-foreground: #ffffff;
-    --accent: #ef4444;
+    --accent: #7D95A0;
     --accent-foreground: #ffffff;
     --destructive: #dc2626;
     --destructive-foreground: #ffffff;
-    --border: #3b82f6;
-    --input: #3b82f6;
-    --ring: #3b82f6;
-    --chart-1: #ef4444;
-    --chart-2: #dc2626;
-    --muted-foreground: #ffffff;
-    --accent: #ef4444;
-    --accent-foreground: #ffffff;
-    --destructive: #dc2626;
-    --destructive-foreground: #ffffff;
-    --border: #3b82f6;
-    --input: #3b82f6;
-    --ring: #3b82f6;
-    --chart-1: #ef4444;
-    --chart-2: #dc2626;
+    --border: #4D7A8C;
+    --input: #4D7A8C;
+    --ring: #4D7A8C;
+    --chart-1: #4D7A8C;
+    --chart-2: #7D95A0;
     --chart-3: #252525;
-    --chart-4: #fef2f2;
-    --chart-5: #ef4444;
-    --chart-4: #fef2f2;
-    --chart-5: #ef4444;
+    --chart-4: #eff6ff;
+    --chart-5: #4D7A8C;
     --sidebar: #252525;
     --sidebar-foreground: #ffffff;
-    --sidebar-primary: #ef4444;
+    --sidebar-primary: #4D7A8C;
     --sidebar-primary-foreground: #ffffff;
-    --sidebar-accent: #dc2626;
+    --sidebar-accent: #7D95A0;
     --sidebar-accent-foreground: #ffffff;
-    --sidebar-border: #ef4444;
-    --sidebar-foreground: #ffffff;
-    --sidebar-primary: #ef4444;
-    --sidebar-primary-foreground: #ffffff;
-    --sidebar-accent: #dc2626;
-    --sidebar-accent-foreground: #ffffff;
-    --sidebar-border: #3b82f6;
-    --sidebar-ring: #3b82f6;
+    --sidebar-border: #4D7A8C;
+    --sidebar-ring: #4D7A8C;
     --custom: #333;
-    --white: #ffffff;
     --white: #ffffff;
 }
 
@@ -238,15 +222,15 @@ body {
     0%,
     100% {
         box-shadow:
-            0 0 8px #f43f5e,
-            0 0 16px #f43f5e,
-            0 0 24px #f43f5e;
+            0 0 8px #3b82f6,
+            0 0 16px #3b82f6,
+            0 0 24px #3b82f6;
     }
     50% {
         box-shadow:
-            0 0 12px #f43f5e,
-            0 0 24px #f43f5e,
-            0 0 36px #f43f5e;
+            0 0 12px #3b82f6,
+            0 0 24px #3b82f6,
+            0 0 36px #3b82f6;
     }
 }
 
@@ -269,20 +253,20 @@ body {
     0% {
         background-position: 0% 0%;
         box-shadow:
-            0 0 8px #f43f5e,
-            0 0 16px #f43f5e;
+            0 0 8px #3b82f6,
+            0 0 16px #3b82f6;
     }
     50% {
         background-position: 0% 100%;
         box-shadow:
-            0 0 12px #f43f5e,
-            0 0 24px #f43f5e;
+            0 0 12px #3b82f6,
+            0 0 24px #3b82f6;
     }
     100% {
         background-position: 0% 0%;
         box-shadow:
-            0 0 8px #f43f5e,
-            0 0 16px #f43f5e;
+            0 0 8px #3b82f6,
+            0 0 16px #3b82f6;
     }
 }
 
@@ -296,19 +280,19 @@ body {
     100% {
         background-position: 0% 0%;
         box-shadow:
-            0 0 5px rgba(244, 63, 94, 0.4),
-            0 0 10px rgba(244, 63, 94, 0.2);
+            0 0 5px rgba(59, 130, 246, 0.4),
+            0 0 10px rgba(59, 130, 246, 0.2);
     }
     50% {
         background-position: 0% 100%;
         box-shadow:
-            0 0 8px rgba(244, 63, 94, 0.5),
-            0 0 15px rgba(244, 63, 94, 0.3);
+            0 0 8px rgba(59, 130, 246, 0.5),
+            0 0 15px rgba(59, 130, 246, 0.3);
     }
 }
 
 .animate-gradient-glow-strong {
-    background: linear-gradient(to bottom, #ef4444, #dc2626, #ef4444);
+    background: linear-gradient(to bottom, #3b82f6, #2563eb, #3b82f6);
     background-size: 100% 300%;
     background-repeat: no-repeat;
     animation: gradient-glow-strong 8s ease-in-out infinite;
@@ -319,15 +303,15 @@ body {
 @keyframes timeline-glow {
     0%,
     100% {
-        box-shadow: 0 0 8px rgba(244, 63, 94, 0.3);
+        box-shadow: 0 0 8px rgba(59, 130, 246, 0.3);
     }
     50% {
-        box-shadow: 0 0 12px rgba(244, 63, 94, 0.4);
+        box-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
     }
 }
 
 .timeline-line {
-    background: linear-gradient(to bottom, #ef4444, #dc2626);
+    background: linear-gradient(to bottom, #3b82f6, #2563eb);
     border-radius: 9999px;
     animation: timeline-glow 4s ease-in-out infinite;
     will-change: box-shadow;

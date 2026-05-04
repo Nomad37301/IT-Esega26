@@ -43,7 +43,7 @@ import { Separator } from "@/components/ui/separator"
 import { Link } from "@inertiajs/react"
 
 // Tipe respons API untuk Tim FF
-interface FFTeamResponse {
+interface PUBGTeamResponse {
     id: number
     team_name: string
     team_logo?: string
@@ -75,7 +75,7 @@ type Team = {
     slot_type?: string
 }
 
-export function TeamsTable({ gameType }: { gameType: "free-fire" | "mobile-legends" | "all" }) {
+export function TeamsTable({ gameType }: { gameType: "pubg-mobile" | "mobile-legends" | "all" }) {
     const [searchQuery, setSearchQuery] = useState("")
     const [loading, setLoading] = useState(true)
     const [teams, setTeams] = useState<Team[]>([])
@@ -100,22 +100,22 @@ export function TeamsTable({ gameType }: { gameType: "free-fire" | "mobile-legen
             let endpoint;
             
             // Tentukan endpoint berdasarkan gameType
-            if (gameType === "free-fire") {
+            if (gameType === "pubg-mobile") {
                 endpoint = '/api/teams/ff';
             } else if (gameType === "mobile-legends") {
                 endpoint = '/api/teams/ml';
             } else {
                 // Jika all, gabungkan data dari kedua endpoint
-                const [ffResponse, mlResponse] = await Promise.all([
+                const [pubgResponse, mlResponse] = await Promise.all([
                     axios.get('/api/teams/ff'),
                     axios.get('/api/teams/ml')
                 ]);
                 
                 // Format data FF
-                const ffTeams = ffResponse.data.map((team: FFTeamResponse) => ({
+                const pubgTeams = pubgResponse.data.map((team: PUBGTeamResponse) => ({
                     id: team.id,
                     name: team.team_name,
-                    game: "Free Fire",
+                    game: "PUBG Mobile",
                     playerCount: team.participant_count || 0,
                     logo: team.team_logo ? `/storage/${team.team_logo}` : "/placeholder.svg",
                     color: "from-orange-500 to-red-600",
@@ -144,14 +144,14 @@ export function TeamsTable({ gameType }: { gameType: "free-fire" | "mobile-legen
                     }),
                 }));
                 
-                setTeams([...ffTeams, ...mlTeams]);
+                setTeams([...pubgTeams, ...mlTeams]);
                 setLoading(false);
                 return;
             }
             
             // Jika memilih game tertentu dan ada filter, gunakan endpoint filter
             if (Object.keys(filterParams).length > 0) {
-                const game = gameType === "free-fire" ? 'ff' : 'ml';
+                const game = gameType === "pubg-mobile" ? 'pubg' : 'ml';
                 const params = new URLSearchParams();
                 
                 // Tambahkan parameter filter ke URL
@@ -163,11 +163,11 @@ export function TeamsTable({ gameType }: { gameType: "free-fire" | "mobile-legen
                 
                 const response = await axios.get(`/api/teams/${game}/filter?${params.toString()}`);
                 
-                if (gameType === "free-fire") {
-                    setTeams(response.data.map((team: FFTeamResponse) => ({
+                if (gameType === "pubg-mobile") {
+                    setTeams(response.data.map((team: PUBGTeamResponse) => ({
                         id: team.id,
                         name: team.team_name,
-                        game: "Free Fire",
+                        game: "PUBG Mobile",
                         playerCount: team.participant_count || 0,
                         logo: team.team_logo ? `/storage/${team.team_logo}` : "/placeholder.svg",
                         color: "from-orange-500 to-red-600",
@@ -199,11 +199,11 @@ export function TeamsTable({ gameType }: { gameType: "free-fire" | "mobile-legen
                 // Jika tidak ada filter, ambil semua data tim dari endpoint
                 const response = await axios.get(endpoint);
                 
-                if (gameType === "free-fire") {
-                    setTeams(response.data.map((team: FFTeamResponse) => ({
+                if (gameType === "pubg-mobile") {
+                    setTeams(response.data.map((team: PUBGTeamResponse) => ({
                         id: team.id,
                         name: team.team_name,
-                        game: "Free Fire",
+                        game: "PUBG Mobile",
                         playerCount: team.participant_count || 0,
                         logo: team.team_logo ? `/storage/${team.team_logo}` : "/placeholder.svg",
                         color: "from-orange-500 to-red-600",
@@ -251,7 +251,7 @@ export function TeamsTable({ gameType }: { gameType: "free-fire" | "mobile-legen
         
         try {
             setLoading(true)
-            const game = teamToDelete.game === 'Free Fire' ? 'ff' : 'ml'
+            const game = teamToDelete.game === 'PUBG Mobile' ? 'pubg' : 'ml'
             await axios.delete(`/api/teams/${game}/${teamToDelete.id}`)
             
             toast.success(`Tim ${teamToDelete.name} berhasil dihapus beserta semua pemainnya.`)
@@ -319,7 +319,7 @@ export function TeamsTable({ gameType }: { gameType: "free-fire" | "mobile-legen
                             <CardDescription>
                                 {gameType === "all" 
                                     ? "Kelola semua tim" 
-                                    : `Kelola tim ${gameType === "free-fire" ? "Free Fire" : "Mobile Legends"}`}
+                                    : `Kelola tim ${gameType === "pubg-mobile" ? "PUBG Mobile" : "Mobile Legends"}`}
                             </CardDescription>
                         </div>
                         <div className="flex gap-2">
@@ -478,7 +478,7 @@ export function TeamsTable({ gameType }: { gameType: "free-fire" | "mobile-legen
                                             </TableCell>
                                             <TableCell>
                                                 <Badge variant="secondary" className={
-                                                    team.game === "Free Fire" 
+                                                    team.game === "PUBG Mobile" 
                                                         ? "bg-orange-100 text-orange-800 hover:bg-orange-200" 
                                                         : "bg-blue-100 text-blue-800 hover:bg-blue-200"
                                                 }>
@@ -524,7 +524,7 @@ export function TeamsTable({ gameType }: { gameType: "free-fire" | "mobile-legen
                                                         <DropdownMenuSeparator />
                                                         <DropdownMenuItem asChild>
                                                             <Link
-                                                                href={`/secure-admin-essega/teams/${team.game === "Free Fire" ? "ff" : "ml"}/${team.id}`}
+                                                                href={`/secure-admin-essega/teams/${team.game === "PUBG Mobile" ? "pubg" : "ml"}/${team.id}`}
                                                                 className="flex gap-2 cursor-pointer"
                                                             >
                                                                 <Edit className="h-4 w-4" /> Detail & Edit

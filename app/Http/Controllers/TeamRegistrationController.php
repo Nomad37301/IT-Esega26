@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreMLTeamRegistrationRequest;
 use App\Mail\TeamRegistered;
-use App\Models\FF_Team;
+use App\Models\PUBG_Team;
 use App\Models\ML_Team;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -67,7 +67,7 @@ class TeamRegistrationController extends Controller
                 'team_logo' => 'required|image|max:2048',
                 'proof_of_payment' => 'required|image|max:2048',
                 'email' => 'required|email|max:255',
-                'game_type' => 'required|in:ml,ff',
+                'game_type' => 'required|in:ml,pubg',
             ];
 
             // Tambahkan aturan validasi untuk slot_type jika game-nya Mobile Legends
@@ -78,8 +78,8 @@ class TeamRegistrationController extends Controller
             // Tambahkan validasi unique berdasarkan jenis game
             if ($gameType === 'ml') {
                 $rules['team_name'] .= '|unique:ml_teams,team_name';
-            } elseif ($gameType === 'ff') {
-                $rules['team_name'] .= '|unique:ff_teams,team_name';
+            } elseif ($gameType === 'pubg') {
+                $rules['team_name'] .= '|unique:pubg_teams,team_name';
             }
 
             // Buat pesan validasi custom
@@ -107,7 +107,7 @@ class TeamRegistrationController extends Controller
             Log::info('Validation passed', ['validated_data' => $validated, 'teamIdToReuse' => $teamIdToReuse]);
 
             // Validasi ketersediaan slot berdasarkan game type dan slot type
-            $competitionName = $gameType === 'ml' ? 'Mobile Legends' : 'Free Fire';
+            $competitionName = $gameType === 'ml' ? 'Mobile Legends' : 'PUBG Mobile';
             $slot = CompetitionSlot::where('competition_name', $competitionName)->first();
 
             if (!$slot) {
@@ -154,7 +154,7 @@ class TeamRegistrationController extends Controller
             }
 
             $isML = $validated['game_type'] === 'ml';
-            $isFF = $validated['game_type'] === 'ff';
+            $isPUBG = $validated['game_type'] === 'pubg';
 
             // Menggunakan transaksi database untuk memastikan semua operasi berjalan dengan baik
             DB::beginTransaction();
@@ -213,25 +213,25 @@ class TeamRegistrationController extends Controller
                     $team->slot_type = $validated['slot_type'] ?? 'single';
                     $team->slot_count = $isDoubleSlot ? 2 : 1; // Set slot_count sesuai dengan tipe slot
 
-                } else if ($isFF) {
-                    $existingTeam = FF_Team::where('team_name', $validated['team_name'])->first();
+                } else if ($isPUBG) {
+                    $existingTeam = PUBG_Team::where('team_name', $validated['team_name'])->first();
                     if ($existingTeam) {
-                        Log::warning('Team already exists', ['team_name' => $validated['team_name'], 'game_type' => 'ff']);
-                        return back()->withErrors(['team_name' => 'Nama tim Free Fire sudah digunakan. Silakan gunakan nama lain.'])->withInput();
+                        Log::warning('Team already exists', ['team_name' => $validated['team_name'], 'game_type' => 'pubg']);
+                        return back()->withErrors(['team_name' => 'Nama tim PUBG Mobile sudah digunakan. Silakan gunakan nama lain.'])->withInput();
                     }
 
                     // Buat tim baru
-                    $team = new FF_Team();
+                    $team = new PUBG_Team();
 
                     // Jika ada ID yang ingin digunakan kembali, set ID tersebut
                     if ($teamIdToReuse) {
-                        $existingTeamWithId = FF_Team::find($teamIdToReuse);
+                        $existingTeamWithId = PUBG_Team::find($teamIdToReuse);
                         if (!$existingTeamWithId) {
                             // Atur ID secara manual jika ID tersebut tersedia
                             $team->id = $teamIdToReuse;
                             $team->setAttribute('id', $teamIdToReuse); // Memastikan ID diset dengan benar
 
-                            Log::info('Using specified team_id_to_reuse for FF team', [
+                            Log::info('Using specified team_id_to_reuse for PUBG team', [
                                 'team_id' => $teamIdToReuse,
                                 'team_id_type' => gettype($teamIdToReuse),
                                 'team_object' => $team
@@ -239,28 +239,28 @@ class TeamRegistrationController extends Controller
 
                             // Cara tambahan: set auto_increment untuk memastikan ID berikutnya lebih tinggi
                             try {
-                                DB::statement('ALTER TABLE ff_teams AUTO_INCREMENT = ?', [$teamIdToReuse + 1]);
-                                Log::info('Changed FF_Team auto_increment', ['new_value' => $teamIdToReuse + 1]);
+                                DB::statement('ALTER TABLE pubg_teams AUTO_INCREMENT = ?', [$teamIdToReuse + 1]);
+                                Log::info('Changed PUBG_Team auto_increment', ['new_value' => $teamIdToReuse + 1]);
 
                                 // Tambahkan pesan ke session untuk ditampilkan di frontend
                                 session()->flash('team_id_reused', [
                                     'message' => 'ID tim berhasil digunakan kembali',
                                     'team_id' => $teamIdToReuse,
-                                    'game_type' => 'ff'
+                                    'game_type' => 'pubg'
                                 ]);
                             } catch (\Exception $e) {
-                                Log::error('Failed to change FF_Team auto_increment', [
+                                Log::error('Failed to change PUBG_Team auto_increment', [
                                     'error' => $e->getMessage(),
                                     'team_id' => $teamIdToReuse
                                 ]);
                             }
                         } else {
-                            Log::warning('Cannot use team_id_to_reuse for FF, team with this ID already exists', [
+                            Log::warning('Cannot use team_id_to_reuse for PUBG, team with this ID already exists', [
                                 'team_id' => $teamIdToReuse
                             ]);
                         }
                     }
-                    // Free Fire selalu single slot, tidak perlu set slot_type dan slot_count
+                    // PUBG Mobile selalu single slot, tidak perlu set slot_type dan slot_count
                 }
 
                 $team->team_name = $validated['team_name'];
@@ -273,7 +273,7 @@ class TeamRegistrationController extends Controller
                 Log::info('Team saved', ['team_id' => $team->id, 'team_name' => $team->team_name]);
 
                 // Buat struktur folder berdasarkan ID tim dan nama
-                $gameFolder = $isML ? 'ML_teams' : 'FF_teams';
+                $gameFolder = $isML ? 'ML_teams' : 'PUBG_teams';
                 $teamFolder = $gameFolder . '/' . $team->id . '_' . Str::slug($team->team_name);
 
                 // Buat folder yang diperlukan untuk file tim saja
@@ -349,8 +349,8 @@ class TeamRegistrationController extends Controller
                 $url = '';
                 if ($isML) {
                     $url = route('player-registration.form', ['encryptedTeamName' => $encryptedTeamName]);
-                } elseif ($isFF) {
-                    $url = route('player-registration-ff.form', ['encryptedTeamName' => $encryptedTeamName]);
+                } elseif ($isPUBG) {
+                    $url = route('player-registration-pubg.form', ['encryptedTeamName' => $encryptedTeamName]);
                 }
 
                 try {
@@ -372,8 +372,8 @@ class TeamRegistrationController extends Controller
 
                 if ($isML) {
                     return redirect()->route('player-registration.form', ['encryptedTeamName' => $encryptedTeamName]);
-                } elseif ($isFF) {
-                    return redirect()->route('player-registration-ff.form', ['encryptedTeamName' => $encryptedTeamName]);
+                } elseif ($isPUBG) {
+                    return redirect()->route('player-registration-pubg.form', ['encryptedTeamName' => $encryptedTeamName]);
                 }
 
             } catch (\Exception $e) {

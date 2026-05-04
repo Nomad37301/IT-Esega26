@@ -22,19 +22,19 @@ import axios from "axios"
 
 export default function PlayerRegistrationForm({ teamData, gameType }: PlayerRegistrationFormProps) {
     const isML = gameType === "ml"
-    const gameTitle = isML ? "Mobile Legends" : "Free Fire"
+    const gameTitle = isML ? "Mobile Legends" : "PUBG Mobile"
     const minPlayers = 5
     const maxPlayers = 7
 
     const themeColors = {
-        primary: "bg-blue-600 hover:bg-blue-700 text-white",
-        secondary: "bg-blue-500/10 text-blue-600 hover:bg-blue-500/20",
-        badge: "bg-blue-100 text-blue-800",
-        progress: "bg-blue-600",
-        progressBg: "bg-blue-100",
-        border: "border-blue-200",
-        text: "text-blue-600",
-        gradient: "bg-gradient-to-r from-blue-600 to-blue-800",
+        primary: "bg-secondary hover:opacity-90 text-white",
+        secondary: "bg-secondary/10 text-secondary hover:bg-secondary/20",
+        badge: "bg-secondary/10 text-secondary",
+        progress: "bg-secondary",
+        progressBg: "bg-secondary/20",
+        border: "border-secondary/20",
+        text: "text-secondary",
+        gradient: "bg-secondary",
         alert: "bg-red-600/90 border-red-200",
         success: "bg-green-600 border-green-200 shadow-md",
         card: "bg-white shadow-lg rounded-xl border border-gray-100",
@@ -242,6 +242,7 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
             submitData.append('game_type', gameType)
 
             router.post(route("player-registration.store"), submitData, {
+                preserveScroll: true,
                 onSuccess: () => {
                     clearInterval(progressInterval);
                     setSuccessMessage("Pendaftaran berhasil!")

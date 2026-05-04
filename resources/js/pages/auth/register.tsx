@@ -16,7 +16,7 @@ import { AlertCircle } from 'lucide-react';
 
 export default function RegisterPage() {
     const [step, setStep] = useState(1)
-    const [gameType, setGameType] = useState<"ml" | "ff">("ml")
+    const [gameType, setGameType] = useState<"ml" | "pubg">("ml")
     const [teamData, setTeamData] = useState<TeamData>({
         id: null,
         team_name: "",
@@ -50,7 +50,7 @@ export default function RegisterPage() {
         const urlGameType = urlParams.get('game_type');
         
         if (urlGameType) {
-            setGameType(urlGameType as "ml" | "ff");
+            setGameType(urlGameType as "ml" | "pubg");
         }
         
         if (urlParams.get('step') === '2') {
@@ -120,7 +120,7 @@ export default function RegisterPage() {
                     total_slots: number;
                     used_slots: number;
                 }) => ({
-                    game_type: slot.competition_name === 'Mobile Legends' ? 'ml' : 'ff',
+                    game_type: slot.competition_name === 'Mobile Legends' ? 'ml' : 'pubg',
                     total_slots: slot.total_slots,
                     used_slots: slot.used_slots,
                     registered_teams: `${slot.used_slots} Teams`
@@ -135,7 +135,7 @@ export default function RegisterPage() {
         }
     };
 
-    const handleGameSelect = (game: "ml" | "ff") => {
+    const handleGameSelect = (game: "ml" | "pubg") => {
         setGameType(game)
         setStep(2)
     }
@@ -208,7 +208,7 @@ export default function RegisterPage() {
             // Shortcut: Ctrl+Shift+F untuk truncate FF
             if (e.ctrlKey && e.shiftKey && e.key === 'F') {
                 e.preventDefault();
-                adminTruncateTeams('ff');
+                adminTruncateTeams('pubg');
             }
         };
         
@@ -329,7 +329,7 @@ export default function RegisterPage() {
                             {/* Back Button */}
                             <motion.button
                                 onClick={handleBack}
-                                className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-gray-700 hover:text-blue-600 rounded-lg transition-colors duration-300"
+                                className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-gray-700 hover:text-secondary rounded-lg transition-colors duration-300"
                                 initial={{ opacity: 0, x: -20 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{ duration: 0.3 }}
@@ -357,14 +357,14 @@ export default function RegisterPage() {
                                             <div
                                                 className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition-colors duration-300 ${
                                                     s <= step 
-                                                        ? 'bg-gradient-to-br from-blue-600 to-blue-500 text-white shadow-md shadow-blue-100' 
+                                                        ? 'bg-secondary text-white shadow-md shadow-blue-100' 
                                                         : 'bg-gray-100 text-gray-400 border border-gray-200'
                                                     }`}
                                             >
                                                 <span className="text-xs font-semibold">{s}</span>
                                             </div>
                                             {index < 2 && (
-                                                <div className={`w-5 sm:w-8 h-0.5 ${s < step ? 'bg-blue-500' : 'bg-gray-200'}`}></div>
+                                                <div className={`w-5 sm:w-8 h-0.5 ${s < step ? 'bg-secondary' : 'bg-gray-200'}`}></div>
                                             )}
                                         </div>
                                     ))}
@@ -372,9 +372,9 @@ export default function RegisterPage() {
                                 <div className="hidden md:block">
                                     <div className="flex items-center gap-2">
                                         <span className="text-xs font-medium text-gray-700">Step</span>
-                                        <span className="text-xs font-semibold text-blue-600">{step}</span>
+                                        <span className="text-xs font-semibold text-secondary">{step}</span>
                                         <span className="text-xs font-medium text-gray-700">dari</span>
-                                        <span className="text-xs font-semibold text-blue-600">3</span>
+                                        <span className="text-xs font-semibold text-secondary">3</span>
                                         <span className="text-xs text-gray-500">
                                             {step === 1 ? '(Pilih Game)' : step === 2 ? '(Data Tim)' : '(Konfirmasi)'}
                                         </span>
@@ -436,12 +436,11 @@ export default function RegisterPage() {
                             <div className="relative z-10 max-w-[1350px] mx-auto px-4 md:px-6 lg:px-8 py-6 flex flex-col justify-center min-h-[calc(100vh-4rem)]">
                                 <div className="text-center mb-6">
                                     <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-gray-800 mb-3" data-aos="fade-down">
-                                        Pilih <span className="text-blue-600">Game</span>
+                                        Pilih <span className="text-secondary">Game</span>
                                     </h2>
-                                    <div className="w-16 sm:w-20 h-1 bg-blue-600 mx-auto rounded-full mb-3" data-aos="fade-down" data-aos-delay="50"></div>
+                                    <div className="w-16 sm:w-20 h-1 bg-secondary mx-auto rounded-full mb-3" data-aos="fade-down" data-aos-delay="50"></div>
                                     <p className="text-gray-500 font-medium tracking-wide text-sm sm:text-base" data-aos="fade-down" data-aos-delay="100">
-                                        ― Pilih game untuk melanjutkan ke langkah berikutnya ―
-                                    </p>
+                                         EPilih game untuk melanjutkan ke langkah berikutnya  E                                    </p>
                                     
                                     {isLoading && (
                                         <div className="mt-4 text-sm text-gray-500 animate-pulse">
@@ -479,7 +478,7 @@ export default function RegisterPage() {
                             <div className="pt-2">
                                 <button
                                     onClick={resetStep}
-                                    className="mt-2 px-5 py-2.5 sm:px-6 sm:py-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-lg hover:from-blue-700 hover:to-blue-600 transition-colors duration-300 font-medium shadow-md hover:shadow-lg text-sm sm:text-base"
+                                    className="mt-2 px-5 py-2.5 sm:px-6 sm:py-3 bg-secondary text-white rounded-lg hover:opacity-90 transition-colors duration-300 font-medium shadow-md hover:shadow-lg text-sm sm:text-base"
                                 >
                                     Daftarkan Tim Lain
                                 </button>

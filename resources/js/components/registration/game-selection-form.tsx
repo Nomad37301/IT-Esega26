@@ -23,7 +23,7 @@ export function GameSelectionForm({ onGameSelect, gameStats: initialGameStats }:
                     total_slots: number;
                     used_slots: number;
                 }) => ({
-                    game_type: slot.competition_name === 'Mobile Legends' ? 'ml' : 'ff',
+                    game_type: slot.competition_name === 'Mobile Legends' ? 'ml' : 'pubg',
                     total_slots: slot.total_slots,
                     used_slots: slot.used_slots,
                     registered_teams: `${slot.used_slots} Teams`
@@ -72,7 +72,7 @@ export function GameSelectionForm({ onGameSelect, gameStats: initialGameStats }:
             slots: "64 SLOT",
             type: "SINGLE & DOUBLE SLOT",
             scope: "NATIONAL COMPETITION",
-            date: "12th, 18th, 19th JULI 2025",
+            date: "17, 18, 24 JULI 2026",
             mode: "ONLINE",
             image: "/Images/ML-logo.png",
             bgImage: "/Images/ML-bg-high.jpeg",
@@ -88,12 +88,12 @@ export function GameSelectionForm({ onGameSelect, gameStats: initialGameStats }:
             isDisabled: getSlotRemaining('ml') <= 0
         },
         {
-            id: "ff",
-            title: "Free Fire",
+            id: "pubg",
+            title: "PUBG Mobile",
             slots: "48 SLOT",
             type: "SINGLE SLOT ONLY",
             scope: "NATIONAL COMPETITION",
-            date: "5th JULI 2025",
+            date: "4, 10 JULI 2026",
             mode: "ONLINE",
             image: "/Images/FF-logo.png",
             bgImage: "/Images/FF-bg-high.jpeg",
@@ -102,11 +102,11 @@ export function GameSelectionForm({ onGameSelect, gameStats: initialGameStats }:
             textColor: "text-orange-600",
             bgColor: "bg-orange-100",
             fee: "Rp 100.000",
-            status: getSlotRemaining('ff') > 0 ? "Available" : "Closed",
-            statusColor: getSlotRemaining('ff') > 0 ? "bg-green-500" : "bg-red-500",
-            totalSlots: gameStats?.find((g: GameStats) => g.game_type === 'ff')?.total_slots || 48,
-            teams: gameStats?.find((g: GameStats) => g.game_type === 'ff')?.registered_teams || "0 Teams",
-            isDisabled: getSlotRemaining('ff') <= 0
+            status: getSlotRemaining('pubg') > 0 ? "Available" : "Closed",
+            statusColor: getSlotRemaining('pubg') > 0 ? "bg-green-500" : "bg-red-500",
+            totalSlots: gameStats?.find((g: GameStats) => g.game_type === 'pubg')?.total_slots || 48,
+            teams: gameStats?.find((g: GameStats) => g.game_type === 'pubg')?.registered_teams || "0 Teams",
+            isDisabled: getSlotRemaining('pubg') <= 0
         }
     ]
 
@@ -126,7 +126,7 @@ export function GameSelectionForm({ onGameSelect, gameStats: initialGameStats }:
                             className={`relative rounded-xl overflow-hidden transition-all duration-300 border border-gray-100 group
                                 ${game.isDisabled ? 'cursor-not-allowed' : 'cursor-pointer hover:shadow-xl'}`}
                             whileHover={!game.isDisabled ? { scale: 1.02, y: -4 } : {}}
-                            onClick={() => !game.isDisabled && onGameSelect(game.id as "ml" | "ff")}
+                            onClick={() => !game.isDisabled && onGameSelect(game.id as "ml" | "pubg")}
                         >
                             {game.isDisabled && (
                                 <div className="absolute inset-0 bg-black/60 backdrop-blur-[1px] flex items-center justify-center z-10">
@@ -177,37 +177,12 @@ export function GameSelectionForm({ onGameSelect, gameStats: initialGameStats }:
                             
                             {/* Game Info Section */}
                             <div className="p-6">                            
-                                {/* Slot Progress Bar */}
-                                <div className="mb-6">
-                                    <div className="flex items-center justify-between mb-2.5">
-                                        <div className="flex items-center">
-                                            <Users className="w-4 h-4 text-blue-500 mr-1.5" />
-                                            <span className="text-sm font-semibold text-gray-700">Slot Tersedia</span>
-                                        </div>
-                                        <span className="text-xs font-medium px-3 py-1 bg-blue-50 text-blue-600 rounded-full">
-                                            {getSlotRemaining(game.id)} dari {game.totalSlots}
-                                        </span>
-                                    </div>
-                                    <div className="h-3 w-full bg-gray-100 rounded-full overflow-hidden">
-                                        <div 
-                                            className="h-full bg-gradient-to-r from-blue-500 to-blue-600 transition-all duration-300"
-                                            style={{width: `${getSlotPercentage(game.id)}%`}}
-                                        ></div>
-                                    </div>
-                                    <div className="flex justify-between text-xs mt-2">
-                                        <span className="text-gray-500">
-                                            {getSlotPercentage(game.id)}% terisi
-                                        </span>
-                                        <span className="text-gray-500 font-medium">
-                                            {game.id === 'ml' ? 'Single & Double Slot' : 'Single Slot Only'}
-                                        </span>
-                                    </div>
-                                </div>
+
 
                                 {/* Fee Section */}
                                 <div className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-4 mb-5">
                                     <div className="flex items-center mb-1.5">
-                                        <DollarSign className="w-5 h-5 text-blue-600 mr-2" />
+                                        <DollarSign className="w-5 h-5 text-secondary mr-2" />
                                         <h4 className="text-base font-semibold text-gray-800">Biaya Pendaftaran</h4>
                                     </div>
                                     
@@ -215,37 +190,46 @@ export function GameSelectionForm({ onGameSelect, gameStats: initialGameStats }:
                                         <div className="grid grid-cols-2 gap-3 mt-3">
                                             <div className="bg-white p-3 rounded-lg border border-gray-200 text-center">
                                                 <div className="text-xs text-gray-500 mb-1">Single Slot</div>
-                                                <div className="text-blue-600 font-bold">{game.fee}</div>
+                                                <div className="flex justify-center items-center gap-1.5">
+                                                    <span className="text-xs text-gray-400 line-through">Rp 125.000</span>
+                                                    <span className="text-secondary font-bold">{game.fee}</span>
+                                                </div>
                                                 <div className="text-xs text-gray-500 mt-1">1 Tim, 1 Slot</div>
                                             </div>
                                             <div className="bg-white p-3 rounded-lg border border-gray-200 text-center">
                                                 <div className="text-xs text-gray-500 mb-1">Double Slot</div>
-                                                <div className="text-blue-600 font-bold">Rp 200.000</div>
+                                                <div className="flex justify-center items-center gap-1.5">
+                                                    <span className="text-xs text-gray-400 line-through">Rp 250.000</span>
+                                                    <span className="text-secondary font-bold">Rp 200.000</span>
+                                                </div>
                                                 <div className="text-xs text-gray-500 mt-1">1 Tim, 2 Slot</div>
                                             </div>
                                         </div>
                                     ) : (
-                                        <div className="bg-white p-3 rounded-lg border border-blue-200 text-center mt-3">
+                                        <div className="bg-white p-3 rounded-lg border border-secondary/20 text-center mt-3">
                                             <div className="text-xs text-gray-500 mb-1">Single Slot Only</div>
-                                            <div className="text-blue-600 font-bold">{game.fee}</div>
-                                            <div className="text-xs text-gray-500 mt-1">Free Fire hanya tersedia dalam format Single Slot</div>
+                                            <div className="flex justify-center items-center gap-1.5">
+                                                <span className="text-xs text-gray-400 line-through">Rp 125.000</span>
+                                                <span className="text-secondary font-bold">{game.fee}</span>
+                                            </div>
+                                            <div className="text-xs text-gray-500 mt-1">PUBG Mobile hanya tersedia dalam format Single Slot</div>
                                         </div>
                                     )}
                                 </div>
 
                                 {/* Date Highlight */}
-                                <div className="mb-6 bg-blue-50 border border-blue-100 rounded-xl p-4">
+                                <div className="mb-6 bg-secondary/5 border border-secondary/20 rounded-xl p-4">
                                     <div className="flex items-center mb-1">
-                                        <Calendar className="w-5 h-5 text-blue-500 mr-2" />
+                                        <Calendar className="w-5 h-5 text-secondary mr-2" />
                                         <h4 className="text-base font-semibold text-gray-800">Tanggal Turnamen</h4>
                                     </div>
-                                    <div className="pl-7 text-sm font-medium text-blue-600 mt-1.5">{game.date}</div>
+                                    <div className="pl-7 text-sm font-medium text-secondary mt-1.5">{game.date}</div>
                                 </div>
                                 
                                 <div className="mt-5">
                                     <button 
-                                        className="w-full py-4 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-xl 
-                                        font-medium hover:from-blue-700 hover:to-blue-600 transition-all duration-300 
+                                        className="w-full py-4 bg-secondary text-white rounded-xl 
+                                        font-medium hover:opacity-90 transition-all duration-300 
                                         flex items-center justify-center shadow-md hover:shadow-lg group"
                                     >
                                         <Gamepad2 className="w-4 h-4 mr-2 group-hover:animate-pulse" />

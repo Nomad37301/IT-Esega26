@@ -12,12 +12,12 @@ import {
 import { ChartContainer } from "@/components/ui/chart"
 
 const data = [
-    { name: "Jan", "Free Fire": 65, "Mobile Legends": 58 },
-    { name: "Feb", "Free Fire": 72, "Mobile Legends": 63 },
-    { name: "Mar", "Free Fire": 68, "Mobile Legends": 70 },
-    { name: "Apr", "Free Fire": 75, "Mobile Legends": 65 },
-    { name: "May", "Free Fire": 70, "Mobile Legends": 68 },
-    { name: "Jun", "Free Fire": 78, "Mobile Legends": 72 },
+    { name: "Jan", "PUBG Mobile": 65, "Mobile Legends": 58 },
+    { name: "Feb", "PUBG Mobile": 72, "Mobile Legends": 63 },
+    { name: "Mar", "PUBG Mobile": 68, "Mobile Legends": 70 },
+    { name: "Apr", "PUBG Mobile": 75, "Mobile Legends": 65 },
+    { name: "May", "PUBG Mobile": 70, "Mobile Legends": 68 },
+    { name: "Jun", "PUBG Mobile": 78, "Mobile Legends": 72 },
 ]
 
 export function TeamPerformanceChart() {
@@ -56,7 +56,7 @@ export function TeamPerformanceChart() {
                     />
                     <Tooltip />
                     <Bar
-                        dataKey="Free Fire"
+                        dataKey="PUBG Mobile"
                         fill="hsl(346, 77%, 60%)"
                         radius={[4, 4, 0, 0]}
                         barSize={20}

@@ -18,12 +18,12 @@ export default function TeamManagement() {
             <div className="container py-8">
                 <h1 className="text-2xl font-bold mb-6">Tim Management</h1>
                 
-                <Tabs defaultValue="free-fire">
+                <Tabs defaultValue="pubg-mobile">
                     <TabsList className="w-full max-w-md mb-6">
-                        <TabsTrigger value="free-fire" className="flex-1">
+                        <TabsTrigger value="pubg-mobile" className="flex-1">
                             <div className="flex items-center gap-2">
-                                <img src="/Images/FF-logo.png" alt="Free Fire" className="w-5 h-5" />
-                                <span>Free Fire</span>
+                                <img src="/Images/FF-logo.png" alt="PUBG Mobile" className="w-5 h-5" />
+                                <span>PUBG Mobile</span>
                             </div>
                         </TabsTrigger>
                         <TabsTrigger value="mobile-legends" className="flex-1">
@@ -34,8 +34,8 @@ export default function TeamManagement() {
                         </TabsTrigger>
                     </TabsList>
                     
-                    <TabsContent value="free-fire">
-                        <TeamsTable gameType="free-fire" />
+                    <TabsContent value="pubg-mobile">
+                        <TeamsTable gameType="pubg-mobile" />
                     </TabsContent>
                     
                     <TabsContent value="mobile-legends">

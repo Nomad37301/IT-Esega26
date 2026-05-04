@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ff_teams', function (Blueprint $table) {
+        Schema::create('pubg_teams', function (Blueprint $table) {
             $table->id();
             $table->string('team_name')->unique(); // Nama tim
             $table->string('team_logo')->nullable(); // Logo tim
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ff_teams');
+        Schema::dropIfExists('pubg_teams');
     }
 };

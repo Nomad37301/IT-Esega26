@@ -8,6 +8,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useEffect, useState, Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
+import { useRegistrationStatus } from '@/hooks/use-registration-status';
 import { route } from 'ziggy-js';
 
 const navItems = [
@@ -24,7 +25,7 @@ const Bracket: React.FC = () => {
 
     // State untuk kontrol registration closed popup
     const [showClosedPopup, setShowClosedPopup] = useState(false);
-    const isRegistrationClosed = false; // Set registration sebagai open (untuk testing)
+    const isRegistrationClosed = useRegistrationStatus();
 
     useEffect(() => {
         // Inisialisasi AOS
@@ -50,9 +51,9 @@ const Bracket: React.FC = () => {
             link: '/bracket/mobile-legends',
         },
         {
-            title: 'Free Fire',
-            summary: "Check out the Free Fire bracket and see who's advancing. Live updates and results.",
-            link: '/bracket/free-fire',
+            title: 'PUBG Mobile Qualification Day 1',
+            summary: "Check out the PUBG Mobile bracket and see who's advancing. Live updates and results.",
+            link: '/bracket/pubg-mobile',
         },
     ];
 
@@ -63,11 +64,11 @@ const Bracket: React.FC = () => {
                 {/* Background Layer */}
                 <div className="absolute inset-0 bg-white"></div>
                 {/* Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-b from-white via-red-50/40 to-red-100/30"></div>
+                <div className="absolute inset-0 bg-gradient-to-b from-white via-blue-50/40 to-blue-100/30"></div>
                 {/* Cross Blob - Top Left */}
                 <div className="pointer-events-none absolute top-24 -left-12 h-28 w-28 opacity-5">
                     <div className="animate-spin-slow h-full w-full">
-                        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="h-full w-full fill-red-500">
+                        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="h-full w-full fill-blue-500">
                             <path d="M85,40 h30 v45 h45 v30 h-45 v45 h-30 v-45 h-45 v-30 h45 z" />
                         </svg>
                     </div>
@@ -75,7 +76,7 @@ const Bracket: React.FC = () => {
                 {/* Cross Blob - Bottom Right */}
                 <div className="pointer-events-none absolute -right-8 bottom-16 h-20 w-20 opacity-5">
                     <div className="animate-spin-reverse-slow h-full w-full">
-                        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="h-full w-full fill-red-500">
+                        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="h-full w-full fill-blue-500">
                             <path d="M85,40 h30 v45 h45 v30 h-45 v45 h-30 v-45 h-45 v-30 h45 z" />
                         </svg>
                     </div>
@@ -91,6 +92,7 @@ const Bracket: React.FC = () => {
                         items={navItems}
                         isRegistrationClosed={isRegistrationClosed}
                         setShowClosedPopup={setShowClosedPopup}
+                        forceSolid
                     />
 
                     {/* Main Content Container */}
@@ -98,9 +100,9 @@ const Bracket: React.FC = () => {
                         {/* Header Section */}
                         <div className="text-center mb-8" data-aos="fade-up">
                             <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-3">
-                                <span className="text-red-600">IT-ESEGA</span> Brackets
+                                <span className="text-secondary">IT-ESEGA</span> Brackets
                             </h1>
-                            <div className="w-16 h-0.5 bg-red-600 rounded-full mx-auto mb-4"></div>
+                            <div className="w-16 h-0.5 bg-secondary rounded-full mx-auto mb-4"></div>
                             <p className="text-base text-gray-600 max-w-xl mx-auto">
                                 Follow your favorite teams and watch live matches
                             </p>
@@ -115,7 +117,7 @@ const Bracket: React.FC = () => {
                                     data-aos="fade-up"
                                     data-aos-delay={index * 100}
                                 >
-                                    <Card className="h-full border border-gray-200 hover:border-red-300 bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
+                                    <Card className="h-full border border-gray-200 hover:border-secondary bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
                                         <CardContent className="p-6">
                                             <div className="text-center">
                                                 <h2 className="text-xl font-semibold text-gray-800 mb-3">
@@ -125,7 +127,7 @@ const Bracket: React.FC = () => {
                                                     {bracket.summary}
                                                 </p>
                                                 <Button
-                                                    className="w-full bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg text-sm font-medium transition-all duration-300"
+                                                    className="w-full bg-secondary hover:opacity-90 text-white py-2 px-4 rounded-lg text-sm font-medium transition-all duration-300"
                                                     onClick={() => router.visit(bracket.link)}
                                                 >
                                                     View Bracket
@@ -137,21 +139,46 @@ const Bracket: React.FC = () => {
                             ))}
                         </div>
 
-                        {/* Special Card - Day 2 & Grand Final */}
-                        <div className="flex justify-center" data-aos="fade-up" data-aos-delay={300}>
-                            <Card className="max-w-xl w-full border border-yellow-400 bg-gradient-to-br from-yellow-50 to-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
-                                <CardContent className="p-6 text-center">
-                                    <h2 className="text-2xl font-semibold text-yellow-700 mb-3">
-                                        Mobile Legends
-                                        <br />
-                                        <span className="text-lg">Day 2 & Grand Final</span>
-                                    </h2>
-                                    <p className="text-gray-700 mb-4 text-sm leading-relaxed max-w-md mx-auto">
-                                        Watch the most anticipated matches of the tournament
-                                    </p>
+                        {/* Special Cards - Finals */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 justify-center" data-aos="fade-up" data-aos-delay={300}>
+                            {/* ML Finals Card */}
+                            <Card className="w-full border border-yellow-400 bg-gradient-to-br from-yellow-50 to-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
+                                <CardContent className="p-6 text-center h-full flex flex-col justify-between">
+                                    <div>
+                                        <h2 className="text-2xl font-semibold text-yellow-700 mb-3">
+                                            Mobile Legends
+                                            <br />
+                                            <span className="text-lg">Day 2 & Grand Final</span>
+                                        </h2>
+                                        <p className="text-gray-700 mb-4 text-sm leading-relaxed max-w-md mx-auto">
+                                            Watch the most anticipated matches of the tournament
+                                        </p>
+                                    </div>
                                     <Button
-                                        className="bg-yellow-600 hover:bg-yellow-700 text-white py-2 px-6 rounded-lg text-sm font-medium transition-all duration-300"
+                                        className="w-full bg-yellow-600 hover:bg-yellow-700 text-white py-2 px-6 rounded-lg text-sm font-medium transition-all duration-300"
                                         onClick={() => router.visit('/bracket/mobile-legends/day2-3')}
+                                    >
+                                        View Finals
+                                    </Button>
+                                </CardContent>
+                            </Card>
+
+                            {/* PUBG Finals Card */}
+                            <Card className="w-full border border-yellow-400 bg-gradient-to-br from-yellow-50 to-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
+                                <CardContent className="p-6 text-center h-full flex flex-col justify-between">
+                                    <div>
+                                        <h2 className="text-2xl font-semibold text-yellow-700 mb-3">
+                                            PUBG Mobile
+                                            <br />
+                                            <span className="text-lg">Grand Final</span>
+                                        </h2>
+                                        <p className="text-gray-700 mb-4 text-sm leading-relaxed max-w-md mx-auto">
+                                            Witness the ultimate survival battle in the Grand Final
+                                        </p>
+                                    </div>
+                                    <Button
+                                        className="w-full bg-yellow-600 hover:bg-yellow-700 text-white py-2 px-6 rounded-lg text-sm font-medium transition-all duration-300"
+                                        onClick={() => router.visit('/bracket/pubg-mobile/grand-final')}
                                     >
                                         View Finals
                                     </Button>
@@ -205,7 +232,7 @@ const Bracket: React.FC = () => {
                                 <div className="flex flex-col gap-4 mt-4">
                                     <Link
                                         href={route('home')}
-                                        className="inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white transition bg-red-600 rounded-md hover:bg-red-700"
+                                        className="inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white transition bg-blue-600 rounded-md hover:bg-blue-700"
                                     >
                                         Kembali ke Beranda
                                     </Link>

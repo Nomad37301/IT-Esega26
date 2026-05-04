@@ -14,7 +14,7 @@ export default function TimelineSection({ timeline }: { timeline: Event[] }) {
                 <div className="relative z-10 mx-auto max-w-[1350px] px-4 md:px-8 lg:px-12">
                     <div className="mb-8 text-center md:mb-12">
                         <h2 className="mb-4 text-3xl font-extrabold sm:text-4xl" data-aos="fade-up">
-                            Event <span className="text-section-title">Timeline</span>
+                            Event <span className="text-secondary">Timeline</span>
                         </h2>
                         <div className="bg-primary mx-auto h-1 w-20 rounded-full sm:w-24" data-aos="fade-up" data-aos-delay="50"></div>
                     </div>

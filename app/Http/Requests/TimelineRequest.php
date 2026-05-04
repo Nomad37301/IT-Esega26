@@ -26,7 +26,7 @@ class TimelineRequest extends FormRequest
             'due_date' => ['nullable', 'date'],
             'end_date' => ['nullable', 'date'],
             'status' => ['required', 'boolean'],
-            'category' => ['required', 'in:mobile_legend,free_fire,valorant,pubgm,opening,closing'],
+            'category' => ['required', 'in:mobile_legend,valorant,pubgm,opening,closing'],
         ];
     }
 
@@ -47,7 +47,7 @@ class TimelineRequest extends FormRequest
             'status.required' => 'Status wajib diisi.',
             'status.boolean' => 'Status harus berupa true atau false.',
             'category.required' => 'Kategori wajib dipilih.',
-            'category.in' => 'Kategori yang dipilih tidak valid. Pilih antara mobile legend, free fire, valorant, pubgm, opening atau closing.',
+            'category.in' => 'Kategori yang dipilih tidak valid. Pilih antara mobile legend, valorant, pubgm, opening atau closing.',
         ];
     }
 }

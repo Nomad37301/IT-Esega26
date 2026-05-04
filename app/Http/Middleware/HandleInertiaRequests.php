@@ -57,7 +57,8 @@ class HandleInertiaRequests extends Middleware
             'ziggy' => fn(): array => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
-            ]
+            ],
+            'event' => fn() => \App\Http\Resources\TimelineResource::collection(\App\Models\Timeline::all()),
         ];
     }
 }

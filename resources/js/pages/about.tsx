@@ -9,6 +9,7 @@ import { usePage, Head, Link } from '@inertiajs/react';
 import { router } from '@inertiajs/react'; 
 import type { UserType } from '@/types/user';
 import { Dialog, Transition } from '@headlessui/react';
+import { useRegistrationStatus } from '@/hooks/use-registration-status';
 interface NavItem {
     title: string;
     href: string;
@@ -23,7 +24,7 @@ export default function About() {
 
     // State untuk kontrol registration closed popup
     const [showClosedPopup, setShowClosedPopup] = useState(false);
-    const isRegistrationClosed = false; // Set registration sebagai open (untuk testing)
+    const isRegistrationClosed = useRegistrationStatus();
 
     useEffect(() => {
         // Reset scroll position ke atas 
@@ -64,7 +65,7 @@ export default function About() {
         navItems.push({
             title: 'Register',
             href: route('register'),
-            className: 'bg-red-600 text-white hover:bg-red-700 px-4 py-2 rounded-lg transition-colors duration-200',
+            className: 'bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded-lg transition-colors duration-200',
         });
     }
 
@@ -118,6 +119,7 @@ export default function About() {
                         items={navItems}
                         isRegistrationClosed={isRegistrationClosed}
                         setShowClosedPopup={setShowClosedPopup}
+                        forceSolid
                     />
 
                     <div className="bg-gradient-to-b from-white">
@@ -189,7 +191,7 @@ export default function About() {
                                 {/* Vision, Mission, Values Cards */}
                                 <div className="mt-12 grid grid-cols-1 gap-6 sm:mt-16 sm:gap-8 md:grid-cols-3" data-aos="fade-up">
                                     {/* Vision */}
-                                    <div className="rounded-xl border border-secondary bg-white p-8 shadow-lg transition-all duration-300 hover:shadow-xl">
+                                    <div className="rounded-xl border border-blue-200 bg-white p-8 shadow-lg transition-all duration-300 hover:shadow-xl hover:border-blue-400">
                                         <div className="mb-6 flex justify-center">
                                             <div className="rounded-full bg-blue-100 p-4">
                                                 <svg
@@ -220,7 +222,7 @@ export default function About() {
                                         </p>
                                     </div>
                                     {/* mission */}
-                                    <div className="rounded-xl border border-secondary bg-white p-8 shadow-lg transition-all duration-300 hover:shadow-xl">
+                                    <div className="rounded-xl border border-blue-200 bg-white p-8 shadow-lg transition-all duration-300 hover:shadow-xl hover:border-blue-400">
                                         <div className="mb-6 flex justify-center">
                                             <div className="rounded-full bg-blue-100 p-4">
                                                 <svg
@@ -246,7 +248,7 @@ export default function About() {
                                         </p>
                                     </div>
                                     {/* Values */}
-                                    <div className="rounded-xl border border-secondary bg-white p-8 shadow-lg transition-all duration-300 hover:shadow-xl">
+                                    <div className="rounded-xl border border-blue-200 bg-white p-8 shadow-lg transition-all duration-300 hover:shadow-xl hover:border-blue-400">
                                         <div className="mb-6 flex justify-center">
                                             <div className="rounded-full bg-blue-100 p-4">
                                                 <svg
@@ -326,14 +328,14 @@ export default function About() {
                                     {/* Deskripsi Mascot */}
                                     <div className="order-2 md:order-1" data-aos="fade-right">
                                         <h2 className="mb-4 text-3xl font-bold text-[#333] sm:mb-6 sm:text-4xl">
-                                            About Our <span className="text-section-title">Mascot</span>
+                                            About Our <span className="text-secondary">Mascot</span>
                                         </h2>
                                         <div className="mb-6 h-1 w-20 rounded-full bg-primary sm:mb-8 sm:w-24"></div>
                                         <div className="space-y-4 text-gray-600 sm:space-y-6">
                                             <div>
                                                 <h3 className="mb-4 text-2xl font-semibold text-primary">[POLARIX]</h3>
                                                 <p className="mb-6 leading-relaxed">
-                                                    “POLARIX” adalah simbol kecerdasan yang tajam, ketangguhan yang tak mudah runtuh, dan presisi dalam setiap langkah di tengah dunia digital yang terus bergerak cepat. Ia mencerminkan cara berpikir yang strategis, tindakan yang terukur, serta kemampuan untuk beradaptasi di setiap perubahan. Polarix menjadi pengingat untuk terus bertumbuh, melampaui batas diri, dan menjaga standar terbaik dalam setiap proses.
+                                                    “POLARIX Eadalah simbol kecerdasan yang tajam, ketangguhan yang tak mudah runtuh, dan presisi dalam setiap langkah di tengah dunia digital yang terus bergerak cepat. Ia mencerminkan cara berpikir yang strategis, tindakan yang terukur, serta kemampuan untuk beradaptasi di setiap perubahan. Polarix menjadi pengingat untuk terus bertumbuh, melampaui batas diri, dan menjaga standar terbaik dalam setiap proses.
                                                 </p>
                                             </div>
                                         </div>
@@ -435,7 +437,7 @@ export default function About() {
                                     </div>
                                     <div data-aos="fade-left">
                                         <h2 className="mb-4 sm:mb-6 text-3xl sm:text-4xl font-bold text-[#333]">
-                                            About Our <span className="text-section-title">Logo</span>
+                                            About Our <span className="text-secondary">Logo</span>
                                         </h2>
                                         <div className="w-20 sm:w-24 h-1 bg-primary rounded-full mb-6 sm:mb-8"></div>
                                         <div className="space-y-4 sm:space-y-6 text-gray-600">
@@ -614,7 +616,7 @@ export default function About() {
                                 <div className="flex flex-col gap-4 mt-4">
                                     <Link
                                         href={route('home')}
-                                        className="inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white transition bg-red-600 rounded-md hover:bg-red-700"
+                                        className="inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white transition bg-blue-600 rounded-md hover:bg-blue-700"
                                     >
                                         Kembali ke Beranda
                                     </Link>

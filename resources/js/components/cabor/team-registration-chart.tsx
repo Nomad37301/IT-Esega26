@@ -11,18 +11,18 @@ import {
 } from "recharts"
 
 const data = [
-    { month: "Jan", "Free Fire": 2, "Mobile Legends": 1 },
-    { month: "Feb", "Free Fire": 3, "Mobile Legends": 2 },
-    { month: "Mar", "Free Fire": 5, "Mobile Legends": 3 },
-    { month: "Apr", "Free Fire": 4, "Mobile Legends": 4 },
-    { month: "May", "Free Fire": 6, "Mobile Legends": 5 },
-    { month: "Jun", "Free Fire": 8, "Mobile Legends": 6 },
-    { month: "Jul", "Free Fire": 7, "Mobile Legends": 7 },
-    { month: "Aug", "Free Fire": 9, "Mobile Legends": 8 },
-    { month: "Sep", "Free Fire": 11, "Mobile Legends": 9 },
-    { month: "Oct", "Free Fire": 10, "Mobile Legends": 10 },
-    { month: "Nov", "Free Fire": 12, "Mobile Legends": 11 },
-    { month: "Dec", "Free Fire": 14, "Mobile Legends": 12 },
+    { month: "Jan", "PUBG Mobile": 2, "Mobile Legends": 1 },
+    { month: "Feb", "PUBG Mobile": 3, "Mobile Legends": 2 },
+    { month: "Mar", "PUBG Mobile": 5, "Mobile Legends": 3 },
+    { month: "Apr", "PUBG Mobile": 4, "Mobile Legends": 4 },
+    { month: "May", "PUBG Mobile": 6, "Mobile Legends": 5 },
+    { month: "Jun", "PUBG Mobile": 8, "Mobile Legends": 6 },
+    { month: "Jul", "PUBG Mobile": 7, "Mobile Legends": 7 },
+    { month: "Aug", "PUBG Mobile": 9, "Mobile Legends": 8 },
+    { month: "Sep", "PUBG Mobile": 11, "Mobile Legends": 9 },
+    { month: "Oct", "PUBG Mobile": 10, "Mobile Legends": 10 },
+    { month: "Nov", "PUBG Mobile": 12, "Mobile Legends": 11 },
+    { month: "Dec", "PUBG Mobile": 14, "Mobile Legends": 12 },
 ]
 
 export function TeamRegistrationChart() {
@@ -39,7 +39,7 @@ export function TeamRegistrationChart() {
                     <Tooltip />
                     <Area
                         type="monotone"
-                        dataKey="Free Fire"
+                        dataKey="PUBG Mobile"
                         stroke="#ef4444"
                         fill="#fee2e2"
                         strokeWidth={2}

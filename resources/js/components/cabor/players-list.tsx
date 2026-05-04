@@ -76,10 +76,10 @@ interface ApiPlayer {
 }
 
 // Data dummy sebagai fallback
-const freeFirePlayers: Player[] = []
+const pubgMobilePlayers: Player[] = []
 const mobileLegendPlayers: Player[] = []
 
-export function PlayersList({ gameType }: { gameType: "free-fire" | "mobile-legends" }) {
+export function PlayersList({ gameType }: { gameType: "pubg-mobile" | "mobile-legends" }) {
     const [searchQuery, setSearchQuery] = useState("")
     const [loading, setLoading] = useState(true)
     const [realPlayers, setRealPlayers] = useState<Player[]>([])
@@ -106,7 +106,7 @@ export function PlayersList({ gameType }: { gameType: "free-fire" | "mobile-lege
     const fetchPlayers = async (filterParams = {}) => {
         try {
             setLoading(true);
-            const game = gameType === "free-fire" ? 'ff' : 'ml';
+            const game = gameType === "pubg-mobile" ? 'pubg' : 'ml';
             
             // Jika ada filter, gunakan endpoint filter
             if (Object.keys(filterParams).length > 0) {
@@ -199,7 +199,7 @@ export function PlayersList({ gameType }: { gameType: "free-fire" | "mobile-lege
         
         try {
             setLoading(true);
-            const game = gameType === "free-fire" ? 'ff' : 'ml';
+            const game = gameType === "pubg-mobile" ? 'pubg' : 'ml';
             
             const response = await fetch(`/api/players/${game}/${playerToDelete.id}`, {
                 method: 'DELETE',
@@ -266,7 +266,7 @@ export function PlayersList({ gameType }: { gameType: "free-fire" | "mobile-lege
             };
 
             // Tentukan game type yang benar
-            const game = gameType === "free-fire" ? "ff" : "ml";
+            const game = gameType === "pubg-mobile" ? "pubg" : "ml";
 
             const response = await axios.put(`/secure-admin-essega/players/${game}/${playerToEdit.id}`, playerData, {
                 headers: {
@@ -328,7 +328,7 @@ export function PlayersList({ gameType }: { gameType: "free-fire" | "mobile-lege
     // Gunakan real data jika tersedia, jika tidak gunakan dummy data
     const players = realPlayers.length > 0 
         ? realPlayers 
-        : (gameType === "free-fire" ? freeFirePlayers : mobileLegendPlayers)
+        : (gameType === "pubg-mobile" ? pubgMobilePlayers : mobileLegendPlayers)
 
     const filteredPlayers = players.filter(
         (player) =>
@@ -339,8 +339,8 @@ export function PlayersList({ gameType }: { gameType: "free-fire" | "mobile-lege
 
     const handleExportCSV = () => {
         // Redirect ke endpoint CSV export sesuai dengan game type
-        window.location.href = gameType === "free-fire" 
-            ? "/secure-admin-essega/export/FFplayers" 
+        window.location.href = gameType === "pubg-mobile" 
+            ? "/secure-admin-essega/export/PUBGPlayers" 
             : "/secure-admin-essega/export/MLplayers"
     }
 
@@ -352,7 +352,7 @@ export function PlayersList({ gameType }: { gameType: "free-fire" | "mobile-lege
                         <div>
                             <CardTitle>Daftar Pemain</CardTitle>
                             <CardDescription>
-                                Kelola pemain {gameType === "free-fire" ? "Free Fire" : "Mobile Legends"}
+                                Kelola pemain {gameType === "pubg-mobile" ? "PUBG Mobile" : "Mobile Legends"}
                             </CardDescription>
                         </div>
                         <div className="flex gap-2">

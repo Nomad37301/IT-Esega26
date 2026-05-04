@@ -52,8 +52,8 @@ type MLTeam = {
     participant_count?: number
 }
 
-// Model untuk tim Free Fire
-type FFTeam = {
+// Model untuk tim PUBG Mobile
+type PUBGTeam = {
     id: number
     team_name: string
     team_logo: string
@@ -64,9 +64,9 @@ type FFTeam = {
 }
 
 // Gabungan tipe untuk tim
-type Team = MLTeam | FFTeam
+type Team = MLTeam | PUBGTeam
 
-export function TeamsTable({ gameType }: { gameType: "free-fire" | "mobile-legends" }) {
+export function TeamsTable({ gameType }: { gameType: "pubg-mobile" | "mobile-legends" }) {
     const [searchQuery, setSearchQuery] = useState("")
     const [loading, setLoading] = useState(true)
     const [teams, setTeams] = useState<Team[]>([])
@@ -95,7 +95,7 @@ export function TeamsTable({ gameType }: { gameType: "free-fire" | "mobile-legen
     const fetchTeams = async (filterParams = {}) => {
         try {
             setLoading(true)
-            const game = gameType === "free-fire" ? 'ff' : 'ml'
+            const game = gameType === "pubg-mobile" ? 'pubg' : 'ml'
             
             // Jika ada filter yang diaplikasikan
             if (Object.keys(filterParams).length > 0) {
@@ -135,7 +135,7 @@ export function TeamsTable({ gameType }: { gameType: "free-fire" | "mobile-legen
         
         try {
             setLoading(true)
-            const game = gameType === "free-fire" ? 'ff' : 'ml'
+            const game = gameType === "pubg-mobile" ? 'pubg' : 'ml'
             const response = await axios.delete(`/api/teams/${game}/${teamToDelete.id}`)
             
             toast.success(`Tim ${teamToDelete.team_name} berhasil dihapus beserta semua pemainnya.`)
@@ -183,7 +183,7 @@ export function TeamsTable({ gameType }: { gameType: "free-fire" | "mobile-legen
         
         try {
             setLoading(true)
-            const game = gameType === "free-fire" ? 'ff' : 'ml'
+            const game = gameType === "pubg-mobile" ? 'pubg' : 'ml'
             
             await axios.put(`/api/teams/${game}/${teamToEdit.id}`, teamForm)
             
@@ -249,7 +249,7 @@ export function TeamsTable({ gameType }: { gameType: "free-fire" | "mobile-legen
     
     // Handle export teams
     const handleExportCSV = () => {
-        const game = gameType === "free-fire" ? 'ff' : 'ml'
+        const game = gameType === "pubg-mobile" ? 'pubg' : 'ml'
         window.location.href = `/secure-admin-essega/export/teams/${game}`
     }
 
@@ -259,9 +259,9 @@ export function TeamsTable({ gameType }: { gameType: "free-fire" | "mobile-legen
                 <CardHeader>
                     <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                         <div>
-                            <CardTitle>Daftar Tim {gameType === "free-fire" ? "Free Fire" : "Mobile Legends"}</CardTitle>
+                            <CardTitle>Daftar Tim {gameType === "pubg-mobile" ? "PUBG Mobile" : "Mobile Legends"}</CardTitle>
                             <CardDescription>
-                                Kelola tim peserta turnamen {gameType === "free-fire" ? "Free Fire" : "Mobile Legends"}
+                                Kelola tim peserta turnamen {gameType === "pubg-mobile" ? "PUBG Mobile" : "Mobile Legends"}
                             </CardDescription>
                         </div>
                         <div className="flex gap-2">

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\FF_Participant;
+use App\Models\PUBG_Participant;
 use App\Models\ML_Participant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -21,8 +21,8 @@ class PlayerController extends Controller
         try {
             Log::info('Fetching players for game: ' . $game);
             
-            if ($game === 'ff') {
-                $players = FF_Participant::with('team')->get();
+            if ($game === 'pubg') {
+                $players = PUBG_Participant::with('team')->get();
                 Log::info('FF Players found: ' . $players->count());
             } elseif ($game === 'ml') {
                 $players = ML_Participant::with('team')->get();
@@ -89,8 +89,8 @@ class PlayerController extends Controller
             $role = $request->input('role');
             $team = $request->input('team');
 
-            if ($game === 'ff') {
-                $query = FF_Participant::query()->with('team');
+            if ($game === 'pubg') {
+                $query = PUBG_Participant::query()->with('team');
             } elseif ($game === 'ml') {
                 $query = ML_Participant::query()->with('team');
             } else {
@@ -159,8 +159,8 @@ class PlayerController extends Controller
                 'alamat' => 'nullable|string|max:255',
             ]);
 
-            if ($game === 'ff') {
-                $player = FF_Participant::findOrFail($id);
+            if ($game === 'pubg') {
+                $player = PUBG_Participant::findOrFail($id);
             } elseif ($game === 'ml') {
                 $player = ML_Participant::findOrFail($id);
             } else {
@@ -186,8 +186,8 @@ class PlayerController extends Controller
     public function destroy($game, $id)
     {
         try {
-            if ($game === 'ff') {
-                $player = FF_Participant::findOrFail($id);
+            if ($game === 'pubg') {
+                $player = PUBG_Participant::findOrFail($id);
             } elseif ($game === 'ml') {
                 $player = ML_Participant::findOrFail($id);
             } else {

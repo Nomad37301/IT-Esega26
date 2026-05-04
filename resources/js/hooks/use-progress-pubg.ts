@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react"
-import type { FFPlayer } from "@/types/register"
+import type { PUBGPlayer } from "@/types/register"
 
-export function useProgressFF(
-    players: FFPlayer[],
+export function useProgressPUBG(
+    players: PUBGPlayer[],
     minPlayers: number
 ): number {
     const [progress, setProgress] = useState(0)

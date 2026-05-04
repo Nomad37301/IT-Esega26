@@ -97,11 +97,11 @@ export function FileUploadField({
                                 className="group cursor-pointer flex flex-col items-center gap-3"
                             >
                                 <div className="relative">
-                                    <div className="absolute inset-0 bg-blue-100 rounded-full scale-150 opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
-                                    <Upload className="h-10 w-10 text-blue-500 transition-transform duration-300 group-hover:scale-110" />
+                                    <div className="absolute inset-0 bg-secondary/10 rounded-full scale-150 opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
+                                    <Upload className="h-10 w-10 text-secondary transition-transform duration-300 group-hover:scale-110" />
                                 </div>
                                 <div className="flex flex-col items-center gap-1">
-                                    <span className="text-sm font-semibold text-blue-600 group-hover:text-blue-700">
+                                    <span className="text-sm font-semibold text-secondary group-hover:opacity-90">
                                         Klik untuk upload
                                     </span>
                                     <span className="text-sm text-gray-500">atau drag and drop</span>
@@ -112,8 +112,8 @@ export function FileUploadField({
                     ) : (
                         <div className="flex items-center justify-between">
                             <div className="flex items-center space-x-3">
-                                <div className="p-2 bg-blue-100 rounded-lg">
-                                    <File className="h-5 w-5 text-blue-600" />
+                                <div className="p-2 bg-secondary/10 rounded-lg">
+                                    <File className="h-5 w-5 text-secondary" />
                                 </div>
                                 <div className="flex flex-col items-start">
                                     <span className="text-sm font-medium text-gray-900 truncate max-w-[200px]">
@@ -127,9 +127,9 @@ export function FileUploadField({
                             <button
                                 type="button"
                                 onClick={handleRemoveClick}
-                                className="p-1.5 hover:bg-blue-100 rounded-full transition-colors duration-200"
+                                className="p-1.5 hover:bg-secondary/10 rounded-full transition-colors duration-200"
                             >
-                                <X className="h-5 w-5 text-blue-500" />
+                                <X className="h-5 w-5 text-secondary" />
                             </button>
                         </div>
                     )}

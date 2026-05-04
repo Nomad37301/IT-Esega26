@@ -47,8 +47,8 @@ return new class extends Migration
                 'updated_at' => now(),
             ],
             [
-                'competition_name' => 'Free Fire',
-                'total_slots' => 48,
+                'competition_name' => 'PUBG Mobile',
+                'total_slots' => 64,
                 'used_slots' => 0,
                 'is_active' => true,
                 'created_at' => now(),

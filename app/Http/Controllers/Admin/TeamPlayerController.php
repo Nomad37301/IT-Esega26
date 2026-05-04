@@ -3,15 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\FFTeamResource;
-use App\Models\FF_Participant;
+use App\Http\Resources\PUBGTeamResource;
+use App\Models\PUBG_Participant;
 use App\Models\ML_Participant;
-use App\Models\FF_Team;
+use App\Models\PUBG_Team;
 use App\Models\ML_Team;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\FFPlayersExport;
+use App\Exports\PUBGPlayersExport;
 use App\Exports\MLPlayersExport;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
@@ -22,15 +22,15 @@ class TeamPlayerController extends Controller
     public function index()
     {
 
-        $ffTeams = FF_Team::withCount('participants')->get();
+        $pubgTeams = PUBG_Team::withCount('participants')->get();
         $mlTeams = ML_Team::withCount('participants')->get();
 
         // Ubah kedua hasil mapping menjadi array biasa terlebih dahulu
-        $ffTeamsArray = $ffTeams->map(function ($team) {
+        $pubgTeamsArray = $pubgTeams->map(function ($team) {
             return [
                 'id' => $team->id,
                 'name' => $team->team_name,
-                'game' => 'Free Fire',
+                'game' => 'PUBG Mobile',
                 'playerCount' => $team->participants_count,
                 'achievements' => $team->achievements ?? 0,
                 'logo' => $team->team_logo ? asset('storage/' . $team->team_logo) : '/placeholder.svg',
@@ -57,7 +57,7 @@ class TeamPlayerController extends Controller
         })->all(); // Konversi ke array
 
         // Gabungkan dengan array_merge dan hasilnya jadikan collection lagi
-        $combinedTeams = collect(array_merge($ffTeamsArray, $mlTeamsArray));
+        $combinedTeams = collect(array_merge($pubgTeamsArray, $mlTeamsArray));
     
         return Inertia::render('admin/lomba/index', [
             'teams' => $combinedTeams,
@@ -73,13 +73,13 @@ class TeamPlayerController extends Controller
      */
     public function showTeam($id, $game)
     {
-        if ($game === 'ff') {
-            $team = FF_Team::with('participants')->findOrFail($id);
+        if ($game === 'pubg') {
+            $team = PUBG_Team::with('participants')->findOrFail($id);
             
             $teamData = [
                 'id' => $team->id,
                 'name' => $team->team_name,
-                'game' => 'Free Fire',
+                'game' => 'PUBG Mobile',
                 'logo' => $team->team_logo ? asset('storage/' . $team->team_logo) : '/placeholder.svg',
                 'payment_proof' => $team->proof_of_payment ? asset('storage/' . $team->proof_of_payment) : null,
                 'status' => $team->status,
@@ -147,8 +147,8 @@ class TeamPlayerController extends Controller
             'status' => 'required|in:pending,verified,rejected'
         ]);
         
-        if ($game === 'ff') {
-            $team = FF_Team::findOrFail($id);
+        if ($game === 'pubg') {
+            $team = PUBG_Team::findOrFail($id);
         } elseif ($game === 'ml') {
             $team = ML_Team::findOrFail($id);
         } else {
@@ -164,8 +164,8 @@ class TeamPlayerController extends Controller
         ]);
     }
 
-    public function ffPlayer(){
-        $players = FF_Participant::with('team')->get();
+    public function pubgPlayer(){
+        $players = PUBG_Participant::with('team')->get();
         
         $formattedPlayers = $players->map(function($player) {
             return [
@@ -184,7 +184,7 @@ class TeamPlayerController extends Controller
             ];
         });
         
-        return Excel::download(new FFPlayersExport($formattedPlayers), 'ff_players.xlsx');
+        return Excel::download(new PUBGPlayersExport($formattedPlayers), 'pubg_players.xlsx');
     }
     
     public function mlPlayer(){
@@ -215,14 +215,14 @@ class TeamPlayerController extends Controller
      */
     public function exportTeams()
     {
-        $ffTeams = FF_Team::withCount('participants')->get();
+        $pubgTeams = PUBG_Team::withCount('participants')->get();
         $mlTeams = ML_Team::withCount('participants')->get();
         
-        $ffTeamsArray = $ffTeams->map(function ($team) {
+        $pubgTeamsArray = $pubgTeams->map(function ($team) {
             return [
                 'ID' => $team->id,
                 'Nama Tim' => $team->team_name,
-                'Game' => 'Free Fire',
+                'Game' => 'PUBG Mobile',
                 'Jenis Slot' => 'Single',
                 'Jumlah Pemain' => $team->participants_count,
                 'Status' => $team->status,
@@ -244,19 +244,19 @@ class TeamPlayerController extends Controller
             ];
         })->all();
         
-        $teams = array_merge($ffTeamsArray, $mlTeamsArray);
+        $teams = array_merge($pubgTeamsArray, $mlTeamsArray);
         
         return Excel::download(new \App\Exports\TeamsExport($teams), 'all_teams.xlsx');
     }
     
     /**
-     * API endpoint untuk mendapatkan data pemain Free Fire
+     * API endpoint untuk mendapatkan data pemain PUBG Mobile
      * 
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getFFPlayers()
+    public function getPUBGPlayers()
     {
-        $players = FF_Participant::with('team')->get();
+        $players = PUBG_Participant::with('team')->get();
         
         // Format data untuk frontend
         $formattedPlayers = $players->map(function($player) {
@@ -312,16 +312,16 @@ class TeamPlayerController extends Controller
     }
     
     /**
-     * Export data semua pemain (FF dan ML) ke Excel
+     * Export data semua pemain (PUBG dan ML) ke Excel
      */
     public function exportAllPlayers()
     {
-        $ffPlayers = FF_Participant::with('team')->get();
+        $pubgPlayers = PUBG_Participant::with('team')->get();
         $mlPlayers = ML_Participant::with('team')->get();
         
         $allPlayersData = [];
         
-        foreach ($ffPlayers as $player) {
+        foreach ($pubgPlayers as $player) {
             $allPlayersData[] = [
                 'ID' => $player->id,
                 'Nama' => $player->name,
@@ -332,7 +332,7 @@ class TeamPlayerController extends Controller
                 'Alamat' => $player->alamat,
                 'Role' => $player->role ?? 'Anggota',
                 'Tim' => $player->team ? $player->team->team_name : 'Tidak ada tim',
-                'Game' => 'Free Fire',
+                'Game' => 'PUBG Mobile',
                 'Status' => 'Aktif',
                 'Tanggal Daftar' => $player->created_at->format('d M Y'),
                 'Terakhir Diperbarui' => $player->updated_at->format('d M Y')
@@ -392,8 +392,8 @@ class TeamPlayerController extends Controller
                 // Tambahkan file-file dari direktori ML_teams
                 $this->addFilesToZip($zip, 'ML_teams', 'files/ML_teams');
                 
-                // Tambahkan file-file dari direktori FF_teams
-                $this->addFilesToZip($zip, 'FF_teams', 'files/FF_teams');
+                // Tambahkan file-file dari direktori PUBG_Teams
+                $this->addFilesToZip($zip, 'PUBG_Teams', 'files/PUBG_Teams');
                 
                 $zip->close();
                 
@@ -418,14 +418,14 @@ class TeamPlayerController extends Controller
      */
     private function prepareTeamsData()
     {
-        $ffTeams = FF_Team::withCount('participants')->get();
+        $pubgTeams = PUBG_Team::withCount('participants')->get();
         $mlTeams = ML_Team::withCount('participants')->get();
         
-        $ffTeamsArray = $ffTeams->map(function ($team) {
+        $pubgTeamsArray = $pubgTeams->map(function ($team) {
             return [
                 'ID' => $team->id,
                 'Nama Tim' => $team->team_name,
-                'Game' => 'Free Fire',
+                'Game' => 'PUBG Mobile',
                 'Jenis Slot' => 'Single',
                 'Jumlah Pemain' => $team->participants_count,
                 'Status' => $team->status,
@@ -447,7 +447,7 @@ class TeamPlayerController extends Controller
             ];
         })->all();
         
-        return array_merge($ffTeamsArray, $mlTeamsArray);
+        return array_merge($pubgTeamsArray, $mlTeamsArray);
     }
 
     /**
@@ -455,12 +455,12 @@ class TeamPlayerController extends Controller
      */
     private function preparePlayersData()
     {
-        $ffPlayers = FF_Participant::with('team')->get();
+        $pubgPlayers = PUBG_Participant::with('team')->get();
         $mlPlayers = ML_Participant::with('team')->get();
         
         $allPlayersData = [];
         
-        foreach ($ffPlayers as $player) {
+        foreach ($pubgPlayers as $player) {
             $allPlayersData[] = [
                 'ID' => $player->id,
                 'Nama' => $player->name,
@@ -471,7 +471,7 @@ class TeamPlayerController extends Controller
                 'Alamat' => $player->alamat,
                 'Role' => $player->role ?? 'Anggota',
                 'Tim' => $player->team ? $player->team->team_name : 'Tidak ada tim',
-                'Game' => 'Free Fire',
+                'Game' => 'PUBG Mobile',
                 'Status' => 'Aktif',
                 'Tanggal Daftar' => $player->created_at->format('d M Y'),
                 'Terakhir Diperbarui' => $player->updated_at->format('d M Y')
@@ -541,15 +541,15 @@ class TeamPlayerController extends Controller
     /**
      * Menghapus pemain berdasarkan ID dan jenis game
      * 
-     * @param string $game jenis game (ff/ml)
+     * @param string $game jenis game (pubg/ml)
      * @param int $id ID pemain
      * @return \Illuminate\Http\JsonResponse
      */
     public function deletePlayer($game, $id)
     {
         try {
-            if ($game === 'ff') {
-                $player = FF_Participant::findOrFail($id);
+            if ($game === 'pubg') {
+                $player = PUBG_Participant::findOrFail($id);
             } elseif ($game === 'ml') {
                 $player = ML_Participant::findOrFail($id);
             } else {
@@ -589,7 +589,7 @@ class TeamPlayerController extends Controller
      * Memperbarui data pemain
      * 
      * @param \Illuminate\Http\Request $request
-     * @param string $game jenis game (ff/ml)
+     * @param string $game jenis game (pubg/ml)
      * @param int $id ID pemain
      * @return \Illuminate\Http\JsonResponse
      */
@@ -608,8 +608,8 @@ class TeamPlayerController extends Controller
                 'tanda_tangan' => 'sometimes|nullable|image|max:2048',
             ]);
             
-            if ($game === 'ff') {
-                $player = FF_Participant::findOrFail($id);
+            if ($game === 'pubg') {
+                $player = PUBG_Participant::findOrFail($id);
             } elseif ($game === 'ml') {
                 $player = ML_Participant::findOrFail($id);
             } else {
@@ -624,7 +624,7 @@ class TeamPlayerController extends Controller
                 }
                 
                 // Simpan foto baru
-                $fotoPath = $request->file('foto')->store('players/' . ($game === 'ff' ? 'ff' : 'ml') . '/photos', 'public');
+                $fotoPath = $request->file('foto')->store('players/' . ($game === 'pubg' ? 'pubg' : 'ml') . '/photos', 'public');
                 $validatedData['foto'] = $fotoPath;
             }
             
@@ -635,7 +635,7 @@ class TeamPlayerController extends Controller
                 }
                 
                 // Simpan tanda tangan baru
-                $tandaTanganPath = $request->file('tanda_tangan')->store('players/' . ($game === 'ff' ? 'ff' : 'ml') . '/signatures', 'public');
+                $tandaTanganPath = $request->file('tanda_tangan')->store('players/' . ($game === 'pubg' ? 'pubg' : 'ml') . '/signatures', 'public');
                 $validatedData['tanda_tangan'] = $tandaTanganPath;
             }
             
@@ -677,7 +677,7 @@ class TeamPlayerController extends Controller
      * Menyaring data pemain berdasarkan kriteria
      * 
      * @param \Illuminate\Http\Request $request
-     * @param string $game jenis game (ff/ml)
+     * @param string $game jenis game (pubg/ml)
      * @return \Illuminate\Http\JsonResponse
      */
     public function filterPlayers(Request $request, $game)
@@ -689,8 +689,8 @@ class TeamPlayerController extends Controller
             $team = $request->input('team');
             
             // Query builder berdasarkan jenis game
-            if ($game === 'ff') {
-                $query = FF_Participant::query()->with('team');
+            if ($game === 'pubg') {
+                $query = PUBG_Participant::query()->with('team');
             } elseif ($game === 'ml') {
                 $query = ML_Participant::query()->with('team');
             } else {
@@ -757,7 +757,7 @@ class TeamPlayerController extends Controller
     /**
      * Menghapus tim berdasarkan ID dan jenis game
      * 
-     * @param string $game jenis game (ff/ml)
+     * @param string $game jenis game (pubg/ml)
      * @param int $id ID tim
      * @return \Illuminate\Http\JsonResponse
      */
@@ -771,10 +771,10 @@ class TeamPlayerController extends Controller
             $team = null;
             $slotCount = 1; // Default slot count untuk single slot
             
-            if ($game === 'ff') {
+            if ($game === 'pubg') {
                 // Cek jika tim ada
-                $team = FF_Team::findOrFail($id);
-                Log::info('Found FF team', ['team_id' => $team->id, 'team_name' => $team->team_name]);
+                $team = PUBG_Team::findOrFail($id);
+                Log::info('Found PUBG team', ['team_id' => $team->id, 'team_name' => $team->team_name]);
             } elseif ($game === 'ml') {
                 // Cek jika tim ada
                 $team = ML_Team::findOrFail($id);
@@ -797,12 +797,12 @@ class TeamPlayerController extends Controller
             $teamInfo = [
                 'id' => $team->id,
                 'name' => $team->team_name,
-                'game' => $game === 'ff' ? 'Free Fire' : 'Mobile Legends'
+                'game' => $game === 'pubg' ? 'PUBG Mobile' : 'Mobile Legends'
             ];
             
             // Proses pengembalian slot sebelum menghapus tim
             try {
-                $competitionName = $game === 'ff' ? 'Free Fire' : 'Mobile Legends';
+                $competitionName = $game === 'pubg' ? 'PUBG Mobile' : 'Mobile Legends';
                 $slot = \App\Models\CompetitionSlot::where('competition_name', $competitionName)->first();
                 
                 if ($slot) {
@@ -828,7 +828,7 @@ class TeamPlayerController extends Controller
                         $slot->used_slots = $mlSlotsUsed;
                     } else {
                         // Untuk FF, jumlah tim = jumlah slot
-                        $slot->used_slots = FF_Team::count();
+                        $slot->used_slots = PUBG_Team::count();
                     }
                     
                     $slot->save();
@@ -853,7 +853,7 @@ class TeamPlayerController extends Controller
                 'redirect' => [
                     'path' => '/lomba', // Redirect ke halaman lomba
                     'params' => [
-                        'tab' => $game === 'ff' ? 'free-fire' : 'mobile-legends'
+                        'tab' => $game === 'pubg' ? 'pubg-mobile' : 'mobile-legends'
                     ]
                 ]
             ]);
@@ -876,7 +876,7 @@ class TeamPlayerController extends Controller
      * Memperbarui data tim
      * 
      * @param \Illuminate\Http\Request $request
-     * @param string $game jenis game (ff/ml)
+     * @param string $game jenis game (pubg/ml)
      * @param int $id ID tim
      * @return \Illuminate\Http\JsonResponse
      */
@@ -891,8 +891,8 @@ class TeamPlayerController extends Controller
                 'proof_of_payment' => 'sometimes|nullable|image|max:2048',
             ]);
             
-            if ($game === 'ff') {
-                $team = FF_Team::findOrFail($id);
+            if ($game === 'pubg') {
+                $team = PUBG_Team::findOrFail($id);
             } elseif ($game === 'ml') {
                 $team = ML_Team::findOrFail($id);
             } else {
@@ -907,7 +907,7 @@ class TeamPlayerController extends Controller
                 }
                 
                 // Simpan logo baru
-                $logoPath = $request->file('team_logo')->store('teams/' . ($game === 'ff' ? 'ff' : 'ml') . '/logos', 'public');
+                $logoPath = $request->file('team_logo')->store('teams/' . ($game === 'pubg' ? 'pubg' : 'ml') . '/logos', 'public');
                 $validatedData['team_logo'] = $logoPath;
             }
             
@@ -918,7 +918,7 @@ class TeamPlayerController extends Controller
                 }
                 
                 // Simpan bukti pembayaran baru
-                $paymentPath = $request->file('proof_of_payment')->store('teams/' . ($game === 'ff' ? 'ff' : 'ml') . '/payments', 'public');
+                $paymentPath = $request->file('proof_of_payment')->store('teams/' . ($game === 'pubg' ? 'pubg' : 'ml') . '/payments', 'public');
                 $validatedData['proof_of_payment'] = $paymentPath;
             }
             
@@ -929,7 +929,7 @@ class TeamPlayerController extends Controller
             $responseData = [
                 'id' => $team->id,
                 'name' => $team->team_name,
-                'game' => $game === 'ff' ? 'Free Fire' : 'Mobile Legends',
+                'game' => $game === 'pubg' ? 'PUBG Mobile' : 'Mobile Legends',
                 'playerCount' => $team->participants()->count(),
                 'logo' => $team->team_logo ? asset('storage/' . $team->team_logo) : null,
                 'payment_proof' => $team->proof_of_payment ? asset('storage/' . $team->proof_of_payment) : null,
@@ -965,7 +965,7 @@ class TeamPlayerController extends Controller
      * Menyaring data tim berdasarkan kriteria
      * 
      * @param \Illuminate\Http\Request $request
-     * @param string $game jenis game (ff/ml)
+     * @param string $game jenis game (pubg/ml)
      * @return \Illuminate\Http\JsonResponse
      */
     public function filterTeams(Request $request, $game)
@@ -977,8 +977,8 @@ class TeamPlayerController extends Controller
             $slotType = $request->input('slot_type'); // hanya untuk ML
             
             // Query builder berdasarkan jenis game
-            if ($game === 'ff') {
-                $query = FF_Team::query()->withCount('participants');
+            if ($game === 'pubg') {
+                $query = PUBG_Team::query()->withCount('participants');
             } elseif ($game === 'ml') {
                 $query = ML_Team::query()->withCount('participants');
             } else {
@@ -1002,12 +1002,12 @@ class TeamPlayerController extends Controller
             $teams = $query->get();
             
             // Format data untuk frontend
-            if ($game === 'ff') {
+            if ($game === 'pubg') {
                 $formattedTeams = $teams->map(function($team) {
                     return [
                         'id' => $team->id,
                         'name' => $team->team_name,
-                        'game' => 'Free Fire',
+                        'game' => 'PUBG Mobile',
                         'playerCount' => $team->participants_count,
                         'achievements' => $team->achievements ?? 0,
                         'logo' => $team->team_logo ? asset('storage/' . $team->team_logo) : '/placeholder.svg',
@@ -1049,10 +1049,10 @@ class TeamPlayerController extends Controller
         }
     }
 
-    // Mendapatkan semua tim Free Fire
-    public function getFFTeams()
+    // Mendapatkan semua tim PUBG Mobile
+    public function getpubgTeams()
     {
-        $teams = FF_Team::withCount('participants as participant_count')
+        $teams = PUBG_Team::withCount('participants as participant_count')
             ->orderBy('created_at', 'desc')
             ->get();
         
@@ -1076,14 +1076,14 @@ class TeamPlayerController extends Controller
     }
 
     /**
-     * API endpoint untuk mendapatkan data pemain Free Fire berdasarkan tim
+     * API endpoint untuk mendapatkan data pemain PUBG Mobile berdasarkan tim
      * 
      * @param int $team_id ID tim
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getFFPlayersByTeam($team_id)
+    public function getPUBGPlayersByTeam($team_id)
     {
-        $players = FF_Participant::where('team_id', $team_id)->get();
+        $players = PUBG_Participant::where('team_id', $team_id)->get();
         
         // Format data untuk frontend
         $formattedPlayers = $players->map(function($player) {

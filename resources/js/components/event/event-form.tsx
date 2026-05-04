@@ -10,7 +10,7 @@ import { Loader } from 'lucide-react';
 const CATEGORIES = [
     { value: 'mobile_legend', label: 'Mobile Legend' },
     { value: 'valorant', label: 'Valorant' },
-    { value: 'free_fire', label: 'Free Fire' },
+    { value: 'pubgm', label: 'PUBG Mobile' },
     { value: 'opening', label: 'Opening' },
     { value: 'closing', label: 'Closing' },
 ];

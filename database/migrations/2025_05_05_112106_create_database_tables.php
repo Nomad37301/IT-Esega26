@@ -25,9 +25,9 @@ return new class extends Migration
             });
         }
         
-        // Buat tabel ff_teams jika belum ada
-        if (!Schema::hasTable('ff_teams')) {
-            Schema::create('ff_teams', function (Blueprint $table) {
+        // Buat tabel pubg_teams jika belum ada
+        if (!Schema::hasTable('pubg_teams')) {
+            Schema::create('pubg_teams', function (Blueprint $table) {
                 $table->id();
                 $table->string('team_name')->unique(); // Nama tim
                 $table->string('team_logo')->nullable(); // Logo tim
@@ -56,11 +56,11 @@ return new class extends Migration
             });
         }
         
-        // Buat tabel ff_participants jika belum ada
-        if (!Schema::hasTable('ff_participants')) {
-            Schema::create('ff_participants', function (Blueprint $table) {
+        // Buat tabel pubg_participants jika belum ada
+        if (!Schema::hasTable('pubg_participants')) {
+            Schema::create('pubg_participants', function (Blueprint $table) {
                 $table->id();
-                $table->foreignId('ff_team_id')->constrained('ff_teams')->onDelete('cascade');
+                $table->foreignId('pubg_team_id')->constrained('pubg_teams')->onDelete('cascade');
                 $table->string('name'); // Nama asli peserta
                 $table->string('nickname'); // Nickname di game
                 $table->string('id_server')->nullable(); // ID Server
@@ -82,8 +82,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('ml_participants');
-        Schema::dropIfExists('ff_participants');
+        Schema::dropIfExists('pubg_participants');
         Schema::dropIfExists('ml_teams');
-        Schema::dropIfExists('ff_teams');
+        Schema::dropIfExists('pubg_teams');
     }
 };

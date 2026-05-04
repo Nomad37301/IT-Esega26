@@ -6,20 +6,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
-class FF_Participant extends Model
+class PUBG_Participant extends Model
 {
     use HasFactory;
 
-    protected $table = 'ff_participants'; 
+    protected $table = 'pubg_participants'; 
     
     protected $fillable = [
-        'ff_team_id', 'name', 'nickname', 'id_server', 'no_hp', 'email', 'alamat',
+        'pubg_team_id', 'name', 'nickname', 'id_server', 'no_hp', 'email', 'alamat',
         'tanda_tangan', 'foto', 'role', 'proof_of_payment', 'status'
     ];
 
     public function team()
     {
-        return $this->belongsTo(FF_Team::class, 'ff_team_id');
+        return $this->belongsTo(PUBG_Team::class, 'pubg_team_id');
     }
     
     /**

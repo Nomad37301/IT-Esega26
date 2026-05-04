@@ -40,7 +40,7 @@ export default function BracketManagementPage() {
     const existingStages = Array.from(new Set(filteredBrackets.map((b: Bracket) => b.stage_name || ""))).filter(Boolean);
     const commonStages = activeTab === 'ML' 
         ? ["Qualification Day 1", "Qualification Day 2", "Playoffs", "Grand Final"]
-        : ["Group Stage", "Final Day"];
+        : ["Group Stage", "Grand Final"];
     const allStageSuggestions = Array.from(new Set([...commonStages, ...existingStages] as string[]));
 
     const { data, setData, post, put, delete: destroy, processing, reset, errors } = useForm({
@@ -49,7 +49,7 @@ export default function BracketManagementPage() {
         group_name: '',
         bracket_url: '',
         order_position: 0,
-        is_active: true,
+        is_active: true as boolean,
     });
 
     // Keep game_name in sync with activeTab unless editing
@@ -126,7 +126,7 @@ export default function BracketManagementPage() {
                 <header className="mb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div>
                         <h1 className="text-3xl font-bold tracking-tight text-white">Bracket Management</h1>
-                        <p className="text-zinc-400">Update tournament brackets for Mobile Legends and Free Fire.</p>
+                        <p className="text-zinc-400">Update tournament brackets for Mobile Legends and PUBG Mobile.</p>
                     </div>
                     {/* CONFIRM ACTION (GREEN) */}
                     <Button onClick={openAddForm} className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold h-10 shadow-lg shadow-emerald-900/20">
@@ -149,8 +149,8 @@ export default function BracketManagementPage() {
                         <TabsTrigger value="ML" className="data-[state=active]:text-white px-10 h-10 transition-all text-sm font-medium">
                             Mobile Legends
                         </TabsTrigger>
-                        <TabsTrigger value="FF" className="data-[state=active]:text-white px-10 h-10 transition-all text-sm font-medium">
-                            Free Fire
+                        <TabsTrigger value="PUBG" className="data-[state=active]:text-white px-10 h-10 transition-all text-sm font-medium">
+                            PUBG Mobile
                         </TabsTrigger>
                     </TabsList>
 
@@ -160,7 +160,7 @@ export default function BracketManagementPage() {
                             <Card className="bg-zinc-950 border-zinc-800 shadow-none">
                                 <CardHeader className="border-b border-zinc-800 pb-4">
                                     <CardTitle className="text-zinc-100 text-base font-medium">
-                                        {activeTab === 'ML' ? 'Mobile Legends' : 'Free Fire'} Brackets
+                                        {activeTab === 'ML' ? 'Mobile Legends' : 'PUBG Mobile'} Brackets
                                     </CardTitle>
                                 </CardHeader>
                                 <CardContent className="p-0">
@@ -228,7 +228,7 @@ export default function BracketManagementPage() {
                                             <div className="space-y-2">
                                                 <Label className="text-[10px] uppercase tracking-wider text-zinc-500 font-bold">Category</Label>
                                                 <div className="bg-zinc-900 border border-zinc-800 rounded-md h-10 flex items-center px-3 text-sm text-zinc-400 font-mono">
-                                                    {activeTab === 'ML' ? 'MOBILE LEGENDS' : 'FREE FIRE'}
+                                                    {activeTab === 'ML' ? 'MOBILE LEGENDS' : 'PUBG Mobile'}
                                                 </div>
                                             </div>
 
@@ -320,7 +320,7 @@ export default function BracketManagementPage() {
                                 <div className="rounded-xl border border-zinc-800 bg-zinc-900/5 p-16 text-center flex flex-col items-center">
                                     <Trophy className="h-10 w-10 text-zinc-800 mb-4 opacity-20" />
                                     <p className="text-zinc-600 text-xs font-medium max-w-[200px] leading-relaxed">
-                                        Select an entry from the list or click the "Add" button to manage tournament brackets for {activeTab === 'ML' ? 'Mobile Legends' : 'Free Fire'}.
+                                        Select an entry from the list or click the "Add" button to manage tournament brackets for {activeTab === 'ML' ? 'Mobile Legends' : 'PUBG Mobile'}.
                                     </p>
                                 </div>
                             )}

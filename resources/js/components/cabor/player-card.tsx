@@ -12,7 +12,7 @@ interface PlayerCardProps {
     avatar: string
     status: "active" | "inactive" | "reserve"
     isIGL?: boolean
-    gameType: "free-fire" | "mobile-legends"
+    gameType: "pubg-mobile" | "mobile-legends"
 }
 
 export function PlayerCard({ id, name, nickname, role, avatar, status, isIGL = false, gameType }: PlayerCardProps) {
@@ -30,7 +30,7 @@ export function PlayerCard({ id, name, nickname, role, avatar, status, isIGL = f
     }
 
     const getBadgeColor = () => {
-        return gameType === "free-fire"
+        return gameType === "pubg-mobile"
             ? "border-orange-200 bg-orange-50 text-orange-700 dark:border-orange-800 dark:bg-orange-950/30 dark:text-orange-400"
             : "border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-800 dark:bg-blue-950/30 dark:text-blue-400"
     }

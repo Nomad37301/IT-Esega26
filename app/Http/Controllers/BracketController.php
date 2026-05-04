@@ -41,16 +41,33 @@ class BracketController extends Controller
     }
 
     /**
-     * Displaying the bracket page for Free Fire.
+     * Displaying the bracket page for PUBG Mobile Group Stage.
      */
-    public function indexFF()
+    public function indexPUBG()
     {
-        $brackets = Bracket::where('game_name', 'FF')
+        $brackets = Bracket::where('game_name', 'PUBG')
+            ->where('stage_name', 'NOT LIKE', '%Final%')
             ->where('is_active', true)
             ->orderBy('order_position', 'asc')
             ->get();
 
-        return Inertia::render('bracketff', [
+        return Inertia::render('bracketpubg', [
+            'brackets' => $brackets
+        ]);
+    }
+
+    /**
+     * Displaying the bracket page for PUBG Mobile Grand Final.
+     */
+    public function indexPUBG2()
+    {
+        $brackets = Bracket::where('game_name', 'PUBG')
+            ->where('stage_name', 'LIKE', '%Final%')
+            ->where('is_active', true)
+            ->orderBy('order_position', 'asc')
+            ->get();
+
+        return Inertia::render('bracketpubg2', [
             'brackets' => $brackets
         ]);
     }

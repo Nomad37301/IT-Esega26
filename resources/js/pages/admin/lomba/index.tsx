@@ -45,8 +45,8 @@ export default function TeamPlayerPage() {
                                 <TabsTrigger value="all-teams" className="rounded-lg text-sm sm:text-base">
                                     All Teams
                                 </TabsTrigger>
-                                <TabsTrigger value="free-fire" className="rounded-lg text-sm sm:text-base">
-                                    Free Fire
+                                <TabsTrigger value="pubg-mobile" className="rounded-lg text-sm sm:text-base">
+                                    PUBG Mobile
                                 </TabsTrigger>
                                 <TabsTrigger value="mobile-legends" className="rounded-lg text-sm sm:text-base">
                                     Mobile Legends
@@ -73,11 +73,11 @@ export default function TeamPlayerPage() {
                                 <TeamsTable gameType="all" />
                             </TabsContent>
 
-                            <TabsContent value="free-fire" className="mt-6 space-y-6">
+                            <TabsContent value="pubg-mobile" className="mt-6 space-y-6">
                                 <GameHeader
-                                    title="Free Fire"
+                                    title="PUBG Mobile"
                                     logo="/Images/FF-logo.png"
-                                    description="Team management for Free Fire division"
+                                    description="Team management for PUBG Mobile division"
                                     color="from-orange-500 to-red-600"
                                 />
                                 
@@ -88,11 +88,11 @@ export default function TeamPlayerPage() {
                                     </TabsList>
                                     
                                     <TabsContent value="teams" className="mt-4">
-                                        <TeamsTable gameType="free-fire" />
+                                        <TeamsTable gameType="pubg-mobile" />
                                     </TabsContent>
                                     
                                     <TabsContent value="players" className="mt-4">
-                                        <PlayersList gameType="free-fire" />
+                                        <PlayersList gameType="pubg-mobile" />
                                     </TabsContent>
                                 </Tabs>
                             </TabsContent>

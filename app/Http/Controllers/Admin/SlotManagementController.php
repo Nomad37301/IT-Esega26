@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\CompetitionSlot;
-use App\Models\FF_Team;
+use App\Models\PUBG_Team;
 use App\Models\ML_Team;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -20,18 +20,18 @@ class SlotManagementController extends Controller
     {
         try {
             $mlSlot = CompetitionSlot::where('competition_name', 'Mobile Legends')->first();
-            $ffSlot = CompetitionSlot::where('competition_name', 'Free Fire')->first();
+            $pubgSlot = CompetitionSlot::where('competition_name', 'PUBG Mobile')->first();
             
             // Hitung slot aktual yang digunakan
             $mlSlotsUsed = DB::table('ml_teams')
                 ->select(DB::raw('COALESCE(SUM(CASE WHEN slot_type = "double" THEN 2 WHEN slot_type = "single" THEN 1 ELSE COALESCE(slot_count, 1) END), 0) as total_slots'))
                 ->first()->total_slots;
                 
-            $ffSlotsUsed = FF_Team::count(); // FF teams always use 1 slot
+            $pubgSlotsUsed = PUBG_Team::count(); // FF teams always use 1 slot
             
             // Deteksi apakah jumlah slot saat ini sesuai dengan perhitungan aktual
             $mlIsSynced = ($mlSlot && $mlSlot->used_slots == $mlSlotsUsed);
-            $ffIsSynced = ($ffSlot && $ffSlot->used_slots == $ffSlotsUsed);
+            $ffIsSynced = ($pubgSlot && $pubgSlot->used_slots == $pubgSlotsUsed);
             
             return response()->json([
                 'success' => true,
@@ -43,11 +43,11 @@ class SlotManagementController extends Controller
                         'difference' => ($mlSlot ? $mlSlot->used_slots : 0) - $mlSlotsUsed,
                         'is_synced' => $mlIsSynced,
                     ],
-                    'ff' => [
-                        'total_slots' => $ffSlot->total_slots ?? 0,
-                        'db_used_slots' => $ffSlot->used_slots ?? 0,
-                        'actual_used_slots' => $ffSlotsUsed,
-                        'difference' => ($ffSlot ? $ffSlot->used_slots : 0) - $ffSlotsUsed,
+                    'pubg' => [
+                        'total_slots' => $pubgSlot->total_slots ?? 0,
+                        'db_used_slots' => $pubgSlot->used_slots ?? 0,
+                        'actual_used_slots' => $pubgSlotsUsed,
+                        'difference' => ($pubgSlot ? $pubgSlot->used_slots : 0) - $pubgSlotsUsed,
                         'is_synced' => $ffIsSynced,
                     ],
                     'needs_sync' => !$mlIsSynced || !$ffIsSynced
@@ -71,9 +71,9 @@ class SlotManagementController extends Controller
             DB::beginTransaction();
             
             $mlSlot = CompetitionSlot::where('competition_name', 'Mobile Legends')->first();
-            $ffSlot = CompetitionSlot::where('competition_name', 'Free Fire')->first();
+            $pubgSlot = CompetitionSlot::where('competition_name', 'PUBG Mobile')->first();
             
-            if (!$mlSlot || !$ffSlot) {
+            if (!$mlSlot || !$pubgSlot) {
                 DB::rollBack();
                 return response()->json([
                     'success' => false,
@@ -86,18 +86,18 @@ class SlotManagementController extends Controller
                 ->select(DB::raw('COALESCE(SUM(CASE WHEN slot_type = "double" THEN 2 WHEN slot_type = "single" THEN 1 ELSE COALESCE(slot_count, 1) END), 0) as total_slots'))
                 ->first()->total_slots;
                 
-            $ffSlotsUsed = FF_Team::count(); // FF teams always use 1 slot
+            $pubgSlotsUsed = PUBG_Team::count(); // FF teams always use 1 slot
             
             // Store old values for logging
             $oldMlSlots = $mlSlot->used_slots;
-            $oldFfSlots = $ffSlot->used_slots;
+            $oldFfSlots = $pubgSlot->used_slots;
             
             // Update slots
             $mlSlot->used_slots = $mlSlotsUsed;
             $mlSlot->save();
             
-            $ffSlot->used_slots = $ffSlotsUsed;
-            $ffSlot->save();
+            $pubgSlot->used_slots = $pubgSlotsUsed;
+            $pubgSlot->save();
             
             DB::commit();
             
@@ -106,9 +106,9 @@ class SlotManagementController extends Controller
                     'old' => $oldMlSlots,
                     'new' => $mlSlotsUsed,
                 ],
-                'ff' => [
+                'pubg' => [
                     'old' => $oldFfSlots,
-                    'new' => $ffSlotsUsed,
+                    'new' => $pubgSlotsUsed,
                 ]
             ]);
             
@@ -121,10 +121,10 @@ class SlotManagementController extends Controller
                         'new_used_slots' => $mlSlotsUsed,
                         'difference' => $mlSlotsUsed - $oldMlSlots
                     ],
-                    'ff' => [
+                    'pubg' => [
                         'old_used_slots' => $oldFfSlots,
-                        'new_used_slots' => $ffSlotsUsed,
-                        'difference' => $ffSlotsUsed - $oldFfSlots
+                        'new_used_slots' => $pubgSlotsUsed,
+                        'difference' => $pubgSlotsUsed - $oldFfSlots
                     ]
                 ]
             ]);

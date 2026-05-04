@@ -17,6 +17,7 @@ import { route } from 'ziggy-js';
 import dayjs from 'dayjs';
 import 'keen-slider/keen-slider.min.css';
 import { useKeenSlider } from 'keen-slider/react';
+import { useRegistrationStatus } from '@/hooks/use-registration-status';
 
 export default function Home() {
     const {
@@ -150,7 +151,7 @@ export default function Home() {
         },
         {
             question: 'Game apa saja yang dimainkan dalam turnamen ini?',
-            answer: 'Turnamen ini menghadirkan game-game populer seperti Mobile Legends dan Free Fire.',
+            answer: 'Turnamen ini menghadirkan game-game populer seperti Mobile Legends dan PUBG Mobile.',
         },
         {
             question: 'Berapa total prize pool IT-ESEGA?',
@@ -177,16 +178,16 @@ export default function Home() {
             desc: 'Kaos eksklusif IT-ESEGA 26 dengan desain eksklusif, nyaman dipakai, dan cocok untuk semua kalangan. Tunjukkan dukunganmu di event tahun ini!',
             link: 'https://forms.gle/AqrAsUc452JHXjN38',
             images: ['/Images/tshirt-merch.png'],
-            price: 'Rp 125.000,-',
-            preorder: 'Periode Pre-Order: 15 April – 17 Mei 2026',
+            price: 'Rp 125.000',
+            preorder: 'Periode Pre-Order: 15 April-17 Mei 2026',
         },
         {
             title: 'Long Sleeve T-Shirt IT-ESEGA 2026',
             desc: 'Kaos lengan panjang eksklusif IT-ESEGA 26 dengan desain eksklusif, nyaman dipakai, dan cocok untuk semua kalangan. Tunjukkan dukunganmu di event tahun ini!',
             link: 'https://forms.gle/AqrAsUc452JHXjN38',
             images: ['/Images/jersey-merch-2.png'],
-            price: 'Rp 125.000,-',
-            preorder: 'Periode Pre-Order: 15 April – 17 Mei 2026',
+            price: 'Rp 125.000',
+            preorder: 'Periode Pre-Order: 15 April-17 Mei 2026',
         },
     ];
 
@@ -212,18 +213,8 @@ export default function Home() {
     }, []);
 
     // === PENDAFTARAN OTOMATIS TUTUP ===
-    const REGISTRATION_DEADLINE = dayjs('2027-07-02T00:00:00');
-    const [isRegistrationClosed, setIsRegistrationClosed] = useState(false);
+    const isRegistrationClosed = useRegistrationStatus();
     const [showClosedPopup, setShowClosedPopup] = useState(false);
-
-    useEffect(() => {
-        const now = dayjs();
-        setIsRegistrationClosed(now.isAfter(REGISTRATION_DEADLINE));
-        const interval = setInterval(() => {
-            setIsRegistrationClosed(dayjs().isAfter(REGISTRATION_DEADLINE));
-        }, 60000);
-        return () => clearInterval(interval);
-    }, []);
 
     return (
         <>
@@ -280,7 +271,7 @@ export default function Home() {
                                         <button
                                             aria-label="Sebelumnya"
                                             onClick={() => popupInstanceRef.current?.prev()}
-                                            className="border-primary text-primary hover:bg-primary absolute top-1/2 left-2 z-10 -translate-y-1/2 rounded-full border bg-white/80 p-2 shadow transition disabled:opacity-50"
+                                            className="border-secondary text-secondary hover:bg-secondary absolute top-1/2 left-2 z-10 -translate-y-1/2 rounded-full border bg-white/80 p-2 shadow transition disabled:opacity-50"
                                             style={{ display: merchSlides.length > 1 ? 'block' : 'none' }}
                                         >
                                             <svg
@@ -307,7 +298,7 @@ export default function Home() {
                                         <button
                                             aria-label="Selanjutnya"
                                             onClick={() => popupInstanceRef.current?.next()}
-                                            className="border-primary text-primary hover:bg-primary absolute top-1/2 right-2 z-10 -translate-y-1/2 rounded-full border bg-white/80 p-2 shadow transition disabled:opacity-50"
+                                            className="border-secondary text-secondary hover:bg-secondary absolute top-1/2 right-2 z-10 -translate-y-1/2 rounded-full border bg-white/80 p-2 shadow transition disabled:opacity-50"
                                             style={{ display: merchSlides.length > 1 ? 'block' : 'none' }}
                                         >
                                             <svg
@@ -326,7 +317,7 @@ export default function Home() {
                                                 <button
                                                     key={idx}
                                                     onClick={() => popupInstanceRef.current?.moveToIdx(idx)}
-                                                    className={`h-3 w-3 rounded-full ${popupSlide === idx ? 'bg-primary' : 'bg-gray-300'} transition`}
+                                                    className={`h-3 w-3 rounded-full ${popupSlide === idx ? 'bg-secondary' : 'bg-gray-300'} transition`}
                                                 ></button>
                                             ))}
                                         </div>
@@ -336,7 +327,7 @@ export default function Home() {
                                         <h3 className="mb-3 text-2xl leading-tight font-extrabold text-gray-900 md:text-3xl">
                                             {merchSlides[popupSlide].title}
                                         </h3>
-                                        <div className="text-primary mb-2 text-xl font-bold md:text-2xl">{merchSlides[popupSlide].price}</div>
+                                        <div className="text-secondary mb-2 text-xl font-bold md:text-2xl">{merchSlides[popupSlide].price}</div>
                                         <div className="mb-4 text-xs font-medium text-gray-500 md:text-sm">{merchSlides[popupSlide].preorder}</div>
                                         {/* Hapus deskripsi untuk tampilan lebih clean */}
                                         {/* <p className="mb-6 text-sm text-left text-gray-700 md:text-base">{merchSlides[popupSlide].desc}</p> */}
@@ -344,7 +335,7 @@ export default function Home() {
                                             href={merchSlides[popupSlide].link}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="bg-primary hover:bg-primary -mt-2 mb-2 inline-flex w-full items-center justify-center rounded-lg px-7 py-3 text-base font-bold text-white shadow transition sm:mt-6 sm:mb-0 sm:w-auto"
+                                            className="bg-secondary hover:bg-secondary -mt-2 mb-2 inline-flex w-full items-center justify-center rounded-lg px-7 py-3 text-base font-bold text-white shadow transition sm:mt-6 sm:mb-0 sm:w-auto"
                                             style={{ letterSpacing: '0.5px' }}
                                         >
                                             <svg className="mr-2 -ml-1 h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -374,7 +365,7 @@ export default function Home() {
                 leaveFrom="translate-y-0 opacity-100"
                 leaveTo="translate-y-full opacity-0"
             >
-                <div className="fixed top-6 left-1/2 z-50 -translate-x-1/2 transform rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 px-6 py-4 text-white shadow-lg">
+                <div className="fixed top-6 left-1/2 z-50 -translate-x-1/2 transform rounded-xl bg-gradient-to-r from-secondary to-indigo-600 px-6 py-4 text-white shadow-lg">
                     <div className="flex items-center space-x-2">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path
@@ -392,13 +383,13 @@ export default function Home() {
                         </div>
                         <Link
                             href={route('register')}
-                            className="ml-2 rounded bg-white px-3 py-1 text-sm font-medium text-blue-600 transition-colors hover:bg-blue-50"
+                            className="ml-2 rounded bg-white px-3 py-1 text-sm font-medium text-secondary transition-colors hover:bg-secondary/10"
                         >
                             Daftar Tim Kedua
                         </Link>
                         <button
                             onClick={() => setShowDoubleSlotNotification(false)}
-                            className="ml-2 text-white transition-colors hover:text-blue-100"
+                            className="ml-2 text-white transition-colors hover:text-secondary/20"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                 <path
@@ -484,14 +475,12 @@ export default function Home() {
                                 >
                                     Register Now!
                                 </button>
-                                <a
-                                    href="https://www.instagram.com/reel/DJx6DmICh5B/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="
-                                    target="_blank"
-                                    rel="noopener noreferrer"
+                                <button
+                                    onClick={() => setIsOpen(true)}
                                     className="btn-outline-white inline-flex transform items-center rounded-lg px-6 py-3 text-base font-semibold transition-all duration-300 hover:scale-105 sm:px-8 sm:py-4 sm:text-lg"
                                 >
                                     How to Register
-                                </a>
+                                </button>
                             </div>
                         </div>
                         <div className="hidden justify-center md:flex md:justify-end" data-aos="fade-up" data-aos-delay="100">
@@ -576,7 +565,7 @@ export default function Home() {
                                             <div className="relative w-full" style={{ paddingTop: '56.25%' }}>
                                                 <iframe
                                                     className="absolute inset-0 h-full w-full"
-                                                    src=""
+                                                    src="https://www.instagram.com/reel/DJx6DmICh5B/embed/"
                                                     title="How to Register IT-ESEGA 2026"
                                                     frameBorder="0"
                                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -592,7 +581,7 @@ export default function Home() {
                                                 </div>
                                                 <button
                                                     type="button"
-                                                    className="bg-primary hover:bg-primary inline-flex justify-center rounded-md px-4 py-2 text-sm font-medium text-white transition-colors duration-200"
+                                                    className="bg-secondary hover:bg-secondary inline-flex justify-center rounded-md px-4 py-2 text-sm font-medium text-white transition-colors duration-200"
                                                     onClick={() => setIsOpen(false)}
                                                 >
                                                     Got it
@@ -612,7 +601,7 @@ export default function Home() {
                     <div className="absolute inset-0 bg-white"></div>
 
                     {/* Gradient Overlay */}
-                    <div className="via-primary/5 to-primary/5 absolute inset-0 bg-gradient-to-b from-white"></div>
+                    <div className="via-secondary/5 to-secondary/5 absolute inset-0 bg-gradient-to-b from-white"></div>
 
                     {/* Cross Blob - Top Left Competition */}
                     <div className="pointer-events-none absolute top-24 -left-12 h-28 w-28 opacity-5">
@@ -627,7 +616,7 @@ export default function Home() {
                             }}
                             className="h-full w-full"
                         >
-                            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="fill-primary h-full w-full">
+                            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="fill-secondary h-full w-full">
                                 <path d="M85,40 h30 v45 h45 v30 h-45 v45 h-30 v-45 h-45 v-30 h45 z" />
                             </svg>
                         </motion.div>
@@ -646,7 +635,7 @@ export default function Home() {
                             }}
                             className="h-full w-full"
                         >
-                            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="fill-primary h-full w-full">
+                            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="fill-secondary h-full w-full">
                                 <path d="M85,40 h30 v45 h45 v30 h-45 v45 h-30 v-45 h-45 v-30 h45 z" />
                             </svg>
                         </motion.div>
@@ -656,9 +645,9 @@ export default function Home() {
                     <div className="relative z-10 mx-auto max-w-[1350px] px-4 md:px-8 lg:px-12">
                         <div className="mb-8 text-center md:mb-12">
                             <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl" data-aos="fade-up">
-                                Upcoming <span className="text-section-title">Tournament</span>
+                                Upcoming <span className="text-secondary">Tournament</span>
                             </h2>
-                            <div className="bg-primary mx-auto h-1 w-20 rounded-full sm:w-24" data-aos="fade-up" data-aos-delay="50"></div>
+                            <div className="bg-secondary mx-auto h-1 w-20 rounded-full sm:w-24" data-aos="fade-up" data-aos-delay="50"></div>
                         </div>
 
                         <div className="grid grid-cols-1 justify-items-center gap-6 md:grid-cols-2 md:gap-8">
@@ -668,7 +657,7 @@ export default function Home() {
                                     slots: '64 SLOTS',
                                     type: 'DOUBLE SLOT',
                                     scope: 'NATIONAL COMPETITION',
-                                    date: 'JULY 12th, 18th, 19th',
+                                    date: '17, 18, 24 JULI 2026',
                                     mode: 'ONLINE',
                                     image: '/Images/ML-logo.png',
                                     bgImage: '/Images/ML-bg-high.jpeg',
@@ -677,11 +666,11 @@ export default function Home() {
                                     fee: 'Rp 100.000',
                                 },
                                 {
-                                    title: 'Free Fire',
-                                    slots: '48 SLOTS',
+                                    title: 'PUBG Mobile',
+                                    slots: '64 SLOTS',
                                     type: 'SINGLE SLOT',
                                     scope: 'NATIONAL COMPETITION',
-                                    date: 'JULY 5th',
+                                    date: '4, 10 JULI 2026',
                                     mode: 'ONLINE',
                                     image: '/Images/FF-logo.png',
                                     bgImage: '/Images/FF-bg-high.jpeg',
@@ -692,7 +681,7 @@ export default function Home() {
                             ].map((game, i) => (
                                 <div
                                     key={i}
-                                    className="group border-primary/50 hover:border-primary relative w-full max-w-md overflow-hidden rounded-2xl border-2 bg-white p-3 shadow-lg transition-all duration-500 hover:shadow-2xl"
+                                    className="group border-secondary/50 hover:border-secondary relative w-full max-w-md overflow-hidden rounded-2xl border-2 bg-white p-3 shadow-lg transition-all duration-500 hover:shadow-2xl"
                                     data-aos={game.animation}
                                     data-aos-delay={game.delay}
                                     style={{ height: '600px' }}
@@ -725,8 +714,8 @@ export default function Home() {
                                         {/* Content (shown on mobile and on hover in desktop) */}
                                         <div className="absolute right-0 bottom-0 left-0 my-5 flex translate-y-0 flex-col items-center p-8 opacity-100 transition-all duration-500 md:translate-y-4 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">
                                             <h3 className="mb-4 text-center text-2xl font-bold text-white">
-                                                {game.title} <span className="text-primary">Tournament</span>
-                                                <div className="bg-primary mx-auto mt-2 h-0.5 w-64 rounded-full"></div>
+                                                {game.title} <span className="text-secondary">Tournament</span>
+                                                <div className="bg-secondary mx-auto mt-2 h-0.5 w-64 rounded-full"></div>
                                             </h3>
 
                                             <div className="mb-6 space-y-2 text-center">
@@ -735,7 +724,7 @@ export default function Home() {
                                                 <p className="text-base text-white/90">{game.scope}</p>
                                                 <p className="text-base font-semibold text-white/90">{game.date}</p>
                                                 <p className="text-base font-bold text-white/90">{game.mode}</p>
-                                                <div className="border-primary/30 mt-2 border-t pt-2">
+                                                <div className="border-secondary/30 mt-2 border-t pt-2">
                                                     <p className="text-sm text-white/90">Registration Fee</p>
                                                     <p className="text-base font-semibold text-white">{game.fee}</p>
                                                 </div>
@@ -743,7 +732,7 @@ export default function Home() {
 
                                             <Link
                                                 href={route('register')}
-                                                className="bg-primary hover:bg-primary inline-block transform rounded-lg px-8 py-3 text-base font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
+                                                className="bg-secondary hover:bg-secondary inline-block transform rounded-lg px-8 py-3 text-base font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
                                                 onClick={(e) => {
                                                     if (isRegistrationClosed) {
                                                         e.preventDefault();
@@ -767,14 +756,14 @@ export default function Home() {
 
                 {/* Video Teaser Section */}
                 <section className="relative overflow-hidden py-16 md:py-24">
-                    <div className="from-primary/20 to-primary/5 absolute inset-0 bg-gradient-to-b via-white"></div>
+                    <div className="from-secondary/20 to-secondary/5 absolute inset-0 bg-gradient-to-b via-white"></div>
                     <div className="relative z-10 mx-auto max-w-[1350px] px-4 md:px-8 lg:px-12">
                         <div className="mb-8 text-center md:mb-12">
                             <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl" data-aos="fade-up">
-                                IT-ESEGA <span className="text-section-title">Teaser</span>
+                                IT-ESEGA <span className="text-secondary">Teaser</span>
                             </h2>
                             <div
-                                className="bg-primary mx-auto mb-6 h-1 w-20 rounded-full sm:mb-8 sm:w-24"
+                                className="bg-secondary mx-auto mb-6 h-1 w-20 rounded-full sm:mb-8 sm:w-24"
                                 data-aos="fade-up"
                                 data-aos-delay="50"
                             ></div>
@@ -785,7 +774,7 @@ export default function Home() {
 
                         <div className="mx-auto max-w-4xl px-4 sm:px-0">
                             <div
-                                className="border-primary/20 hover:border-primary/40 relative w-full overflow-hidden rounded-2xl border-4 shadow-2xl transition-all duration-500"
+                                className="border-secondary/20 hover:border-secondary/40 relative w-full overflow-hidden rounded-2xl border-4 shadow-2xl transition-all duration-500"
                                 data-aos="fade-up"
                                 data-aos-delay="150"
                             >
@@ -793,7 +782,7 @@ export default function Home() {
                                 <div className="relative w-full bg-black pt-[125%]">
                                     <iframe
                                         className="absolute top-0 left-0 h-full w-full"
-                                        src="https://www.instagram.com/reel/DIlLmrxSbpP/embed/"
+                                        src="https://www.instagram.com/reel/DXJ6DSpkiiy/embed/"
                                         frameBorder="0"
                                         scrolling="no"
                                         allowFullScreen={true}
@@ -808,7 +797,7 @@ export default function Home() {
                                             <p className="text-sm text-gray-300">Experience the Next Level of Gaming Competition</p>
                                         </div>
                                         <div className="flex items-center space-x-2">
-                                            <span className="bg-primary/80 inline-flex items-center rounded-full px-3 py-1 text-sm">
+                                            <span className="bg-secondary/80 inline-flex items-center rounded-full px-3 py-1 text-sm">
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     className="mr-1 h-4 w-4"
@@ -835,28 +824,28 @@ export default function Home() {
 
                 {/* Prizepool Section */}
                 <section className="relative overflow-hidden py-16 md:py-24">
-                    <div className="from-primary/5 via-primary/10 absolute inset-0 bg-gradient-to-b to-white"></div>
+                    <div className="from-secondary/5 via-secondary/10 absolute inset-0 bg-gradient-to-b to-white"></div>
                     <div className="relative z-10 mx-auto max-w-[1350px] px-4 md:px-8 lg:px-12">
                         <div className="mb-10 text-center md:mb-16">
                             <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl" data-aos="fade-up">
-                                Total <span className="text-section-title">Prizepool</span>
+                                Total <span className="text-secondary">Prizepool</span>
                             </h2>
-                            <div className="bg-primary mx-auto h-1 w-20 rounded-full sm:w-24" data-aos="fade-up" data-aos-delay="50"></div>
+                            <div className="bg-secondary mx-auto h-1 w-20 rounded-full sm:w-24" data-aos="fade-up" data-aos-delay="50"></div>
                         </div>
 
                         <div className="mx-auto max-w-lg">
                             <div
-                                className="border-primary/50 hover:border-primary relative overflow-hidden rounded-2xl border-2 bg-white shadow-lg transition-all duration-500 hover:shadow-xl"
+                                className="border-secondary/50 hover:border-secondary relative overflow-hidden rounded-2xl border-2 bg-white shadow-lg transition-all duration-500 hover:shadow-xl"
                                 data-aos="fade-up"
                                 data-aos-delay="100"
                             >
-                                <div className="from-primary/20 to-primary/5 absolute top-0 left-0 h-2 w-full bg-gradient-to-r"></div>
+                                <div className="from-secondary/20 to-secondary/5 absolute top-0 left-0 h-2 w-full bg-gradient-to-r"></div>
                                 <div className="px-6 py-8 sm:px-8 sm:py-10">
                                     <div className="flex flex-col items-center">
-                                        <div className="bg-primary/10 mb-3 rounded-full p-3">
+                                        <div className="bg-secondary/10 mb-3 rounded-full p-3">
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
-                                                className="text-primary h-8 w-8"
+                                                className="text-secondary h-8 w-8"
                                                 fill="none"
                                                 viewBox="0 0 24 24"
                                                 stroke="currentColor"
@@ -871,15 +860,15 @@ export default function Home() {
                                         </div>
                                         <div className="text-center">
                                             <p className="mb-1 text-sm font-medium text-gray-500">Total Hadiah</p>
-                                            <h3 className="text-section-title mb-3 text-4xl font-bold sm:text-5xl">Rp 12.000.000</h3>
+                                            <h3 className="text-secondary mb-3 text-4xl font-bold sm:text-5xl">Rp 12.000.000</h3>
                                             <div className="flex items-center justify-center gap-2 text-gray-600">
                                                 <span className="text-2xl">🏆</span>
-                                                <p className="text-sm">Mobile Legends & Free Fire</p>
+                                                <p className="text-sm">Mobile Legends & PUBG Mobile</p>
                                             </div>
                                         </div>
                                         <Link
                                             href={route('register')}
-                                            className="from-primary/20 to-primary/5 hover:from-primary/20 hover:to-primary/5 mt-6 inline-flex transform items-center rounded-lg bg-gradient-to-r px-6 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:scale-105 disabled:cursor-not-allowed disabled:opacity-60"
+                                            className="from-secondary/20 to-secondary/5 hover:from-secondary/20 hover:to-secondary/5 mt-6 inline-flex transform items-center rounded-lg bg-gradient-to-r px-6 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:scale-105 disabled:cursor-not-allowed disabled:opacity-60"
                                             onClick={(e) => {
                                                 if (isRegistrationClosed) {
                                                     e.preventDefault();
@@ -905,14 +894,14 @@ export default function Home() {
 
                 {/* FAQ Section */}
                 <section id="faq" className="relative overflow-hidden py-16 md:py-24">
-                    <div className="from-primary/20 to-primary/5 absolute inset-0 bg-gradient-to-b via-white"></div>
+                    <div className="from-secondary/20 to-secondary/5 absolute inset-0 bg-gradient-to-b via-white"></div>
                     <div className="relative z-10 mx-auto max-w-[1350px] px-4 md:px-8 lg:px-12">
                         <div className="mx-auto max-w-3xl">
                             <div className="text-center md:text-left">
                                 <h2 className="mb-4 text-center text-3xl font-extrabold sm:text-4xl" data-aos="fade-up">
-                                    Frequently <span className="text-section-title">Asked Questions</span>
+                                    Frequently <span className="text-secondary">Asked Questions</span>
                                 </h2>
-                                <div className="bg-primary mx-auto h-1 w-20 rounded-full sm:w-24" data-aos="fade-up" data-aos-delay="50"></div>
+                                <div className="bg-secondary mx-auto h-1 w-20 rounded-full sm:w-24" data-aos="fade-up" data-aos-delay="50"></div>
                                 <p
                                     className="mx-auto mt-6 mb-6 max-w-2xl text-center text-base text-gray-600 sm:text-lg"
                                     data-aos="fade-up"
@@ -931,12 +920,12 @@ export default function Home() {
                                     >
                                         {({ open }: { open: boolean }) => (
                                             <>
-                                                <Disclosure.Button className="focus-visible:ring-primary/50 flex w-full items-center justify-between px-6 py-5 text-left focus:outline-none focus-visible:ring">
-                                                    <span className={`text-lg font-medium ${open ? 'text-primary' : 'text-section-title'}`}>
+                                                <Disclosure.Button className="focus-visible:ring-secondary/50 flex w-full items-center justify-between px-6 py-5 text-left focus:outline-none focus-visible:ring">
+                                                    <span className={`text-lg font-medium ${open ? 'text-secondary' : 'text-secondary'}`}>
                                                         {faq.question}
                                                     </span>
                                                     <div
-                                                        className={`ml-4 flex-shrink-0 rounded-full p-1.5 ${open ? 'bg-primary/10 text-primary' : 'bg-gray-50 text-gray-500'}`}
+                                                        className={`ml-4 flex-shrink-0 rounded-full p-1.5 ${open ? 'bg-secondary/10 text-secondary' : 'bg-gray-50 text-gray-500'}`}
                                                     >
                                                         <svg
                                                             className={`h-5 w-5 transition-transform duration-300 ${open ? 'rotate-180' : ''}`}
@@ -965,7 +954,7 @@ export default function Home() {
                                 <p className="mb-4 text-gray-600">Masih punya pertanyaan lain?</p>
                                 <a
                                     href="#contact"
-                                    className="bg-primary/10 text-primary hover:bg-primary hover:text-primary inline-flex items-center rounded-lg px-5 py-2.5 text-sm font-medium transition-colors duration-300"
+                                    className="bg-secondary/10 text-secondary hover:bg-secondary hover:text-secondary inline-flex items-center rounded-lg px-5 py-2.5 text-sm font-medium transition-colors duration-300"
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" className="mr-2 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                         <path
@@ -983,13 +972,13 @@ export default function Home() {
 
                 {/* Contact Person Section */}
                 <section id="contact" className="relative overflow-hidden py-16 md:py-24">
-                    <div className="from-primary/5 via-primary/10 absolute inset-0 bg-gradient-to-b to-white"></div>
+                    <div className="from-secondary/5 via-secondary/10 absolute inset-0 bg-gradient-to-b to-white"></div>
                     <div className="relative z-10 mx-auto max-w-[1350px] px-4 md:px-8 lg:px-12">
                         <div className="mb-10 text-center md:mb-16">
                             <h2 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl" data-aos="fade-up">
-                                <span className="">Contact</span> <span className="text-section-title">Person</span>
+                                <span className="">Contact</span> <span className="text-secondary">Person</span>
                             </h2>
-                            <div className="bg-primary mx-auto h-1 w-20 rounded-full sm:w-24" data-aos="fade-up" data-aos-delay="50"></div>
+                            <div className="bg-secondary mx-auto h-1 w-20 rounded-full sm:w-24" data-aos="fade-up" data-aos-delay="50"></div>
                             <p className="mx-auto mt-4 max-w-2xl text-base text-gray-600 sm:text-lg" data-aos="fade-up" data-aos-delay="100">
                                 Jika Anda memiliki pertanyaan lebih lanjut, jangan ragu untuk menghubungi narahubung yang tertera di bawah ini.
                             </p>
@@ -998,35 +987,35 @@ export default function Home() {
                         <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
                             {[
                                 {
-                                    name: 'Damar',
-                                    wa: '089666401388',
-                                    line: 'komang.damar',
+                                    name: 'Egy',
+                                    wa: '082147000716',
+                                    line: 'egyputra25',
                                     animation: 'fade-up',
                                     delay: 0,
                                 },
                                 {
-                                    name: 'Mita',
-                                    wa: '087861081640',
-                                    line: 'pramitawindari',
+                                    name: 'Anin',
+                                    wa: '085785073445',
+                                    line: 'lifeasanine',
                                     animation: 'fade-up',
                                     delay: 100,
                                 },
                                 {
-                                    name: 'Yoga',
-                                    wa: '082145175076',
-                                    line: 'dewaanoc135',
+                                    name: 'Surya',
+                                    wa: '081238222608',
+                                    line: 'suryaputra110506',
                                     animation: 'fade-up',
                                     delay: 200,
                                 },
                             ].map((contact, index) => (
                                 <div
                                     key={index}
-                                    className="border-primary rounded-xl border bg-white p-6 shadow-lg transition-shadow duration-300 hover:shadow-xl"
+                                    className="border-secondary rounded-xl border bg-white p-6 shadow-lg transition-shadow duration-300 hover:shadow-xl"
                                     data-aos={contact.animation}
                                     data-aos-delay={contact.delay}
                                 >
                                     <div className="mb-4 flex items-center gap-4">
-                                        <div className="bg-primary flex h-12 w-12 items-center justify-center rounded-full shadow-md">
+                                        <div className="bg-secondary flex h-12 w-12 items-center justify-center rounded-full shadow-md">
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 className="h-6 w-6 text-white"
@@ -1042,14 +1031,14 @@ export default function Home() {
                                                 />
                                             </svg>
                                         </div>
-                                        <h3 className="text-primary text-xl font-semibold">{contact.name}</h3>
+                                        <h3 className="text-secondary text-xl font-semibold">{contact.name}</h3>
                                     </div>
                                     <div className="space-y-3">
                                         <a
                                             href={`https://wa.me/${contact.wa}`}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="hover:text-primary flex items-center gap-2 text-gray-600 transition-colors duration-300"
+                                            className="hover:text-secondary flex items-center gap-2 text-gray-600 transition-colors duration-300"
                                         >
                                             <span className="font-semibold">WA:</span>
                                             <span className="hover:underline">{contact.wa}</span>
@@ -1072,11 +1061,11 @@ export default function Home() {
                         {/* Header */}
                         <div className="mx-auto mb-10 max-w-2xl text-center md:mb-16">
                             <h2 className="mb-2 text-center text-3xl font-extrabold tracking-tight sm:text-4xl">
-                                Merchandise <span className="text-section-title ml-2">IT-ESEGA 25</span>
+                                Merchandise <span className="text-secondary ml-2">IT-ESEGA 26</span>
                             </h2>
-                            <div className="bg-primary/80 mx-auto mb-4 h-1 w-24 rounded-full"></div>
+                            <div className="bg-secondary/80 mx-auto mb-4 h-1 w-24 rounded-full"></div>
                             <p className="mx-auto mb-15 max-w-2xl text-center text-base text-gray-600 sm:text-lg">
-                                Merchandise resmi IT-ESEGA 25, desain eksklusif dan nyaman dipakai. Tersedia kaos & jersey edisi terbatas.
+                                Merchandise resmi IT-ESEGA 26, desain eksklusif dan nyaman dipakai. Tersedia kaos & jersey edisi terbatas.
                             </p>
                         </div>
                         <div className="flex flex-col items-center justify-between gap-10 md:flex-row md:gap-20">
@@ -1085,7 +1074,7 @@ export default function Home() {
                                 <button
                                     aria-label="Sebelumnya"
                                     onClick={() => instanceRef.current?.prev()}
-                                    className="border-primary text-primary hover:bg-primary absolute top-1/2 -left-2 z-10 -translate-y-1/2 rounded-full border bg-white/80 p-2 shadow transition disabled:opacity-50"
+                                    className="border-secondary text-secondary hover:bg-secondary absolute top-1/2 -left-2 z-10 -translate-y-1/2 rounded-full border bg-white/80 p-2 shadow transition disabled:opacity-50"
                                     style={{ display: merchSlides.length > 1 ? 'block' : 'none' }}
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1106,7 +1095,7 @@ export default function Home() {
                                 <button
                                     aria-label="Selanjutnya"
                                     onClick={() => instanceRef.current?.next()}
-                                    className="border-primary text-primary hover:bg-primary absolute top-1/2 right-0 z-10 -translate-y-1/2 rounded-full border bg-white/80 p-2 shadow transition disabled:opacity-50"
+                                    className="border-secondary text-secondary hover:bg-secondary absolute top-1/2 right-0 z-10 -translate-y-1/2 rounded-full border bg-white/80 p-2 shadow transition disabled:opacity-50"
                                     style={{ display: merchSlides.length > 1 ? 'block' : 'none' }}
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1119,7 +1108,7 @@ export default function Home() {
                                         <button
                                             key={idx}
                                             onClick={() => instanceRef.current?.moveToIdx(idx)}
-                                            className={`h-3 w-3 rounded-full ${currentSlide === idx ? 'bg-primary' : 'bg-gray-300'} transition`}
+                                            className={`h-3 w-3 rounded-full ${currentSlide === idx ? 'bg-secondary' : 'bg-gray-300'} transition`}
                                         ></button>
                                     ))}
                                 </div>
@@ -1133,22 +1122,22 @@ export default function Home() {
                                 {/* Info berdasarkan slide aktif */}
                                 {/*
                                     <h3 className="mb-2 text-2xl font-bold text-gray-900 sm:text-3xl">{merchData[currentSlide].title}</h3>
-                                    <div className="mb-1 text-xl font-semibold text-primary">{merchData[currentSlide].price}</div>
+                                    <div className="mb-1 text-xl font-semibold text-secondary">{merchData[currentSlide].price}</div>
                                     <div className="mb-3 text-sm text-gray-500">{merchData[currentSlide].preorder}</div>
                                     <p className="mb-6 text-base text-gray-700 sm:text-lg">{merchData[currentSlide].desc}</p>
-                                    <a href={merchData[currentSlide].link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center w-full py-3 text-base font-semibold text-white transition bg-primary rounded-lg shadow px-7 hover:bg-primary md:w-auto">
+                                    <a href={merchData[currentSlide].link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center w-full py-3 text-base font-semibold text-white transition bg-secondary rounded-lg shadow px-7 hover:bg-secondary md:w-auto">
                                         Order Now
                                     </a>
                                     */}
                                 <h3 className="mb-2 text-2xl font-bold text-gray-900 sm:text-3xl">{activeInfo.title}</h3>
-                                <div className="text-primary mb-1 text-xl font-semibold">{activeInfo.price}</div>
+                                <div className="text-secondary mb-1 text-xl font-semibold">{activeInfo.price}</div>
                                 <div className="mb-3 text-sm text-gray-500">{activeInfo.preorder}</div>
                                 <p className="mb-6 text-base text-gray-700 sm:text-lg">{activeInfo.desc}</p>
                                 <a
                                     href={activeInfo.link}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="bg-primary hover:bg-primary mt-0 mb-2 inline-flex w-full items-center justify-center rounded-lg px-7 py-3 text-base font-bold text-white shadow transition md:w-auto"
+                                    className="bg-secondary hover:bg-secondary mt-0 mb-2 inline-flex w-full items-center justify-center rounded-lg px-7 py-3 text-base font-bold text-white shadow transition md:w-auto"
                                 >
                                     Order Now
                                 </a>
@@ -1207,7 +1196,7 @@ export default function Home() {
                                 <div className="mt-4 flex flex-col gap-4">
                                     <Link
                                         href={route('home')}
-                                        className="bg-primary hover:bg-primary inline-flex w-full items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-white transition"
+                                        className="bg-secondary hover:bg-secondary inline-flex w-full items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-white transition"
                                     >
                                         Kembali ke Beranda
                                     </Link>

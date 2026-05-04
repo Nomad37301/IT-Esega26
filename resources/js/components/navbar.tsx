@@ -18,10 +18,11 @@ interface NavbarProps {
     user?: { data: UserType };
     isRegistrationClosed?: boolean;
     setShowClosedPopup?: (show: boolean) => void;
+    forceSolid?: boolean;
 }
 
-export function Navbar({ logo, items = [], user, isRegistrationClosed = false, setShowClosedPopup }: NavbarProps) {
-    const [isScrolled, setIsScrolled] = useState(false);
+export function Navbar({ logo, items = [], user, isRegistrationClosed = false, setShowClosedPopup, forceSolid = false }: NavbarProps) {
+    const [isScrolled, setIsScrolled] = useState(forceSolid);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownTriggerRef = useRef<HTMLButtonElement>(null);
     const dropdownContentRef = useRef<HTMLDivElement>(null);
@@ -32,7 +33,7 @@ export function Navbar({ logo, items = [], user, isRegistrationClosed = false, s
 
     useEffect(() => {
         const handleScroll = () => {
-            setIsScrolled(window.scrollY > 0);
+            setIsScrolled(forceSolid || window.scrollY > 0);
         };
 
         window.addEventListener('scroll', handleScroll);

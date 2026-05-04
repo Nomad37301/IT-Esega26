@@ -8,11 +8,11 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use App\Models\CompetitionSlot;
 
-class FF_Team extends Model
+class PUBG_Team extends Model
 {
     use HasFactory;
 
-    protected $table = 'ff_teams';
+    protected $table = 'pubg_teams';
     
     protected $fillable = [
         'team_name', 
@@ -24,7 +24,7 @@ class FF_Team extends Model
 
     public function participants()
     {
-        return $this->hasMany(FF_Participant::class, 'ff_team_id');
+        return $this->hasMany(PUBG_Participant::class, 'pubg_team_id');
     }
     
     /**
@@ -46,19 +46,19 @@ class FF_Team extends Model
             
             // Kembalikan slot kompetisi
             try {
-                $slot = CompetitionSlot::where('competition_name', 'Free Fire')->first();
+                $slot = CompetitionSlot::where('competition_name', 'PUBG Mobile')->first();
                 
                 if ($slot) {
-                    Log::info('Returning competition slot from FF_Team model', [
+                    Log::info('Returning competition slot from PUBG_Team model', [
                         'team_id' => $team->id,
                         'team_name' => $team->team_name,
-                        'slot_count' => 1, // FF selalu menggunakan 1 slot
+                        'slot_count' => 1, // PUBG selalu menggunakan 1 slot
                         'current_used_slots' => $slot->used_slots
                     ]);
                     
                     // Pastikan jumlah slot yang dikembalikan tidak membuat used_slots negatif
                     if ($slot->used_slots >= 1) {
-                        $success = $slot->decrementUsedSlots(1); // FF selalu menggunakan 1 slot
+                        $success = $slot->decrementUsedSlots(1); // PUBG selalu menggunakan 1 slot
                         
                         Log::info('Slot decrement result', [
                             'success' => $success,
@@ -74,10 +74,10 @@ class FF_Team extends Model
                         ]);
                     }
                 } else {
-                    Log::warning('Free Fire competition slot not found');
+                    Log::warning('PUBG Mobile competition slot not found');
                 }
             } catch (\Exception $e) {
-                Log::error('Error returning competition slot from FF_Team model', [
+                Log::error('Error returning competition slot from PUBG_Team model', [
                     'team_id' => $team->id,
                     'error' => $e->getMessage(),
                     'trace' => $e->getTraceAsString()

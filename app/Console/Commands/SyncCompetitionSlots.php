@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\CompetitionSlot;
-use App\Models\FF_Team;
+use App\Models\PUBG_Team;
 use App\Models\ML_Team;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
@@ -34,9 +34,9 @@ class SyncCompetitionSlots extends Command
 
         // Get current slot information
         $mlSlot = CompetitionSlot::where('competition_name', 'Mobile Legends')->first();
-        $ffSlot = CompetitionSlot::where('competition_name', 'Free Fire')->first();
+        $pubgSlot = CompetitionSlot::where('competition_name', 'PUBG Mobile')->first();
 
-        if (!$mlSlot || !$ffSlot) {
+        if (!$mlSlot || !$pubgSlot) {
             $this->error('Competition slots not found in database!');
             return 1;
         }
@@ -49,18 +49,18 @@ class SyncCompetitionSlots extends Command
             ->select(DB::raw('SUM(CASE WHEN slot_type = "double" THEN 2 WHEN slot_type = "single" THEN 1 ELSE COALESCE(slot_count, 1) END) as total_slots'))
             ->first()->total_slots ?? 0;
             
-        $ffSlotsUsed = FF_Team::count(); // FF teams always use 1 slot
+        $pubgSlotsUsed = PUBG_Team::count(); // PUBG teams always use 1 slot
 
         $this->info('Current situation:');
         $this->table(
             ['Competition', 'DB Used Slots', 'Actual Used Slots', 'Difference'],
             [
                 ['Mobile Legends', $mlSlot->used_slots, $mlSlotsUsed, $mlSlot->used_slots - $mlSlotsUsed],
-                ['Free Fire', $ffSlot->used_slots, $ffSlotsUsed, $ffSlot->used_slots - $ffSlotsUsed],
+                ['PUBG Mobile', $pubgSlot->used_slots, $pubgSlotsUsed, $pubgSlot->used_slots - $pubgSlotsUsed],
             ]
         );
 
-        if ($mlSlot->used_slots == $mlSlotsUsed && $ffSlot->used_slots == $ffSlotsUsed) {
+        if ($mlSlot->used_slots == $mlSlotsUsed && $pubgSlot->used_slots == $pubgSlotsUsed) {
             $this->info('Slots are already in sync with the database. No updates needed.');
             return 0;
         }
@@ -78,8 +78,8 @@ class SyncCompetitionSlots extends Command
             $mlSlot->save();
             
             // Update FF slot
-            $ffSlot->used_slots = $ffSlotsUsed;
-            $ffSlot->save();
+            $pubgSlot->used_slots = $pubgSlotsUsed;
+            $pubgSlot->save();
 
             DB::commit();
 
@@ -88,13 +88,13 @@ class SyncCompetitionSlots extends Command
                 ['Competition', 'New Used Slots'],
                 [
                     ['Mobile Legends', $mlSlot->used_slots],
-                    ['Free Fire', $ffSlot->used_slots],
+                    ['PUBG Mobile', $pubgSlot->used_slots],
                 ]
             );
 
             Log::info('Competition slots synchronized', [
                 'ml_slots' => $mlSlotsUsed,
-                'ff_slots' => $ffSlotsUsed
+                'pubg_slots' => $pubgSlotsUsed
             ]);
 
             return 0;

@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { UserType } from '@/types/user';
 import { Head, usePage, Link } from '@inertiajs/react';
 import { useState, Fragment } from 'react';
+import { useRegistrationStatus } from '@/hooks/use-registration-status';
 import { route } from 'ziggy-js';
 import { Dialog, Transition } from '@headlessui/react';
 
@@ -33,7 +34,7 @@ interface Props {
 const BracketML: React.FC<Props> = ({ user, brackets }) => {
     // State untuk kontrol registration closed popup
     const [showClosedPopup, setShowClosedPopup] = useState(false);
-    const isRegistrationClosed = false; // Set registration sebagai open (untuk testing)
+    const isRegistrationClosed = useRegistrationStatus();
 
     return (
         <>
@@ -50,6 +51,7 @@ const BracketML: React.FC<Props> = ({ user, brackets }) => {
                         items={navItems}
                         isRegistrationClosed={isRegistrationClosed}
                         setShowClosedPopup={setShowClosedPopup}
+                        forceSolid
                     />
                 </div>
 
@@ -58,11 +60,11 @@ const BracketML: React.FC<Props> = ({ user, brackets }) => {
                     {/* Header */}
                     <div className="text-center mb-12">
                         <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-                            <span className="text-red-600">IT-ESEGA</span> Mobile Legends
+                            <span className="text-secondary">IT-ESEGA</span> Mobile Legends
                             <br />
                             <span className="text-3xl md:text-4xl text-gray-800">Qualification Day 1</span>
                         </h1>
-                        <div className="w-24 h-1 bg-red-600 rounded-full mx-auto"></div>
+                        <div className="w-24 h-1 bg-secondary rounded-full mx-auto"></div>
                     </div>
 
                     {/* Bracket Grid - Dynamic Columns Layout */}
@@ -72,7 +74,7 @@ const BracketML: React.FC<Props> = ({ user, brackets }) => {
                                 <Card key={bracket.id} className="w-full transition-shadow duration-300 bg-white border-2 border-gray-300 shadow-lg hover:shadow-xl">
                                     <CardHeader className="border-b border-gray-200 bg-gray-50">
                                         <CardTitle className="text-xl font-bold text-center text-gray-900">
-                                            <span className="text-red-600">
+                                            <span className="text-secondary">
                                                 {bracket.group_name ? `Group ${bracket.group_name}` : bracket.stage_name}
                                             </span>
                                         </CardTitle>
@@ -145,7 +147,7 @@ const BracketML: React.FC<Props> = ({ user, brackets }) => {
                                 <div className="flex flex-col gap-4 mt-4">
                                     <Link
                                         href={route('home')}
-                                        className="inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white transition bg-red-600 rounded-md hover:bg-red-700"
+                                        className="inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white transition bg-secondary rounded-md hover:opacity-90"
                                     >
                                         Kembali ke Beranda
                                     </Link>

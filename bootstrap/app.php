@@ -27,6 +27,13 @@ return Application::configure(basePath: dirname(__DIR__))
             NotFoundMiddleware::class,
         ]);
 
+        $middleware->redirectUsersTo(function (\Illuminate\Http\Request $request) {
+            if ($request->user() && $request->user()->hasAnyRole(['super_admin', 'admin'])) {
+                return route('admin.dashboard');
+            }
+            return route('dashboard');
+        });
+
 
         $middleware->alias([
             'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,

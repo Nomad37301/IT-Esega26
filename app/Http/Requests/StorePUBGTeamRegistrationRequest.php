@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreFFTeamRegistrationRequest extends FormRequest
+class StorePUBGTeamRegistrationRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -14,10 +14,10 @@ class StoreFFTeamRegistrationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'team_name' => 'required|string|unique:ff_teams,team_name',
+            'team_name' => 'required|string|unique:pubg_teams,team_name',
             'team_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'proof_of_payment' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'game_type' => 'required|in:ff',
+            'game_type' => 'required|in:pubg',
         ];
     }
 

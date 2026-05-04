@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AuthenticatedSessionControllerAdmin;
 use App\Http\Controllers\Admin\TeamPlayerController;
 use App\Http\Controllers\Admin\TimelineController;
+use App\Http\Controllers\Admin\DatabaseExportController;
 use App\Http\Controllers\IncompleteTeamController;
 use App\Http\Controllers\PlayerRegistrationController;
 use App\Http\Controllers\TeamRegistrationController;
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 use App\Http\Controllers\PageController;
 use App\Exports\MLPlayersExport;
-use App\Exports\FFPlayersExport;
+use App\Exports\PUBGPlayersExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 // Route::get('/', function () {
@@ -30,22 +31,23 @@ Route::get('/bracket', function () {
 })->name('bracket');
 
 Route::get('/bracket/mobile-legends', [App\Http\Controllers\BracketController::class, 'indexML'])->name('bracket.ml');
-Route::get('/bracket/free-fire', [App\Http\Controllers\BracketController::class, 'indexFF'])->name('bracket.ff');
+Route::get('/bracket/pubg-mobile', [App\Http\Controllers\BracketController::class, 'indexPUBG'])->name('bracket.pubg');
 
 Route::get('/bracket/mobile-legends/day2-3', [App\Http\Controllers\BracketController::class, 'indexML2'])->name('bracket.ml2');
+Route::get('/bracket/pubg-mobile/grand-final', [App\Http\Controllers\BracketController::class, 'indexPUBG2'])->name('bracket.pubg2');
 
 
 Route::middleware('guest')->group(function () {
     Route::post('/team-registration', [TeamRegistrationController::class, 'store'])->name('team-registration.store');
 
     Route::post('/player-registration', [PlayerRegistrationController::class, 'store'])->name('player-registration.store');
-    Route::post('/player-registration-ff', [PlayerRegistrationController::class, 'storeFF'])->name('player-registration-ff.store');
+    Route::post('/player-registration-pubg', [PlayerRegistrationController::class, 'storePUBG'])->name('player-registration-pubg.store');
 
     Route::get('/player-registration-ml/form/{encryptedTeamName}', [PlayerRegistrationController::class, 'showRegistrationForm'])
         ->name('player-registration.form');
 
-    Route::get('/player-registration-ff/form/{encryptedTeamName}', [PlayerRegistrationController::class, 'showRegistrationFormFF'])
-        ->name('player-registration-ff.form');
+    Route::get('/player-registration-pubg/form/{encryptedTeamName}', [PlayerRegistrationController::class, 'showRegistrationFormPUBG'])
+        ->name('player-registration-pubg.form');
 
     // Tambahkan route untuk menghapus tim yang belum selesai didaftarkan
     Route::post('/delete-incomplete-team', [IncompleteTeamController::class, 'destroy'])->name('delete-incomplete-team');
@@ -65,19 +67,7 @@ Route::get('/test-mail', function () {
     return 'Email sent!';
 });
 
-// API Routes for Player Data
-Route::get('/api/ff-players', [TeamPlayerController::class, 'getFFPlayers']);
-Route::get('/api/ml-players', [TeamPlayerController::class, 'getMLPlayers']);
 
-// API Routes for Player Management
-Route::delete('/api/players/{game}/{id}', [TeamPlayerController::class, 'deletePlayer']);
-Route::put('/api/players/{game}/{id}', [TeamPlayerController::class, 'updatePlayer']);
-Route::get('/api/players/{game}/filter', [TeamPlayerController::class, 'filterPlayers']);
-
-// API Routes for Team Management
-Route::delete('/api/teams/{game}/{id}', [TeamPlayerController::class, 'deleteTeam']);
-Route::put('/api/teams/{game}/{id}', [TeamPlayerController::class, 'updateTeam']);
-Route::get('/api/teams/{game}/filter', [TeamPlayerController::class, 'filterTeams']);
 
 Route::middleware(['auth', 'verified', 'role:user'])->group(function () {
     Route::get('dashboard', function () {
@@ -106,29 +96,45 @@ Route::middleware(['auth', 'role:super_admin|admin'])->prefix('secure-admin-esse
     // Rute untuk export data
     Route::get('export/teams', [TeamPlayerController::class, 'exportTeams'])->name('admin.export.teams');
     Route::get('export/all-players', [TeamPlayerController::class, 'exportAllPlayers'])->name('admin.export.all-players');
-    Route::get('export/ff-players', [TeamPlayerController::class, 'ffPlayer'])->name('admin.export.ff-players');
+    Route::get('export/pubg-players', [TeamPlayerController::class, 'pubgPlayer'])->name('admin.export.pubg-players');
     Route::get('export/ml-players', [TeamPlayerController::class, 'mlPlayer'])->name('admin.export.ml-players');
 
     // Tambahkan rute untuk export ZIP dengan semua data dan file
     Route::get('export/all-files-data', [TeamPlayerController::class, 'exportFilesAndData'])->name('admin.export.all-files-data');
 
     // Tambahkan rute yang langsung match dengan URL yang dipanggil oleh frontend
-    Route::get('export/FFplayers', [TeamPlayerController::class, 'ffPlayer']);
+    Route::get('export/PUBGplayers', [TeamPlayerController::class, 'pubgPlayer']);
     Route::get('export/MLplayers', [TeamPlayerController::class, 'mlPlayer']);
 
     // Rute lama (untuk kompatibilitas)
-    Route::get('testff', [TeamPlayerController::class, 'ffPlayer'])->name('ffPlayer.list');
+    Route::get('testpubg', [TeamPlayerController::class, 'pubgPlayer'])->name('pubgPlayer.list');
     Route::get('testml', [TeamPlayerController::class, 'mlPlayer'])->name('mlPlayer.list');
 
     Route::post('logout/admin/it-esega', [AuthenticatedSessionControllerAdmin::class, 'destroy'])
         ->name('logout.admin');
+
+    // API Routes for Player Data (protected)
+    Route::get('/api/pubg-players', [TeamPlayerController::class, 'getPUBGPlayers']);
+    Route::get('/api/ml-players', [TeamPlayerController::class, 'getMLPlayers']);
+
+    // API Routes for Player Management (protected)
+    Route::delete('/api/players/{game}/{id}', [TeamPlayerController::class, 'deletePlayer']);
+    Route::put('/api/players/{game}/{id}', [TeamPlayerController::class, 'updatePlayer']);
+    Route::get('/api/players/{game}/filter', [TeamPlayerController::class, 'filterPlayers']);
+
+    // API Routes for Team Management (protected)
+    Route::delete('/api/teams/{game}/{id}', [TeamPlayerController::class, 'deleteTeam']);
+    Route::put('/api/teams/{game}/{id}', [TeamPlayerController::class, 'updateTeam']);
+    Route::get('/api/teams/{game}/filter', [TeamPlayerController::class, 'filterTeams']);
+
+    // Truncate teams (protected)
+    Route::post('truncate-teams', [IncompleteTeamController::class, 'truncateTeams'])->name('admin.truncate-teams');
+
+    // Export full database + uploaded files as ZIP
+    Route::get('export/full-database', [DatabaseExportController::class, 'exportAll'])->name('admin.export.full-database');
 });
 
-// Tambahkan route baru untuk endpoint truncate
-Route::post('/admin/truncate-teams', [IncompleteTeamController::class, 'truncateTeams'])->name('admin.truncate-teams');
 
-// Test route for TeamPlayer page - tanpa middleware auth untuk testing
-Route::get('/test-players', [TeamPlayerController::class, 'index'])->name('test.players');
 
 // Admin Player Management Routes
 Route::middleware(['auth', 'role:super_admin|admin'])->prefix('secure-admin-essega/players')->group(function () {
