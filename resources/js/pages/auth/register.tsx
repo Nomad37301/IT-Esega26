@@ -437,7 +437,7 @@ window.location.reload();
                                     </h2>
                                     <div className="w-16 sm:w-20 h-1 bg-secondary mx-auto rounded-full mb-3" data-aos="fade-down" data-aos-delay="50"></div>
                                     <p className="text-gray-500 font-medium tracking-wide text-sm sm:text-base" data-aos="fade-down" data-aos-delay="100">
-                                         EPilih game untuk melanjutkan ke langkah berikutnya  E                                    </p>
+                                         Pilih game untuk melanjutkan ke langkah berikutnya                                    </p>
                                     
                                     {isLoading && (
                                         <div className="mt-4 text-sm text-gray-500 animate-pulse">
