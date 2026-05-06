@@ -430,17 +430,16 @@ export default function Home() {
 
             {/* ====== HERO SECTION dengan Background Image ====== */}
             <div
-                className="hero-section font-poppins"
+                className="hero-section relative flex min-h-[90vh] items-center justify-center font-poppins md:min-h-screen"
                 style={{
                     backgroundImage: `url('/Images/bg-image.png')`,
-                    minHeight: '100vh',
                 }}
             >
                 {/* Dark overlay */}
                 <div className="hero-overlay" />
 
                 {/* Hero Content */}
-                <div className="hero-content relative z-10 mx-auto max-w-[1350px] px-4 pt-32 pb-20 md:px-8 md:pt-60 md:pb-36 lg:px-12">
+                <div className="hero-content relative z-10 mx-auto w-full max-w-[1350px] px-4 py-20 md:px-8 md:py-36 lg:px-12">
                     <div className="grid w-full grid-cols-1 items-center gap-8 md:grid-cols-[1.5fr_1fr]">
                         <div className="flex w-full flex-col items-center text-center md:items-start md:text-left" data-aos="fade-up">
                             {/* Judul Besar Hero */}
@@ -676,14 +675,14 @@ export default function Home() {
                             ].map((game, i) => (
                                 <div
                                     key={i}
-                                    className="group border-secondary/50 hover:border-secondary relative w-full max-w-md overflow-hidden rounded-2xl border-2 bg-white p-3 shadow-lg transition-all duration-500 hover:shadow-2xl"
+                                    className="group md:hover:border-secondary relative w-full max-w-md overflow-hidden rounded-2xl border-2 border-secondary/50 bg-white p-3 shadow-lg transition-all duration-500 md:hover:shadow-2xl"
                                     data-aos={game.animation}
                                     data-aos-delay={game.delay}
                                     style={{ height: '600px' }}
                                 >
                                     {/* Background Game Image */}
                                     <div
-                                        className="absolute inset-0 m-3 rounded-xl bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                                        className="absolute inset-0 m-3 rounded-xl bg-cover bg-center transition-transform duration-500 md:group-hover:scale-110"
                                         style={{ backgroundImage: `url(${game.bgImage})` }}
                                     />
 
@@ -691,29 +690,29 @@ export default function Home() {
                                     <div className="absolute inset-0 block rounded-xl bg-black/60 md:hidden" />
 
                                     {/* Dark Overlay (only on desktop hover) */}
-                                    <div className="absolute inset-0 hidden rounded-xl bg-gradient-to-t from-black/90 via-black/70 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 md:block" />
+                                    <div className="absolute inset-0 hidden rounded-xl bg-gradient-to-t from-black/90 via-black/70 to-transparent opacity-0 transition-opacity duration-500 md:block md:group-hover:opacity-100" />
 
                                     {/* Content Container */}
-                                    <div className="relative flex h-full w-full flex-col items-center justify-center">
+                                    <div className="relative flex h-full w-full flex-col items-center justify-center p-6">
                                         {/* Game Logo */}
-                                        <div className="absolute -top-1 left-1/2 z-20 -translate-x-1/2 md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2">
-                                            <div className="flex items-center justify-center rounded-full p-8 transition-all duration-500 md:group-hover:-translate-y-[80%]">
+                                        <div className="relative z-20 md:absolute md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2">
+                                            <div className="flex items-center justify-center rounded-full p-4 transition-all duration-500 md:p-8 md:group-hover:-translate-y-[80%]">
                                                 <img
                                                     src={game.image}
                                                     alt={`${game.title} Logo`}
-                                                    className="h-42 w-auto object-contain transition-all duration-500 md:group-hover:scale-140"
+                                                    className="h-32 w-auto object-contain transition-all duration-500 md:h-42 md:group-hover:scale-140"
                                                 />
                                             </div>
                                         </div>
 
                                         {/* Content (shown on mobile and on hover in desktop) */}
-                                        <div className="absolute right-0 bottom-0 left-0 my-5 flex translate-y-0 flex-col items-center p-8 opacity-100 transition-all duration-500 md:translate-y-4 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">
+                                        <div className="relative flex flex-col items-center opacity-100 transition-all duration-500 md:absolute md:right-0 md:bottom-0 md:left-0 md:my-5 md:p-8 md:translate-y-4 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">
                                             <h3 className="mb-4 text-center text-2xl font-bold text-white">
                                                 {game.title} <span className="text-secondary">Tournament</span>
-                                                <div className="bg-secondary mx-auto mt-2 h-0.5 w-64 rounded-full"></div>
+                                                <div className="bg-secondary mx-auto mt-2 h-0.5 w-48 rounded-full md:w-64"></div>
                                             </h3>
 
-                                            <div className="mb-6 space-y-2 text-center">
+                                            <div className="mb-6 space-y-1 text-center md:space-y-2">
                                                 <p className="text-lg font-bold text-white/90">{game.slots}</p>
                                                 <p className="text-base text-white/90">{game.type}</p>
                                                 <p className="text-base text-white/90">{game.scope}</p>
@@ -727,7 +726,7 @@ export default function Home() {
 
                                             <Link
                                                 href={route('register')}
-                                                className="bg-secondary hover:bg-secondary inline-block transform rounded-lg px-8 py-3 text-base font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
+                                                className="bg-secondary inline-block transform rounded-lg px-8 py-3 text-base font-semibold text-white transition-all duration-300 md:hover:scale-105 md:hover:shadow-lg md:hover:bg-secondary disabled:cursor-not-allowed disabled:opacity-60"
                                                 onClick={(e) => {
                                                     if (isRegistrationClosed) {
                                                         e.preventDefault();
@@ -830,7 +829,7 @@ export default function Home() {
 
                         <div className="mx-auto max-w-lg">
                             <div
-                                className="border-secondary/50 hover:border-secondary relative overflow-hidden rounded-2xl border-2 bg-white shadow-lg transition-all duration-500 hover:shadow-xl"
+                                className="md:hover:border-secondary relative overflow-hidden rounded-2xl border-2 border-secondary/50 bg-white shadow-lg transition-all duration-500 md:hover:shadow-xl"
                                 data-aos="fade-up"
                                 data-aos-delay="100"
                             >
@@ -863,7 +862,7 @@ export default function Home() {
                                         </div>
                                         <Link
                                             href={route('register')}
-                                            className="from-secondary/20 to-secondary/5 hover:from-secondary/20 hover:to-secondary/5 mt-6 inline-flex transform items-center rounded-lg bg-gradient-to-r px-6 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:scale-105 disabled:cursor-not-allowed disabled:opacity-60"
+                                            className="bg-secondary mt-6 inline-flex transform items-center rounded-lg px-6 py-2.5 text-sm font-semibold text-white transition-all duration-300 md:hover:scale-105 md:hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
                                             onClick={(e) => {
                                                 if (isRegistrationClosed) {
                                                     e.preventDefault();
@@ -949,7 +948,7 @@ export default function Home() {
                                 <p className="mb-4 text-gray-600">Masih punya pertanyaan lain?</p>
                                 <a
                                     href="#contact"
-                                    className="bg-secondary/10 text-secondary hover:bg-secondary hover:text-secondary inline-flex items-center rounded-lg px-5 py-2.5 text-sm font-medium transition-colors duration-300"
+                                    className="bg-secondary/10 text-secondary hover:bg-secondary hover:text-white inline-flex items-center rounded-lg px-5 py-2.5 text-sm font-medium transition-colors duration-300"
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" className="mr-2 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                         <path
@@ -1005,7 +1004,7 @@ export default function Home() {
                             ].map((contact, index) => (
                                 <div
                                     key={index}
-                                    className="border-secondary rounded-xl border bg-white p-6 shadow-lg transition-shadow duration-300 hover:shadow-xl"
+                                    className="border-secondary rounded-xl border bg-white p-6 shadow-lg transition-shadow duration-300 md:hover:shadow-xl"
                                     data-aos={contact.animation}
                                     data-aos-delay={contact.delay}
                                 >
@@ -1033,10 +1032,10 @@ export default function Home() {
                                             href={`https://wa.me/${contact.wa}`}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="hover:text-secondary flex items-center gap-2 text-gray-600 transition-colors duration-300"
+                                            className="md:hover:text-secondary flex items-center gap-2 text-gray-600 transition-colors duration-300"
                                         >
                                             <span className="font-semibold">WA:</span>
-                                            <span className="hover:underline">{contact.wa}</span>
+                                            <span className="md:hover:underline">{contact.wa}</span>
                                         </a>
                                         <p className="flex items-center gap-2 text-gray-600">
                                             <span className="font-semibold">LINE:</span>
@@ -1189,12 +1188,15 @@ export default function Home() {
                                     </p>
                                 </div>
                                 <div className="mt-4 flex flex-col gap-4">
-                                    <Link
-                                        href={route('home')}
+                                    <button
+                                        onClick={() => {
+                                            setShowClosedPopup(false);
+                                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                                        }}
                                         className="bg-secondary hover:bg-secondary inline-flex w-full items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-white transition"
                                     >
                                         Kembali ke Beranda
-                                    </Link>
+                                    </button>
                                     <button
                                         onClick={() => setShowClosedPopup(false)}
                                         className="inline-flex w-full items-center justify-center rounded-md bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-200"

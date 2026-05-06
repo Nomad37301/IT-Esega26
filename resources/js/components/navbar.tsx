@@ -192,7 +192,7 @@ return (
                                 <button
                                     ref={dropdownTriggerRef}
                                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                                    className="flex h-10 w-10 transform items-center justify-center rounded-full bg-gradient-to-r from-[#ba0000] to-[#ba0000]/90 text-white shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:from-[#ba0000]/90 hover:to-[#ba0000] hover:shadow-lg focus:ring-2 focus:ring-[#ba0000]/20 focus:ring-offset-2 focus:outline-none"
+                                    className="flex h-10 w-10 transform items-center justify-center rounded-full bg-gradient-to-r from-[#4D7A8C] to-[#4D7A8C]/90 text-white shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:from-[#4D7A8C]/90 hover:to-[#4D7A8C] hover:shadow-lg focus:ring-2 focus:ring-[#4D7A8C]/20 focus:ring-offset-2 focus:outline-none"
                                 >
                                     <User className="h-5 w-5" />
                                 </button>
@@ -217,7 +217,7 @@ return (
                                                         ? route('admin.dashboard')
                                                         : route('dashboard')
                                                 }
-                                                className="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-1.5 text-sm text-gray-700 transition-colors duration-200 hover:bg-[#ba0000]/5 hover:text-[#ba0000]"
+                                                className="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-1.5 text-sm text-gray-700 transition-colors duration-200 hover:bg-[#4D7A8C]/5 hover:text-[#4D7A8C]"
                                             >
                                                 <LayoutDashboard className="h-4 w-4" />
                                                 Dashboard
@@ -226,7 +226,7 @@ return (
                                                 href={route('logout')}
                                                 method="post"
                                                 as="button"
-                                                className="flex w-full cursor-pointer items-center gap-2 rounded-lg px-2 py-1.5 text-sm text-gray-700 transition-colors duration-200 hover:bg-[#ba0000]/5 hover:text-[#ba0000]"
+                                                className="flex w-full cursor-pointer items-center gap-2 rounded-lg px-2 py-1.5 text-sm text-gray-700 transition-colors duration-200 hover:bg-[#4D7A8C]/5 hover:text-[#4D7A8C]"
                                             >
                                                 <LogOut className="h-4 w-4" />
                                                 Logout
@@ -304,8 +304,8 @@ return (
                                                 }
                                                 className={`block rounded-lg px-4 py-3 text-[15px] transition-all duration-300 ${
                                                     currentPath === item.href
-                                                        ? 'bg-[#ba0000]/5 font-semibold text-[#ba0000]'
-                                                        : 'text-gray-700 hover:bg-[#ba0000]/5 hover:text-[#ba0000]'
+                                                        ? 'bg-[#4D7A8C]/5 font-semibold text-[#4D7A8C]'
+                                                        : 'text-gray-700 hover:bg-[#4D7A8C]/5 hover:text-[#4D7A8C]'
                                                 }`}
                                             >
                                                 {item.title}
@@ -325,7 +325,7 @@ return (
                                                             ? route('admin.dashboard')
                                                             : route('dashboard')
                                                     }
-                                                    className="flex items-center gap-2 rounded-lg bg-[#ba0000]/5 px-4 py-3 text-[15px] font-semibold text-[#ba0000] transition-all duration-300 hover:bg-[#ba0000]/10"
+                                                    className="flex items-center gap-2 rounded-lg bg-[#4D7A8C]/5 px-4 py-3 text-[15px] font-semibold text-[#4D7A8C] transition-all duration-300 hover:bg-[#4D7A8C]/10"
                                                 >
                                                     <LayoutDashboard className="h-5 w-5" /> Dashboard
                                                 </Link>
@@ -333,7 +333,7 @@ return (
                                                     href={route('logout')}
                                                     method="post"
                                                     as="button"
-                                                    className="flex items-center gap-2 rounded-lg px-4 py-3 text-[15px] text-gray-700 transition-all duration-300 hover:bg-[#ba0000]/5 hover:text-[#ba0000]"
+                                                    className="flex items-center gap-2 rounded-lg px-4 py-3 text-[15px] text-gray-700 transition-all duration-300 hover:bg-[#4D7A8C]/5 hover:text-[#4D7A8C]"
                                                 >
                                                     <LogOut className="h-5 w-5" /> Logout
                                                 </Link>
