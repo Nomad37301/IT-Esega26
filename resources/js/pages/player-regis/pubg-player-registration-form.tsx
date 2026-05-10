@@ -20,12 +20,31 @@ import { PUBGPlayerForm } from "@/components/registration/pubg-player-form"
 import LoadingScreen from "@/components/ui/loading-screen"
 import SuccessDialog from "@/components/ui/success-dialog"
 import axios from "axios"
+import imageCompression from "browser-image-compression"
+
+// Opsi kompresi: maksimal 300KB per file agar aman dari limit 8MB cPanel
+const compressionOptions = {
+    maxSizeMB: 0.3,          // Maksimal 300 KB per file
+    maxWidthOrHeight: 1280,  // Resolusi max 1280px
+    useWebWorker: true,      // Proses di background agar UI tidak freeze
+    fileType: 'image/jpeg',  // Output selalu JPEG agar ukuran lebih kecil
+}
+
+const compressImage = async (file: File): Promise<File> => {
+    try {
+        const compressed = await imageCompression(file, compressionOptions)
+        return compressed
+    } catch (err) {
+        console.warn('Kompresi gambar gagal, menggunakan file asli:', err)
+        return file // Fallback ke file asli jika kompresi gagal
+    }
+}
 
 export default function PlayerRegistrationForm({ teamData, gameType }: PlayerRegistrationFormProps) {
     const isPUBG = gameType === "pubg"
     const gameTitle = isPUBG ? "PUBG Mobile" : "Mobile Legends"
     const minPlayers = 4
-    const maxPlayers = 6
+    const maxPlayers = 5
 
     const themeColors = {
         primary: "bg-secondary hover:opacity-90 text-white",
@@ -74,7 +93,11 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
             if (saved && formData.pubg_players.length === 0) {
                 try {
                     const parsed = JSON.parse(saved)
-                    if (Array.isArray(parsed)) setFormData(prev => ({ ...prev, pubg_players: parsed }))
+                    if (Array.isArray(parsed)) {
+                        // Sanitasi: pastikan data dari localStorage tidak melebihi batas max
+                        const sanitized = parsed.slice(0, maxPlayers)
+                        setFormData(prev => ({ ...prev, pubg_players: sanitized }))
+                    }
                 } catch (e) {
                     console.error("Failed to parse saved players", e)
                 }
@@ -262,7 +285,17 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
             submitData.append('team_id', teamId.toString())
             submitData.append('pubg_team_id', teamId.toString())
 
-            formData.pubg_players.forEach((player: PUBGPlayer, index: number) => {
+            // Kompres semua gambar secara paralel sebelum dikirim ke server
+            // Ini mencegah PostTooLargeException karena limit 8MB di cPanel
+            const compressedPlayers = await Promise.all(
+                formData.pubg_players.map(async (player: PUBGPlayer) => ({
+                    ...player,
+                    foto: player.foto instanceof File ? await compressImage(player.foto) : player.foto,
+                    tanda_tangan: player.tanda_tangan instanceof File ? await compressImage(player.tanda_tangan) : player.tanda_tangan,
+                }))
+            )
+
+            compressedPlayers.forEach((player: PUBGPlayer, index: number) => {
                 submitData.append(`pubg_players[${index}][name]`, player.name || '')
                 submitData.append(`pubg_players[${index}][nickname]`, player.nickname || '')
                 submitData.append(`pubg_players[${index}][id_server]`, player.id_server || '')
@@ -272,11 +305,12 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
                 submitData.append(`pubg_players[${index}][pubg_team_id]`, teamId.toString())
                 submitData.append(`pubg_players[${index}][role]`, player.role || 'anggota')
 
+                // Format key konsisten dengan bracket notation agar terbaca oleh controller
                 if (player.foto instanceof File) {
-                    submitData.append(`pubg_players_${index}_foto`, player.foto)
+                    submitData.append(`pubg_players[${index}][foto]`, player.foto)
                 }
                 if (player.tanda_tangan instanceof File) {
-                    submitData.append(`pubg_players_${index}_tanda_tangan`, player.tanda_tangan)
+                    submitData.append(`pubg_players[${index}][tanda_tangan]`, player.tanda_tangan)
                 }
             })
 
@@ -303,6 +337,11 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
                     setTimeout(() => {
                         setShowValidationError(false)
                     }, 10000)
+                },
+                onFinish: () => {
+                    // Selalu dieksekusi, termasuk saat PostTooLargeException atau error HTTP lainnya
+                    clearInterval(progressInterval);
+                    setShowLoadingScreen(false);
                 }
             })
         } catch (error) {

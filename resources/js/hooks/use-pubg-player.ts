@@ -17,7 +17,12 @@ export function usePUBGPlayers(
         [data.pubg_players, setData]
     )
 
+    const MAX_PUBG_PLAYERS = 5
+
     const addPlayer = react.useCallback(() => {
+        // Guard: jangan tambah pemain jika sudah mencapai batas maksimum
+        if (data.pubg_players.length >= MAX_PUBG_PLAYERS) return
+
         const newPlayer: PUBGPlayer = {
             name: "",
             nickname: "",

@@ -559,7 +559,7 @@ export default function Home() {
                                             <div className="relative w-full" style={{ paddingTop: '56.25%' }}>
                                                 <iframe
                                                     className="absolute inset-0 h-full w-full"
-                                                    src="https://www.instagram.com/reel/DJx6DmICh5B/embed/"
+                                                    src="https://www.instagram.com/reel/DYBn0lnSaJ_/embed/"
                                                     title="How to Register IT-ESEGA 2026"
                                                     frameBorder="0"
                                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

@@ -65,8 +65,8 @@ class PlayerRegistrationController extends Controller
             foreach ($validated['ml_players'] as $index => $player) {
                 try {
                     $photoPath = null;
-                    if ($request->hasFile("ml_players_{$index}_foto")) {
-                        $file = $request->file("ml_players_{$index}_foto");
+                    if ($request->hasFile("ml_players.{$index}.foto")) {
+                        $file = $request->file("ml_players.{$index}.foto");
                         if ($file && $file->isValid()) {
                             $photoExtension = $file->getClientOriginalExtension();
                             $photoFileName = "player_{$index}_foto.{$photoExtension}";
@@ -75,8 +75,8 @@ class PlayerRegistrationController extends Controller
                     }
 
                     $signaturePath = null;
-                    if ($request->hasFile("ml_players_{$index}_tanda_tangan")) {
-                        $file = $request->file("ml_players_{$index}_tanda_tangan");
+                    if ($request->hasFile("ml_players.{$index}.tanda_tangan")) {
+                        $file = $request->file("ml_players.{$index}.tanda_tangan");
                         if ($file && $file->isValid()) {
                             $signatureExtension = $file->getClientOriginalExtension();
                             $signatureFileName = "player_{$index}_ttd.{$signatureExtension}";
@@ -86,8 +86,8 @@ class PlayerRegistrationController extends Controller
 
                     // Debug: Log file information
                     Log::info("Processing ML player {$index}", [
-                        'has_foto' => $request->hasFile("ml_players_{$index}_foto"),
-                        'has_tanda_tangan' => $request->hasFile("ml_players_{$index}_tanda_tangan"),
+                        'has_foto' => $request->hasFile("ml_players.{$index}.foto"),
+                        'has_tanda_tangan' => $request->hasFile("ml_players.{$index}.tanda_tangan"),
                         'foto_path' => $photoPath,
                         'tanda_tangan_path' => $signaturePath,
                         'player_data' => $player
@@ -181,8 +181,8 @@ class PlayerRegistrationController extends Controller
         foreach ($validated['pubg_players'] as $index => $player) {
             try {
                 $photoPath = null;
-                if ($request->hasFile("pubg_players_{$index}_foto")) {
-                    $file = $request->file("pubg_players_{$index}_foto");
+                if ($request->hasFile("pubg_players.{$index}.foto")) {
+                    $file = $request->file("pubg_players.{$index}.foto");
                     if ($file && $file->isValid()) {
                         $photoExtension = $file->getClientOriginalExtension();
                         $photoFileName = "player_{$index}_foto.{$photoExtension}";
@@ -191,8 +191,8 @@ class PlayerRegistrationController extends Controller
                 }
 
                 $signaturePath = null;
-                if ($request->hasFile("pubg_players_{$index}_tanda_tangan")) {
-                    $file = $request->file("pubg_players_{$index}_tanda_tangan");
+                if ($request->hasFile("pubg_players.{$index}.tanda_tangan")) {
+                    $file = $request->file("pubg_players.{$index}.tanda_tangan");
                     if ($file && $file->isValid()) {
                         $signatureExtension = $file->getClientOriginalExtension();
                         $signatureFileName = "player_{$index}_ttd.{$signatureExtension}";
@@ -201,8 +201,8 @@ class PlayerRegistrationController extends Controller
                 }
 
                 Log::info("Processing PUBG player {$index}", [
-                    'has_foto' => $request->hasFile("pubg_players_{$index}_foto"),
-                    'has_tanda_tangan' => $request->hasFile("pubg_players_{$index}_tanda_tangan"),
+                    'has_foto' => $request->hasFile("pubg_players.{$index}.foto"),
+                    'has_tanda_tangan' => $request->hasFile("pubg_players.{$index}.tanda_tangan"),
                     'foto_path' => $photoPath,
                     'tanda_tangan_path' => $signaturePath,
                     'player_data' => $player

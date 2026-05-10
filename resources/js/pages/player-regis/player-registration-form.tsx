@@ -19,6 +19,25 @@ import type { MLPlayer, PlayerRegistrationFormProps } from "@/types/register"
 import LoadingScreen from "@/components/ui/loading-screen"
 import SuccessDialog from "@/components/ui/success-dialog"
 import axios from "axios"
+import imageCompression from "browser-image-compression"
+
+// Opsi kompresi: maksimal 300KB per file agar aman dari limit 8MB cPanel
+const compressionOptions = {
+    maxSizeMB: 0.3,          // Maksimal 300 KB per file
+    maxWidthOrHeight: 1280,  // Resolusi max 1280px
+    useWebWorker: true,      // Proses di background agar UI tidak freeze
+    fileType: 'image/jpeg',  // Output selalu JPEG
+}
+
+const compressImage = async (file: File): Promise<File> => {
+    try {
+        const compressed = await imageCompression(file, compressionOptions)
+        return compressed
+    } catch (err) {
+        console.warn('Kompresi gambar gagal, menggunakan file asli:', err)
+        return file // Fallback ke file asli jika kompresi gagal
+    }
+}
 
 export default function PlayerRegistrationForm({ teamData, gameType }: PlayerRegistrationFormProps) {
     const isML = gameType === "ml"
@@ -211,7 +230,18 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
         try {
             const submitData = new FormData()
             submitData.append('team_id', formData.team_id.toString())
-formData.ml_players.forEach((player: MLPlayer, index: number) => {
+
+            // Kompres semua gambar secara paralel sebelum dikirim ke server
+            // Ini mencegah PostTooLargeException karena limit 8MB di cPanel
+            const compressedPlayers = await Promise.all(
+                formData.ml_players.map(async (player: MLPlayer) => ({
+                    ...player,
+                    foto: player.foto instanceof File ? await compressImage(player.foto) : player.foto,
+                    tanda_tangan: player.tanda_tangan instanceof File ? await compressImage(player.tanda_tangan) : player.tanda_tangan,
+                }))
+            )
+
+            compressedPlayers.forEach((player: MLPlayer, index: number) => {
                 submitData.append(`ml_players[${index}][name]`, player.name || '')
                 submitData.append(`ml_players[${index}][nickname]`, player.nickname || '')
                 submitData.append(`ml_players[${index}][id_server]`, player.id_server || '')
@@ -222,14 +252,12 @@ formData.ml_players.forEach((player: MLPlayer, index: number) => {
                 submitData.append(`ml_players[${index}][role]`, player.role || 'anggota')
                 
                 if (player.foto instanceof File) {
-submitData.append(`ml_players_${index}_foto`, player.foto)
+                    submitData.append(`ml_players[${index}][foto]`, player.foto)
                 }
                 if (player.tanda_tangan instanceof File) {
-submitData.append(`ml_players_${index}_tanda_tangan`, player.tanda_tangan)
+                    submitData.append(`ml_players[${index}][tanda_tangan]`, player.tanda_tangan)
                 }
             })
-for (const [key, value] of submitData.entries()) {
-}
 
             submitData.append('game_type', gameType)
 
@@ -257,6 +285,10 @@ for (const [key, value] of submitData.entries()) {
                         setShowValidationError(false)
                     }, 10000)
                 },
+                onFinish: () => {
+                    clearInterval(progressInterval);
+                    setShowLoadingScreen(false);
+                }
             })
         } catch (error) {
             clearInterval(progressInterval);
@@ -377,7 +409,7 @@ for (const [key, value] of submitData.entries()) {
     }
 
     const handleEmergencyContact = () => {
-        const phoneNumber = "6287861081640"
+        const phoneNumber = "6285785073445"
         const message = `Halo, saya butuh bantuan terkait pendaftaran pemain ${gameTitle}.`
         window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank')
     }
@@ -760,7 +792,7 @@ for (const [key, value] of submitData.entries()) {
             
             <SuccessDialog
                 isOpen={showSuccessDialog}
-                message="Selamat! Pendaftaran tim dan pemain Mobile Legends telah berhasil. Tim Anda telah terdaftar dalam kompetisi IT-ESEGA 2025. Silahkan tunggu informasi selanjutnya dari panitia."
+                message="Selamat! Pendaftaran tim dan pemain Mobile Legends telah berhasil. Tim Anda telah terdaftar dalam kompetisi IT-ESEGA 2026. Silahkan tunggu informasi selanjutnya dari panitia."
                 title="Pendaftaran Berhasil!"
                 buttonText="Kembali ke Beranda"
                 onClose={handleSuccessDialogClose}

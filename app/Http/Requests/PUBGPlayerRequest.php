@@ -17,7 +17,7 @@ class PUBGPlayerRequest extends FormRequest
             'pubg_team_id' => ['required', 'exists:pubg_teams,id'],
             'team_id' => ['required', 'exists:pubg_teams,id'],
 
-            'pubg_players' => ['required', 'array', 'min:4', 'max:6'],
+            'pubg_players' => ['required', 'array', 'min:4', 'max:5'],
             'pubg_players.*.name' => ['required', 'string', 'max:255'],
             'pubg_players.*.nickname' => ['required', 'string', 'max:50'],
             'pubg_players.*.id_server' => ['required', 'string', 'max:50'],
@@ -41,7 +41,7 @@ class PUBGPlayerRequest extends FormRequest
             'pubg_players.required' => 'Data pemain wajib diisi.',
             'pubg_players.array' => 'Format pemain tidak valid.',
             'pubg_players.min' => 'Minimal harus ada 4 pemain.',
-            'pubg_players.max' => 'Maksimal hanya 6 pemain yang diperbolehkan.',
+            'pubg_players.max' => 'Maksimal hanya 5 pemain yang diperbolehkan.',
 
             'pubg_players.*.name.required' => 'Nama pemain wajib diisi.',
             'pubg_players.*.nickname.required' => 'Nickname pemain wajib diisi.',
