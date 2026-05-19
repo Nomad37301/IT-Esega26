@@ -18,7 +18,7 @@ class IncompleteTeamController extends Controller
     {
         $validated = $request->validate([
             'team_id' => 'required',
-            'game_type' => 'required|in:ml,ff',
+            'game_type' => 'required|in:ml,pubg',
         ]);
 
         $teamId = $validated['team_id'];

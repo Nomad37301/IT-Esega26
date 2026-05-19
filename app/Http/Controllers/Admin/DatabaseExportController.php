@@ -17,64 +17,81 @@ class DatabaseExportController extends Controller
      */
     public function exportAll()
     {
+        // Gunakan ZipStream untuk streaming langsung ke browser tanpa buffering ke RAM
+        // Ini aman untuk data skala besar (64 tim × banyak pemain) di shared cPanel
         $timestamp = now()->format('Y-m-d_His');
+        $zipFileName = "IT-ESEGA-Full-Export-{$timestamp}.zip";
 
-        // Pastikan folder temp ada
-        $tempDir = storage_path('app/temp');
-        if (!is_dir($tempDir)) {
-            mkdir($tempDir, 0755, true);
-        }
-
-        // 1. Generate Excel database export
-        $excelFileName = "database-{$timestamp}.xlsx";
-        Excel::store(new FullDatabaseExport(), "temp/{$excelFileName}", 'local');
-        $excelTempPath = storage_path("app/temp/{$excelFileName}");
-
-        // 2. Kumpulkan semua file yang akan di-zip
-        $files = [];
-
-        // Tambahkan file Excel
-        $files[] = [
-            'path' => $excelTempPath,
-            'zipPath' => "database/{$excelFileName}",
+        $headers = [
+            'Content-Type'              => 'application/zip',
+            'Content-Disposition'       => "attachment; filename=\"{$zipFileName}\"",
+            'Cache-Control'             => 'no-cache, no-store, must-revalidate',
+            'X-Accel-Buffering'         => 'no', // Penting untuk Nginx di cPanel agar tidak di-buffer
         ];
 
-        // Tambahkan file upload
-        $uploadDirs = ['ML_teams', 'PUBG_teams'];
-        foreach ($uploadDirs as $dir) {
-            $basePath = storage_path("app/public/{$dir}");
-            if (is_dir($basePath)) {
-                $this->collectFiles($basePath, "uploads/{$dir}", $files);
-            }
-        }
+        return response()->stream(function () use ($timestamp) {
+            $zip = new \ZipStream\ZipStream(
+                outputName: '',           // Nama file diurus oleh header HTTP kita
+                sendHttpHeaders: false,   // Header HTTP kita tangani sendiri
+                enableZip64: false,       // Kompatibilitas lebih luas
+                defaultCompressionMethod: \ZipStream\CompressionMethod::DEFLATE,
+            );
 
-        // Cek folder legacy
-        $legacyDirs = ['payment', 'logoTeam', 'TandaTangan', 'Foto'];
-        foreach ($legacyDirs as $dir) {
-            foreach ([storage_path("app/{$dir}"), storage_path("app/public/{$dir}")] as $path) {
-                if (is_dir($path)) {
-                    $this->collectFiles($path, "uploads/{$dir}", $files);
+            // 1. Generate dan stream file Excel database
+            $excelFileName = "database/database-{$timestamp}.xlsx";
+            $excelContent = \Maatwebsite\Excel\Facades\Excel::raw(
+                new \App\Exports\FullDatabaseExport(),
+                \Maatwebsite\Excel\Excel::XLSX
+            );
+            $zip->addFile(fileName: $excelFileName, data: $excelContent);
+            unset($excelContent); // Bebaskan RAM segera setelah di-stream
+
+            // 2. Stream file upload peserta langsung dari disk ke ZIP
+            $uploadDirs = ['ML_teams', 'PUBG_Teams'];
+            foreach ($uploadDirs as $dir) {
+                $basePath = storage_path("app/public/{$dir}");
+                if (is_dir($basePath)) {
+                    $this->streamFilesToZip($zip, $basePath, "uploads/{$dir}");
+                }
+            }
+
+            // 3. Cek folder legacy jika ada
+            $legacyDirs = ['payment', 'logoTeam', 'TandaTangan', 'Foto'];
+            foreach ($legacyDirs as $dir) {
+                foreach ([storage_path("app/{$dir}"), storage_path("app/public/{$dir}")] as $path) {
+                    if (is_dir($path)) {
+                        $this->streamFilesToZip($zip, $path, "uploads/{$dir}");
+                    }
+                }
+            }
+
+            $zip->finish();
+        }, 200, $headers);
+    }
+
+    /**
+     * Stream file dari direktori ke ZipStream satu per satu (hemat RAM).
+     */
+    private function streamFilesToZip(\ZipStream\ZipStream $zip, string $dirPath, string $zipFolder): void
+    {
+        $iterator = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator($dirPath, \RecursiveDirectoryIterator::SKIP_DOTS),
+            \RecursiveIteratorIterator::LEAVES_ONLY
+        );
+
+        foreach ($iterator as $file) {
+            if ($file->isFile()) {
+                $filePath = $file->getRealPath();
+                $zipPath  = $zipFolder . '/' . str_replace('\\', '/', substr($filePath, strlen($dirPath) + 1));
+
+                // Buka file sebagai stream — tidak dimuat ke RAM sekaligus
+                $stream = fopen($filePath, 'rb');
+                if ($stream) {
+                    $zip->addFileFromStream(fileName: $zipPath, stream: $stream);
+                    fclose($stream);
                 }
             }
         }
-
-        // 3. Buat ZIP menggunakan ZipArchive jika tersedia, atau fallback ke manual
-        $zipFileName = "IT-ESEGA-Full-Export-{$timestamp}.zip";
-        $zipPath = storage_path("app/temp/{$zipFileName}");
-
-        if (class_exists('ZipArchive')) {
-            $this->createZipWithZipArchive($zipPath, $files);
-        } else {
-            // Fallback: buat ZIP secara manual menggunakan PHP streams
-            $this->createZipManual($zipPath, $files);
-        }
-
-        // Cleanup Excel temp file
-        if (file_exists($excelTempPath)) {
-            @unlink($excelTempPath);
-        }
-
-        return response()->download($zipPath, $zipFileName)->deleteFileAfterSend(true);
     }
 
     /**

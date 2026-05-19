@@ -43,7 +43,7 @@ export function usePUBGPlayers(
         (index: number) => {
             const updated = data.pubg_players.filter((_, i) => i !== index)
             setData("pubg_players", updated)
-            localStorage.setItem("pubg_players_data", JSON.stringify(updated))
+            // localStorage disimpan oleh useEffect di parent component dengan sanitasi File object
         },
         [data.pubg_players, setData]
     )
