@@ -204,8 +204,13 @@ export default function Home() {
     const merchImage = (activeInfo as any).image || (activeInfo as any).images?.[0] || '/Images/LogoEsega25.png';
 
     useEffect(() => {
-        setShowMerchPopup(true); // Always show on mount/reload
-    }, []);
+        // Jangan tampilkan pop up merch jika ada notifikasi sukses / info pendaftaran
+        if (flash?.success || flash?.info) {
+            setShowMerchPopup(false);
+        } else {
+            setShowMerchPopup(true);
+        }
+    }, [flash?.success, flash?.info]);
 
     // === PENDAFTARAN OTOMATIS TUTUP ===
     const isRegistrationClosed = useRegistrationStatus();

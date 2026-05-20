@@ -170,7 +170,7 @@ export default function RegisterPage() {
     // Fungsi untuk truncate database (fungsi admin)
     const adminTruncateTeams = async (gameType = 'all') => {
         try {
-            if (process.env.NODE_ENV !== 'production') {
+            if (import.meta.env.DEV) {
                 const response = await axios.post(route('admin.truncate-teams'), {
                     game_type: gameType,
                     reset_slots: true
@@ -218,7 +218,7 @@ window.location.reload();
 
     return (
         <>
-            <Head title="IT-ESEGA 2025 Official Website | Register Team" />
+            <Head title="IT-ESEGA 2026 Official Website | Register Team" />
             
             {/* Dialog informasi ID tim yang akan digunakan kembali */}
             <Dialog open={showLastDeletedTeamIdDialog} onOpenChange={setShowLastDeletedTeamIdDialog}>

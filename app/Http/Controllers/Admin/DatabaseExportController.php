@@ -47,7 +47,7 @@ class DatabaseExportController extends Controller
             unset($excelContent); // Bebaskan RAM segera setelah di-stream
 
             // 2. Stream file upload peserta langsung dari disk ke ZIP
-            $uploadDirs = ['ML_teams', 'PUBG_Teams'];
+            $uploadDirs = ['ML_teams', 'PUBG_Teams', 'PUBG_teams'];
             foreach ($uploadDirs as $dir) {
                 $basePath = storage_path("app/public/{$dir}");
                 if (is_dir($basePath)) {

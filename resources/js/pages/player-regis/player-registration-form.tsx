@@ -269,11 +269,9 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
                     setShowSuccessAlert(true)
                     setShowLoadingScreen(false)
                     
-                    setTimeout(() => {
-                        setFormData(prev => ({ ...prev, ml_players: [] }))
-                        localStorage.removeItem("ml_players_data")
-                        setShowSuccessDialog(true)
-                    }, 3000);
+                    setFormData(prev => ({ ...prev, ml_players: [] }))
+                    localStorage.removeItem("ml_players_data")
+                    setShowSuccessDialog(true)
                 },
                 onError: (errors) => {
                     clearInterval(progressInterval);
@@ -380,24 +378,31 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
                 team_id: teamData.id,
                 game_type: gameType
             })
-            .then(() => {
-// Hapus data pemain dari localStorage
+                .then(() => {
+                // Hapus data pemain dari localStorage
                 localStorage.removeItem("ml_players_data")
                 
-                // Arahkan ke halaman registrasi tim dengan parameter game_type 
-                window.location.href = route('register') + '?step=2&game_type=' + gameType;
+                // Tambahkan delay agar loading button terlihat lebih intuitif sebelum redirect
+                setTimeout(() => {
+                    // Arahkan ke halaman registrasi tim dengan parameter game_type 
+                    window.location.href = route('register') + '?step=2&game_type=' + gameType;
+                }, 1500);
             })
             .catch((error) => {
                 console.error("Error deleting team data:", error)
                 // Hapus data pemain dari localStorage
                 localStorage.removeItem("ml_players_data")
                 
-                // Tetap arahkan ke halaman registrasi tim
-                window.location.href = route('register') + '?step=2&game_type=' + gameType;
+                setTimeout(() => {
+                    // Tetap arahkan ke halaman registrasi tim
+                    window.location.href = route('register') + '?step=2&game_type=' + gameType;
+                }, 1500);
             })
             .finally(() => {
-                setShowLoadingScreen(false)
-                setIsBackButtonLoading(false)
+                // Tidak perlu false loading screen disini karena page akan berpindah (reload)
+                // Namun untuk berjaga-jaga jika setTimeout belum trigger (meski jarang):
+                // setShowLoadingScreen(false)
+                // setIsBackButtonLoading(false)
             })
         } else {
             // Jika tidak ada team_id, hanya hapus data dari localStorage
@@ -736,7 +741,7 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
                                     <div className="flex items-start gap-2 p-2 sm:p-3 bg-amber-50 border border-amber-200 rounded-md mb-4 sm:mb-5">
                                         <AlertCircle className="h-4 sm:h-5 w-4 sm:w-5 text-amber-500 mt-0.5 flex-shrink-0" />
                                         <p className="text-xs sm:text-sm text-amber-700">
-                                            Data tim dan pemain yang belum selesai didaftarkan akan dihapus!
+                                            Data tim dan pemain yang belum selesai didaftarkan akan <strong>dihapus permanen</strong>. Anda harus mendaftar ulang dari awal dan <strong>link pendaftaran yang dikirim ke email akan hangus/tidak berlaku lagi</strong>.
                                         </p>
                                     </div>
                                     
