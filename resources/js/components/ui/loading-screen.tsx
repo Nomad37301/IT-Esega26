@@ -1,13 +1,18 @@
 "use client";
 
 import { Loader2 } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface LoadingScreenProps {
   isOpen: boolean;
+  message?: string;
+  subMessage?: string;
 }
 
 export default function LoadingScreen({
-  isOpen
+  isOpen,
+  message = "Mohon Tunggu",
+  subMessage = "Sedang memproses data...",
 }: LoadingScreenProps) {
   if (!isOpen) return null;
 
@@ -23,16 +28,40 @@ export default function LoadingScreen({
         {/* Loader Container */}
         <div className="relative flex flex-col items-center py-6 sm:py-8">
           {/* Pulsing Circle Behind Loader */}
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-20"></span>
+          <span className="animate-ping absolute inline-flex h-16 w-16 rounded-full bg-blue-400 opacity-20"></span>
           
           {/* Spinner */}
           <Loader2 className="h-14 w-14 sm:h-16 sm:w-16 text-blue-600 animate-spin relative z-10" />
           
-          {/* Loading text */}
-          <p className="mt-6 text-base sm:text-lg font-medium text-gray-700">Mohon Tunggu</p>
-          <p className="text-sm text-gray-500">Sedang memproses data...</p>
+          {/* Loading text dengan animasi pergantian pesan */}
+          <div className="mt-6 text-center min-h-[3.5rem]">
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={message}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.25 }}
+                className="text-base sm:text-lg font-semibold text-gray-800"
+              >
+                {message}
+              </motion.p>
+            </AnimatePresence>
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={subMessage}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="text-sm text-gray-500 mt-1"
+              >
+                {subMessage}
+              </motion.p>
+            </AnimatePresence>
+          </div>
         </div>
       </div>
     </div>
   );
-} 
+}

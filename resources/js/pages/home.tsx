@@ -15,8 +15,6 @@ import { route } from 'ziggy-js';
 
 // Keen Slider imports
 import dayjs from 'dayjs';
-import 'keen-slider/keen-slider.min.css';
-import { useKeenSlider } from 'keen-slider/react';
 import { useRegistrationStatus } from '@/hooks/use-registration-status';
 
 export default function Home() {
@@ -34,59 +32,7 @@ export default function Home() {
     const [isOpen, setIsOpen] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
     const [showDoubleSlotNotification, setShowDoubleSlotNotification] = useState(false);
-    const [sliderRef, instanceRef] = useKeenSlider({
-        initial: 0,
-        slides: { perView: 1 }, // Satu gambar per slide
-        loop: true,
-        mode: 'snap', // Pastikan mode snap agar hanya satu slide penuh
-        renderMode: 'performance',
-        drag: true,
-        slideChanged(slider) {
-            setCurrentSlide(slider.track.details.rel);
-        },
-        created(slider) {
-            setCurrentSlide(slider.track.details.rel);
-        },
-    });
-    const [currentSlide, setCurrentSlide] = useState(0);
-    const [showMerchPopup, setShowMerchPopup] = useState(true);
 
-    // State for merch popup slider
-    const [popupSlide, setPopupSlide] = useState(0);
-    const [popupSliderRef, popupInstanceRef] = useKeenSlider({
-        initial: 0,
-        slides: { perView: 1 },
-        loop: true,
-        mode: 'snap',
-        renderMode: 'performance',
-        drag: true,
-        slideChanged(slider) {
-            setPopupSlide(slider.track.details.rel);
-        },
-        created(slider) {
-            setPopupSlide(slider.track.details.rel);
-        },
-    });
-
-    // Auto slide effect
-    useEffect(() => {
-        const interval = setInterval(() => {
-            if (instanceRef.current) {
-                instanceRef.current.next();
-            }
-        }, 3500); // 3.5 detik per slide
-        return () => clearInterval(interval);
-    }, [instanceRef]);
-
-    // Auto slide effect for popup slider
-    useEffect(() => {
-        const interval = setInterval(() => {
-            if (popupInstanceRef.current) {
-                popupInstanceRef.current.next();
-            }
-        }, 3500); // 3.5 detik per slide
-        return () => clearInterval(interval);
-    }, [popupInstanceRef]);
 
     // Debugging data timeline
 // const auth = user;
@@ -166,53 +112,8 @@ export default function Home() {
         },
     ];
 
-    // Data preorder merch
-    const merchData = [
-        {
-            title: 'T-Shirt IT-ESEGA 2026',
-            desc: 'Kaos eksklusif IT-ESEGA 26 dengan desain eksklusif, nyaman dipakai, dan cocok untuk semua kalangan. Tunjukkan dukunganmu di event tahun ini!',
-            link: 'https://forms.gle/AqrAsUc452JHXjN38',
-            images: ['/Images/tshirt-merch.png'],
-            price: 'Rp 125.000',
-            preorder: 'Periode Pre-Order: 15 April-17 Mei 2026',
-        },
-        {
-            title: 'Long Sleeve T-Shirt IT-ESEGA 2026',
-            desc: 'Kaos lengan panjang eksklusif IT-ESEGA 26 dengan desain eksklusif, nyaman dipakai, dan cocok untuk semua kalangan. Tunjukkan dukunganmu di event tahun ini!',
-            link: 'https://forms.gle/AqrAsUc452JHXjN38',
-            images: ['/Images/jersey-merch-2.png'],
-            price: 'Rp 125.000',
-            preorder: 'Periode Pre-Order: 15 April-17 Mei 2026',
-        },
-    ];
-
-    // Flatten merchData to get one image per slide, but keep info reference
-    const merchSlides = merchData.flatMap((merch, merchIdx) =>
-        merch.images.map((img, imgIdx) => ({
-            ...merch,
-            image: img,
-            merchIdx,
-            imgIdx,
-            totalImages: merch.images.length,
-        })),
-    );
-    const activeInfo = merchSlides && merchSlides.length > 0 ? merchSlides[currentSlide] : merchData[0];
-
-    // Hapus useEffect router.on('navigate', ...) yang error
-
-    // Tambahkan deklarasi merchImage sebelum return agar bisa digunakan di JSX
-    const merchImage = (activeInfo as any).image || (activeInfo as any).images?.[0] || '/Images/LogoEsega25.png';
-
-    useEffect(() => {
-        // Jangan tampilkan pop up merch jika ada notifikasi sukses / info pendaftaran
-        if (flash?.success || flash?.info) {
-            setShowMerchPopup(false);
-        } else {
-            setShowMerchPopup(true);
-        }
-    }, [flash?.success, flash?.info]);
-
     // === PENDAFTARAN OTOMATIS TUTUP ===
+
     const isRegistrationClosed = useRegistrationStatus();
     const [showClosedPopup, setShowClosedPopup] = useState(false);
 
@@ -230,126 +131,6 @@ export default function Home() {
                 isRegistrationClosed={isRegistrationClosed}
                 setShowClosedPopup={setShowClosedPopup}
             />
-
-            {/* Merch Popup Modal with Horizontal Layout and Professional Style */}
-            <Transition appear show={showMerchPopup} as={Fragment}>
-                <Dialog as="div" className="fixed inset-0 z-[1000] overflow-y-auto" onClose={() => setShowMerchPopup(false)}>
-                    <Transition.Child
-                        as={Fragment}
-                        enter="ease-out duration-200"
-                        enterFrom="opacity-0"
-                        enterTo="opacity-100"
-                        leave="ease-in duration-150"
-                        leaveFrom="opacity-100"
-                        leaveTo="opacity-0"
-                    >
-                        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm" />
-                    </Transition.Child>
-                    <div className="flex min-h-screen items-center justify-center p-4">
-                        <Transition.Child
-                            as={Fragment}
-                            enter="ease-out duration-200"
-                            enterFrom="opacity-0 scale-95"
-                            enterTo="opacity-100 scale-100"
-                            leave="ease-in duration-150"
-                            leaveFrom="opacity-100 scale-100"
-                            leaveTo="opacity-0 scale-95"
-                        >
-                            <Dialog.Panel className="relative flex h-[600px] w-full max-w-5xl transform items-center justify-center overflow-hidden rounded-2xl bg-white p-0 shadow-2xl transition-all md:h-[500px]">
-                                <button
-                                    onClick={() => setShowMerchPopup(false)}
-                                    className="absolute top-4 right-4 z-20 rounded-full p-2 text-gray-400 transition hover:bg-gray-100 hover:text-gray-600"
-                                >
-                                    <span className="sr-only">Close</span>
-                                    <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                    </svg>
-                                </button>
-                                <div className="flex h-full w-full flex-col items-stretch md:flex-row">
-                                    {/* Left: Keen Slider for merch images */}
-                                    <div className="relative flex h-full w-full items-center justify-center bg-gray-50 p-6 md:w-3/5 md:p-10">
-                                        <button
-                                            aria-label="Sebelumnya"
-                                            onClick={() => popupInstanceRef.current?.prev()}
-                                            className="border-secondary text-secondary hover:bg-secondary absolute top-1/2 left-2 z-10 -translate-y-1/2 rounded-full border bg-white/80 p-2 shadow transition disabled:opacity-50"
-                                            style={{ display: merchSlides.length > 1 ? 'block' : 'none' }}
-                                        >
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                className="h-6 w-6"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                                stroke="currentColor"
-                                            >
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-                                            </svg>
-                                        </button>
-                                        <div ref={popupSliderRef} className="keen-slider flex h-full w-full overflow-hidden">
-                                            {merchSlides.map((slide, idx) => (
-                                                <div key={idx} className="keen-slider__slide flex w-full min-w-0 items-center justify-center">
-                                                    <img
-                                                        src={slide.image}
-                                                        alt={slide.title}
-                                                        className="mx-auto h-[340px] w-auto max-w-full rounded-xl object-contain drop-shadow md:h-[420px]"
-                                                    />
-                                                </div>
-                                            ))}
-                                        </div>
-                                        <button
-                                            aria-label="Selanjutnya"
-                                            onClick={() => popupInstanceRef.current?.next()}
-                                            className="border-secondary text-secondary hover:bg-secondary absolute top-1/2 right-2 z-10 -translate-y-1/2 rounded-full border bg-white/80 p-2 shadow transition disabled:opacity-50"
-                                            style={{ display: merchSlides.length > 1 ? 'block' : 'none' }}
-                                        >
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                className="h-6 w-6"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                                stroke="currentColor"
-                                            >
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                                            </svg>
-                                        </button>
-                                        {/* Dot navigation */}
-                                        <div className="absolute bottom-4 left-0 mt-4 flex w-full justify-center gap-2">
-                                            {merchSlides.map((_, idx) => (
-                                                <button
-                                                    key={idx}
-                                                    onClick={() => popupInstanceRef.current?.moveToIdx(idx)}
-                                                    className={`h-3 w-3 rounded-full ${popupSlide === idx ? 'bg-secondary' : 'bg-gray-300'} transition`}
-                                                ></button>
-                                            ))}
-                                        </div>
-                                    </div>
-                                    {/* Right: Info Merch (sync with popupSlide) */}
-                                    <div className="flex h-full w-full flex-col justify-center p-6 md:w-2/5 md:p-10">
-                                        <h3 className="mb-3 text-2xl leading-tight font-extrabold text-gray-900 md:text-3xl">
-                                            {merchSlides[popupSlide].title}
-                                        </h3>
-                                        <div className="text-secondary mb-2 text-xl font-bold md:text-2xl">{merchSlides[popupSlide].price}</div>
-                                        <div className="mb-4 text-xs font-medium text-gray-500 md:text-sm">{merchSlides[popupSlide].preorder}</div>
-                                        {/* Hapus deskripsi untuk tampilan lebih clean */}
-                                        {/* <p className="mb-6 text-sm text-left text-gray-700 md:text-base">{merchSlides[popupSlide].desc}</p> */}
-                                        <a
-                                            href={merchSlides[popupSlide].link}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="bg-secondary hover:bg-secondary -mt-2 mb-2 inline-flex w-full items-center justify-center rounded-lg px-7 py-3 text-base font-bold text-white shadow transition sm:mt-6 sm:mb-0 sm:w-auto"
-                                            style={{ letterSpacing: '0.5px' }}
-                                        >
-                                            <svg className="mr-2 -ml-1 h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" d="M3 12h18m-6-6l6 6-6 6" />
-                                            </svg>
-                                            Order Now
-                                        </a>
-                                    </div>
-                                </div>
-                            </Dialog.Panel>
-                        </Transition.Child>
-                    </div>
-                </Dialog>
-            </Transition>
 
             {/* Head title tetap */}
             <Head title="IT-ESEGA 2026 Official Website" />
@@ -1053,97 +834,6 @@ export default function Home() {
                     </div>
                 </section>
 
-                {/* Merch Section */}
-                <section id="merch" className="relative mb-20 overflow-hidden py-16 md:py-24">
-                    <div className="pointer-events-none absolute inset-0"></div>
-                    <div className="relative z-10 mx-auto flex max-w-[1350px] flex-col px-4 md:px-8 lg:px-12">
-                        {/* Header */}
-                        <div className="mx-auto mb-10 max-w-2xl text-center md:mb-16">
-                            <h2 className="mb-2 text-center text-3xl font-extrabold tracking-tight sm:text-4xl">
-                                Merchandise <span className="text-secondary ml-2">IT-ESEGA 26</span>
-                            </h2>
-                            <div className="bg-secondary/80 mx-auto mb-4 h-1 w-24 rounded-full"></div>
-                            <p className="mx-auto mb-15 max-w-2xl text-center text-base text-gray-600 sm:text-lg">
-                                Merchandise resmi IT-ESEGA 26, desain eksklusif dan nyaman dipakai. Tersedia kaos & jersey edisi terbatas.
-                            </p>
-                        </div>
-                        <div className="flex flex-col items-center justify-between gap-10 md:flex-row md:gap-20">
-                            {/* Left: Gambar Merch + Navigasi (Keen Slider) */}
-                            <div className="relative flex w-full flex-col items-center justify-center md:w-1/2" data-aos="fade-up" data-aos-delay="0">
-                                <button
-                                    aria-label="Sebelumnya"
-                                    onClick={() => instanceRef.current?.prev()}
-                                    className="border-secondary text-secondary hover:bg-secondary absolute top-1/2 -left-2 z-10 -translate-y-1/2 rounded-full border bg-white/80 p-2 shadow transition disabled:opacity-50"
-                                    style={{ display: merchSlides.length > 1 ? 'block' : 'none' }}
-                                >
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-                                    </svg>
-                                </button>
-                                <div ref={sliderRef} className="keen-slider w-full overflow-hidden">
-                                    {merchSlides.map((slide, idx) => (
-                                        <div key={idx} className="keen-slider__slide flex w-full min-w-0 flex-col items-center justify-center">
-                                            <img
-                                                src={slide.image}
-                                                alt={slide.title}
-                                                className="mx-auto mb-4 h-[300px] w-auto max-w-full rounded-xl bg-transparent object-contain drop-shadow-xl"
-                                            />
-                                        </div>
-                                    ))}
-                                </div>
-                                <button
-                                    aria-label="Selanjutnya"
-                                    onClick={() => instanceRef.current?.next()}
-                                    className="border-secondary text-secondary hover:bg-secondary absolute top-1/2 right-0 z-10 -translate-y-1/2 rounded-full border bg-white/80 p-2 shadow transition disabled:opacity-50"
-                                    style={{ display: merchSlides.length > 1 ? 'block' : 'none' }}
-                                >
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                                    </svg>
-                                </button>
-                                {/* Dot navigation */}
-                                <div className="mt-2 flex gap-2">
-                                    {merchSlides.map((_, idx) => (
-                                        <button
-                                            key={idx}
-                                            onClick={() => instanceRef.current?.moveToIdx(idx)}
-                                            className={`h-3 w-3 rounded-full ${currentSlide === idx ? 'bg-secondary' : 'bg-gray-300'} transition`}
-                                        ></button>
-                                    ))}
-                                </div>
-                            </div>
-                            {/* Right: Info Merch */}
-                            <div
-                                className="flex w-full flex-col items-start justify-center px-2 md:w-1/2 md:pl-12"
-                                data-aos="fade-left"
-                                data-aos-delay="200"
-                            >
-                                {/* Info berdasarkan slide aktif */}
-                                {/*
-                                    <h3 className="mb-2 text-2xl font-bold text-gray-900 sm:text-3xl">{merchData[currentSlide].title}</h3>
-                                    <div className="mb-1 text-xl font-semibold text-secondary">{merchData[currentSlide].price}</div>
-                                    <div className="mb-3 text-sm text-gray-500">{merchData[currentSlide].preorder}</div>
-                                    <p className="mb-6 text-base text-gray-700 sm:text-lg">{merchData[currentSlide].desc}</p>
-                                    <a href={merchData[currentSlide].link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center w-full py-3 text-base font-semibold text-white transition bg-secondary rounded-lg shadow px-7 hover:bg-secondary md:w-auto">
-                                        Order Now
-                                    </a>
-                                    */}
-                                <h3 className="mb-2 text-2xl font-bold text-gray-900 sm:text-3xl">{activeInfo.title}</h3>
-                                <div className="text-secondary mb-1 text-xl font-semibold">{activeInfo.price}</div>
-                                <div className="mb-3 text-sm text-gray-500">{activeInfo.preorder}</div>
-                                <p className="mb-6 text-base text-gray-700 sm:text-lg">{activeInfo.desc}</p>
-                                <a
-                                    href={activeInfo.link}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="bg-secondary hover:bg-secondary mt-0 mb-2 inline-flex w-full items-center justify-center rounded-lg px-7 py-3 text-base font-bold text-white shadow transition md:w-auto"
-                                >
-                                    Order Now
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </section>
 
                 {/* Footer */}
                 <Footer isRegistrationClosed={isRegistrationClosed} setShowClosedPopup={setShowClosedPopup} />

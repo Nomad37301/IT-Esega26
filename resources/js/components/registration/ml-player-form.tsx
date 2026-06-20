@@ -252,13 +252,13 @@ export function MLPlayerForm({ player, index, onChange, onDelete, allPlayers, er
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
                         <div className="space-y-2 sm:space-y-3">
                             <Label htmlFor={`ml-id_server-${index}`} className="text-sm sm:text-base font-medium text-gray-700">
-                                ID<span className="text-red-500">*</span>
+                                ID Game <span className="text-red-500">*</span>
                             </Label>
                             <Input
                                 id={`ml-id_server-${index}`}
                                 value={player.id_server}
                                 onChange={handleInputChange("id_server")}
-                                placeholder="Contoh: 12345678"
+                                placeholder="Masukkan ID Game kamu"
                                 className="py-2.5 sm:py-3.5 bg-white border-gray-200 rounded-lg text-gray-900 
                                            px-4 sm:px-5 text-sm sm:text-base placeholder:text-gray-400 focus:border-secondary focus:ring-secondary/20 shadow-sm"
                                 required

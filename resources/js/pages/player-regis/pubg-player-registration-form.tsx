@@ -30,13 +30,45 @@ const compressionOptions = {
     fileType: 'image/jpeg',  // Output selalu JPEG agar ukuran lebih kecil
 }
 
+// Threshold: skip kompresi jika file sudah kecil
+// PUBG 500 KB (lebih longgar dari ML 400 KB karena max 6 pemain)
+const THRESHOLD = 500 * 1024; // 500 KB
+
 const compressImage = async (file: File): Promise<File> => {
+    if (file.size <= THRESHOLD) {
+        console.log(`Skip kompresi ${file.name} (${(file.size / 1024).toFixed(1)} KB <= threshold)`);
+        return file;
+    }
+
+    // AbortController: memastikan Web Worker benar-benar diterminasi saat timeout
+    // (bukan sekadar diabaikan seperti Promise.race biasa)
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 3000);
+
     try {
-        const compressed = await imageCompression(file, compressionOptions)
-        return compressed
+        const compressed = await imageCompression(file, {
+            ...compressionOptions,
+            useWebWorker: true,
+            signal: controller.signal,
+        }) as File | Blob;
+
+        return compressed instanceof File
+            ? compressed
+            : new File([compressed], file.name, { type: compressed.type || 'image/jpeg', lastModified: Date.now() });
     } catch (err) {
-        console.warn('Kompresi gambar gagal, menggunakan file asli:', err)
-        return file // Fallback ke file asli jika kompresi gagal
+        const isAbort =
+            controller.signal.aborted ||
+            (err instanceof DOMException && err.name === 'AbortError');
+
+        if (isAbort) {
+            console.warn(`Compression timeout (3s), menggunakan file asli: ${file.name}`);
+            return file;
+        }
+
+        console.warn(`Compression gagal, menggunakan file asli: ${file.name}`, err);
+        return file;
+    } finally {
+        clearTimeout(timeoutId);
     }
 }
 
@@ -75,6 +107,8 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
     const [playerToDelete, setPlayerToDelete] = useState<number | null>(null)
     const [showLoadingScreen, setShowLoadingScreen] = useState(false)
     const [showSuccessDialog, setShowSuccessDialog] = useState(false)
+    const [loadingMessage, setLoadingMessage] = useState("Mohon Tunggu")
+    const [subLoadingMessage, setSubLoadingMessage] = useState("Sedang memproses data...")
     
     // Tambahkan state baru untuk dialog konfirmasi kembali
     const [isBackDialogOpen, setBackDialogOpen] = useState(false)
@@ -276,6 +310,8 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
             return
         }
 
+        setLoadingMessage("Mempersiapkan Data")
+        setSubLoadingMessage("Sedang memvalidasi berkas...")
         setShowLoadingScreen(true)
         
         const progressInterval = simulateFileUploadProgress();
@@ -285,15 +321,42 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
             submitData.append('team_id', teamId.toString())
             submitData.append('pubg_team_id', teamId.toString())
 
-            // Kompres semua gambar secara paralel sebelum dikirim ke server
-            // Ini mencegah PostTooLargeException karena limit 8MB di cPanel
-            const compressedPlayers = await Promise.all(
-                formData.pubg_players.map(async (player: PUBGPlayer) => ({
-                    ...player,
-                    foto: player.foto instanceof File ? await compressImage(player.foto) : player.foto,
-                    tanda_tangan: player.tanda_tangan instanceof File ? await compressImage(player.tanda_tangan) : player.tanda_tangan,
-                }))
-            )
+            // Pembagian kelompok (Batching): Proses 2 pemain sekaligus secara paralel untuk mempercepat
+            // namun tetap membatasi memori agar tidak crash pada peramban HP.
+            const chunkArray = <T,>(arr: T[], size: number): T[][] => {
+                const chunks: T[][] = []
+                for (let i = 0; i < arr.length; i += size) {
+                    chunks.push(arr.slice(i, i + size))
+                }
+                return chunks
+            }
+
+            const totalPlayers = formData.pubg_players.length
+            const chunks = chunkArray(formData.pubg_players, 2)
+            const compressedPlayers: PUBGPlayer[] = []
+            let processedCount = 0
+
+            for (const chunk of chunks) {
+                const chunkResults = await Promise.all(
+                    // foto & tanda_tangan tiap pemain dikompres paralel,
+                    // sehingga 1 chunk = 4 file jalan bersamaan (2 pemain × 2 file)
+                    chunk.map(async (player) => {
+                        const playerNum = formData.pubg_players.indexOf(player) + 1
+                        setLoadingMessage(`Mengompresi Foto Pemain ${playerNum}`)
+                        setSubLoadingMessage(`Memproses ${playerNum} dari ${totalPlayers} pemain...`)
+                        const [foto, tanda_tangan] = await Promise.all([
+                            player.foto instanceof File ? compressImage(player.foto) : Promise.resolve(player.foto),
+                            player.tanda_tangan instanceof File ? compressImage(player.tanda_tangan) : Promise.resolve(player.tanda_tangan),
+                        ]);
+                        return { ...player, foto, tanda_tangan };
+                    })
+                )
+                processedCount += chunk.length
+                compressedPlayers.push(...chunkResults)
+            }
+
+            setLoadingMessage("Mengirim Data ke Server")
+            setSubLoadingMessage("Mohon jangan tutup halaman ini...")
 
             compressedPlayers.forEach((player: PUBGPlayer, index: number) => {
                 submitData.append(`pubg_players[${index}][name]`, player.name || '')
@@ -460,15 +523,15 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
     }
 
     const handleSuccessDialogClose = () => {
-        router.visit(route('register'))
+        router.visit(route('home'))
     }
 
     useEffect(() => {
         // Menambahkan beberapa state history untuk mencegah navigasi back langsung
         // Tambahkan state untuk halaman saat ini
-        window.history.pushState({ page: 'ff-player-registration' }, "", window.location.href);
+        window.history.pushState({ page: 'pubg-player-registration' }, "", window.location.href);
         // Tambahkan lagi satu state yang sama untuk membuat back button lebih handal
-        window.history.pushState({ page: 'ff-player-registration' }, "", window.location.href);
+        window.history.pushState({ page: 'pubg-player-registration' }, "", window.location.href);
         
         // Menangani tombol back di browser
         const handlePopState = (e: PopStateEvent) => {
@@ -476,12 +539,12 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
             const state = e.state;
             
             // Jika state tidak ada atau bukan dari halaman kita, tampilkan dialog
-            if (!state || state.page === 'ff-player-registration') {
+            if (!state || state.page === 'pubg-player-registration') {
                 // Tampilkan dialog konfirmasi
                 setBackDialogOpen(true);
                 
                 // Tambahkan kembali state untuk mencegah navigasi langsung jika user cancel
-                window.history.pushState({ page: 'ff-player-registration' }, "", window.location.href);
+                window.history.pushState({ page: 'pubg-player-registration' }, "", window.location.href);
             }
         };
         
@@ -837,11 +900,15 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
                 </button>
             </div>
 
-            <LoadingScreen isOpen={showLoadingScreen} />
+            <LoadingScreen
+                isOpen={showLoadingScreen}
+                message={loadingMessage}
+                subMessage={subLoadingMessage}
+            />
             
             <SuccessDialog
                 isOpen={showSuccessDialog}
-                message="Selamat! Pendaftaran tim dan pemain PUBG Mobile telah berhasil. Tim Anda telah terdaftar dalam kompetisi IT-ESEGA 2025. Silahkan tunggu informasi selanjutnya dari panitia."
+                message="Selamat! Pendaftaran tim dan pemain PUBG Mobile telah berhasil. Tim Anda telah terdaftar dalam kompetisi IT-ESEGA 2026. Silahkan tunggu informasi selanjutnya dari panitia."
                 title="Pendaftaran Berhasil!"
                 buttonText="Kembali ke Beranda"
                 onClose={handleSuccessDialogClose}

@@ -4,28 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PUBGPlayerRequest;
 use App\Http\Requests\StorePlayerMLRegistrationRequest;
-use App\Models\PUBG_Team;
-use App\Models\PUBG_Participant;
 use App\Models\ML_Participant;
 use App\Models\ML_Team;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\URL;
+use App\Models\PUBG_Participant;
+use App\Models\PUBG_Team;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
-use Inertia\Inertia;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Inertia\Inertia;
 
 class PlayerRegistrationController extends Controller
 {
-
     public function showRegistrationForm($encryptedTeamName)
     {
         try {
             $teamName = decrypt($encryptedTeamName);
 
             $team = ML_Team::where('team_name', $teamName)->firstOrFail();
-            
+
             Log::info('Showing ML registration form', ['team_id' => $team->id, 'team_name' => $team->team_name]);
 
         } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
@@ -39,26 +36,25 @@ class PlayerRegistrationController extends Controller
         ]);
     }
 
-
     public function store(StorePlayerMLRegistrationRequest $request)
     {
         $validated = $request->validated();
-        
+
         Log::info('Processing ML team registration', [
             'team_id' => $validated['team_id'] ?? 'not provided',
-            'player_count' => count($validated['ml_players'] ?? [])
+            'player_count' => count($validated['ml_players'] ?? []),
         ]);
 
-        if (!empty($validated['ml_players'])) {
+        if (! empty($validated['ml_players'])) {
             $teamId = $validated['team_id'];
             $team = ML_Team::findOrFail($teamId);
             $teamSlug = Str::slug($team->team_name);
 
             // Buat folder player jika belum ada
             $playerBasePath = "ML_teams/{$teamId}_{$teamSlug}/players";
-            
+
             // Gunakan Storage facade untuk membuat direktori
-            if (!Storage::disk('public')->exists($playerBasePath)) {
+            if (! Storage::disk('public')->exists($playerBasePath)) {
                 Storage::disk('public')->makeDirectory($playerBasePath, 0777, true);
             }
 
@@ -90,7 +86,7 @@ class PlayerRegistrationController extends Controller
                         'has_tanda_tangan' => $request->hasFile("ml_players.{$index}.tanda_tangan"),
                         'foto_path' => $photoPath,
                         'tanda_tangan_path' => $signaturePath,
-                        'player_data' => $player
+                        'player_data' => $player,
                     ]);
 
                     $participant = ML_Participant::create([
@@ -103,19 +99,19 @@ class PlayerRegistrationController extends Controller
                         'alamat' => $player['alamat'] ?? '-',
                         'tanda_tangan' => $signaturePath,
                         'foto' => $photoPath,
-                        'role' => $player['role']
+                        'role' => $player['role'],
                     ]);
-                    
-                    Log::info("ML player saved", [
+
+                    Log::info('ML player saved', [
                         'player_id' => $participant->id,
                         'name' => $participant->name,
-                        'team_id' => $teamId
+                        'team_id' => $teamId,
                     ]);
                 } catch (\Exception $e) {
                     Log::error("Error saving ML player {$index}", [
                         'error' => $e->getMessage(),
                         'file' => $e->getFile(),
-                        'line' => $e->getLine()
+                        'line' => $e->getLine(),
                     ]);
                 }
             }
@@ -124,18 +120,18 @@ class PlayerRegistrationController extends Controller
         // Cek apakah user menggunakan double slot dan ini adalah tim pertama
         if (Session::has('double_slot_registered')) {
             Session::forget('double_slot_registered'); // Hapus penanda karena sudah tidak dibutuhkan
-            
+
             // Arahkan ke halaman registrasi tim kedua dengan pesan
             Session::flash('info', 'Pendaftaran Player berhasil di lakukan, tunggu konfirmasi dari Humas IT-ESEGA!.');
+
             return redirect()->route('home')->with([
-                'showSecondTeamRegistration' => true, 
-                'success' => 'Pendaftaran Player berhasil di lakukan, tunggu konfirmasi dari Humas IT-ESEGA!.'
+                'showSecondTeamRegistration' => true,
+                'success' => 'Pendaftaran Player berhasil di lakukan, tunggu konfirmasi dari Humas IT-ESEGA!.',
             ]);
         }
 
-        return to_route('home')->with('success', 'Pendaftaran Player berhasil di lakukan, tunggu konfirmasi dari Humas IT-ESSEGA!');
+        return back()->with('success', 'Pendaftaran Player berhasil di lakukan, tunggu konfirmasi dari Humas IT-ESEGA!');
     }
-
 
     public function showRegistrationFormPUBG($encryptedTeamName)
     {
@@ -143,7 +139,7 @@ class PlayerRegistrationController extends Controller
             $teamName = decrypt($encryptedTeamName);
 
             $team = PUBG_Team::where('team_name', $teamName)->firstOrFail();
-            
+
             Log::info('Showing PUBG registration form', ['team_id' => $team->id, 'team_name' => $team->team_name]);
 
         } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
@@ -160,21 +156,21 @@ class PlayerRegistrationController extends Controller
     public function storePUBG(PUBGPlayerRequest $request)
     {
         $validated = $request->validated();
-        
+
         Log::info('Processing PUBG team registration', [
             'team_id' => $validated['team_id'] ?? 'not provided',
-            'player_count' => count($validated['pubg_players'] ?? [])
+            'player_count' => count($validated['pubg_players'] ?? []),
         ]);
-        
+
         $teamId = $validated['team_id'];
         $team = PUBG_Team::findOrFail($teamId);
         $teamSlug = Str::slug($team->team_name);
 
         // Buat folder player jika belum ada
         $playerBasePath = "PUBG_teams/{$teamId}_{$teamSlug}/players";
-        
+
         // Gunakan Storage facade untuk membuat direktori
-        if (!Storage::disk('public')->exists($playerBasePath)) {
+        if (! Storage::disk('public')->exists($playerBasePath)) {
             Storage::disk('public')->makeDirectory($playerBasePath, 0777, true);
         }
 
@@ -205,7 +201,7 @@ class PlayerRegistrationController extends Controller
                     'has_tanda_tangan' => $request->hasFile("pubg_players.{$index}.tanda_tangan"),
                     'foto_path' => $photoPath,
                     'tanda_tangan_path' => $signaturePath,
-                    'player_data' => $player
+                    'player_data' => $player,
                 ]);
 
                 $participant = PUBG_Participant::create([
@@ -218,23 +214,23 @@ class PlayerRegistrationController extends Controller
                     'alamat' => $player['alamat'] ?? '-',
                     'tanda_tangan' => $signaturePath,
                     'foto' => $photoPath,
-                    'role' => $player['role']
+                    'role' => $player['role'],
                 ]);
-                
-                Log::info("PUBG player saved", [
+
+                Log::info('PUBG player saved', [
                     'player_id' => $participant->id,
                     'name' => $participant->name,
-                    'team_id' => $teamId
+                    'team_id' => $teamId,
                 ]);
             } catch (\Exception $e) {
                 Log::error("Error saving PUBG player {$index}", [
                     'error' => $e->getMessage(),
                     'file' => $e->getFile(),
-                    'line' => $e->getLine()
+                    'line' => $e->getLine(),
                 ]);
             }
         }
 
-        return to_route('home')->with('success', 'Pendaftaran Player berhasil di lakukan, tunggu konfirmasi dari Humas IT-ESSEGA!');
+        return back()->with('success', 'Pendaftaran Player berhasil di lakukan, tunggu konfirmasi dari Humas IT-ESEGA!');
     }
 }
