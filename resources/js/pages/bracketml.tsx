@@ -68,7 +68,7 @@ const BracketML: React.FC<Props> = ({ user, brackets }) => {
                     </div>
 
                     {/* Bracket Grid - Dynamic Columns Layout */}
-                    <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+                    <div className={`grid grid-cols-1 gap-8 ${brackets.length <= 1 ? 'lg:grid-cols-1' : 'lg:grid-cols-2'}`}>
                         {brackets.length > 0 ? (
                             brackets.map((bracket) => (
                                 <Card key={bracket.id} className="w-full transition-shadow duration-300 bg-white border-2 border-gray-300 shadow-lg hover:shadow-xl">
@@ -84,7 +84,7 @@ const BracketML: React.FC<Props> = ({ user, brackets }) => {
                                             <iframe
                                                 src={bracket.bracket_url}
                                                 width="100%"
-                                                height="500"
+                                                height={brackets.length === 1 ? "700" : "500"}
                                                 frameBorder="0"
                                                 scrolling="auto"
                                                 className="w-full"
@@ -103,7 +103,7 @@ const BracketML: React.FC<Props> = ({ user, brackets }) => {
                     </div>
                 </div>
             </div>
-            <Footer 
+            <Footer
                 isRegistrationClosed={isRegistrationClosed}
                 setShowClosedPopup={setShowClosedPopup}
             />

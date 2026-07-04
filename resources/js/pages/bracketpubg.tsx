@@ -68,7 +68,7 @@ const BracketPUBG: React.FC<Props> = ({ user, brackets }) => {
                     </div>
 
                     {/* Bracket Grid - Dynamic Columns Layout */}
-                    <div className="grid grid-cols-1 gap-8 lg:grid-cols-1">
+                    <div className={`grid grid-cols-1 gap-8 ${brackets.length <= 1 ? 'lg:grid-cols-1' : 'lg:grid-cols-2'}`}>
                         {brackets.length > 0 ? (
                             brackets.map((bracket) => (
                                 <Card key={bracket.id} className="border-2 border-gray-300 shadow-xl bg-white w-full">
@@ -82,7 +82,7 @@ const BracketPUBG: React.FC<Props> = ({ user, brackets }) => {
                                             <iframe
                                                 src={bracket.bracket_url}
                                                 width="100%"
-                                                height="700"
+                                                height={brackets.length === 1 ? "700" : "500"}
                                                 frameBorder="0"
                                                 scrolling="auto"
                                                 className="w-full"

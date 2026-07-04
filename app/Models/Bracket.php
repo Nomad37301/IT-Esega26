@@ -24,4 +24,13 @@ class Bracket extends Model
         'is_active' => 'boolean',
         'order_position' => 'integer',
     ];
+
+    public function getBracketUrlAttribute($value)
+    {
+        if ($value && str_contains(strtolower($value), 'challonge.com') && !str_contains(strtolower($value), '/module')) {
+            return rtrim($value, '/') . '/module';
+        }
+        return $value;
+    }
+
 }
