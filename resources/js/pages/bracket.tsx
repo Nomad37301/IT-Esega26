@@ -138,56 +138,9 @@ const Bracket: React.FC = () => {
                                 </div>
                             ))}
                         </div>
-
-                        {/* Special Cards - Finals */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 justify-center" data-aos="fade-up" data-aos-delay={300}>
-                            {/* ML Finals Card */}
-                            <Card className="w-full border border-yellow-400 bg-gradient-to-br from-yellow-50 to-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
-                                <CardContent className="p-6 text-center h-full flex flex-col justify-between">
-                                    <div>
-                                        <h2 className="text-2xl font-semibold text-yellow-700 mb-3">
-                                            Mobile Legends
-                                            <br />
-                                            <span className="text-lg">Day 2 & Grand Final</span>
-                                        </h2>
-                                        <p className="text-gray-700 mb-4 text-sm leading-relaxed max-w-md mx-auto">
-                                            Watch the most anticipated matches of the tournament
-                                        </p>
-                                    </div>
-                                    <Button
-                                        className="w-full bg-yellow-600 hover:bg-yellow-700 text-white py-2 px-6 rounded-lg text-sm font-medium transition-all duration-300"
-                                        onClick={() => router.visit('/bracket/mobile-legends/day2-3')}
-                                    >
-                                        View Finals
-                                    </Button>
-                                </CardContent>
-                            </Card>
-
-                            {/* PUBG Finals Card */}
-                            <Card className="w-full border border-yellow-400 bg-gradient-to-br from-yellow-50 to-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
-                                <CardContent className="p-6 text-center h-full flex flex-col justify-between">
-                                    <div>
-                                        <h2 className="text-2xl font-semibold text-yellow-700 mb-3">
-                                            PUBG Mobile
-                                            <br />
-                                            <span className="text-lg">Grand Final</span>
-                                        </h2>
-                                        <p className="text-gray-700 mb-4 text-sm leading-relaxed max-w-md mx-auto">
-                                            Witness the ultimate survival battle in the Grand Final
-                                        </p>
-                                    </div>
-                                    <Button
-                                        className="w-full bg-yellow-600 hover:bg-yellow-700 text-white py-2 px-6 rounded-lg text-sm font-medium transition-all duration-300"
-                                        onClick={() => router.visit('/bracket/pubg-mobile/grand-final')}
-                                    >
-                                        View Finals
-                                    </Button>
-                                </CardContent>
-                            </Card>
                         </div>
                     </div>
                 </div>
-            </div>
             <Footer 
                 isRegistrationClosed={isRegistrationClosed}
                 setShowClosedPopup={setShowClosedPopup}

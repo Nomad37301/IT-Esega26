@@ -62,7 +62,7 @@ const BracketPUBG: React.FC<Props> = ({ user, brackets }) => {
                         <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
                             <span className="text-secondary">IT-ESEGA</span> PUBG Mobile
                             <br />
-                            <span className="text-3xl md:text-4xl text-gray-800">Qualification Day 1</span>
+                            <span className="text-3xl md:text-4xl text-gray-800">D-Day Bracket</span>
                         </h1>
                         <div className="w-24 h-1 bg-secondary rounded-full mx-auto"></div>
                     </div>
@@ -137,7 +137,7 @@ const BracketPUBG: React.FC<Props> = ({ user, brackets }) => {
                                 </Dialog.Title>
                                 <div className="mt-2">
                                     <p className="text-sm text-gray-500">
-                                        Mohon maaf, pendaftaran untuk IT-ESEGA 2025 sudah ditutup. Pastikan untuk mengikuti kami di media sosial
+                                        Mohon maaf, pendaftaran untuk IT-ESEGA 2026 sudah ditutup. Pastikan untuk mengikuti kami di media sosial
                                         untuk informasi lebih lanjut tentang event mendatang.
                                     </p>
                                 </div>
