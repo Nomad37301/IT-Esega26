@@ -170,7 +170,7 @@ export default function RegisterPage() {
     // Fungsi untuk truncate database (fungsi admin)
     const adminTruncateTeams = async (gameType = 'all') => {
         try {
-            if (process.env.NODE_ENV !== 'production') {
+            if (import.meta.env.DEV) {
                 const response = await axios.post(route('admin.truncate-teams'), {
                     game_type: gameType,
                     reset_slots: true
@@ -215,74 +215,10 @@ window.location.reload();
         };
     }, []);
 
-    // Tambahkan useEffect baru untuk membersihkan tim yang tidak selesai didaftarkan
-    useEffect(() => {
-        // Variabel untuk melacak tim yang sedang didaftar
-        let teamToCleanup: { id: number | null; gameType: string } | null = null;
-        let timeoutRef: number | null = null;
-
-        // Handler untuk event beforeunload - ketika user menutup tab/browser
-        const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-            // Jika user sedang dalam proses pendaftaran dan sudah ada ID tim
-            if (step === 2 && teamData.id) {
-                // Simpan ID tim untuk digunakan kembali di sesi berikutnya
-                localStorage.setItem("last_deleted_team_id", teamData.id.toString());
-                localStorage.setItem("last_deleted_game_type", gameType);
-                
-                // Hapus tim yang tidak selesai didaftarkan
-                axios.post('/delete-incomplete-team', {
-                    team_id: teamData.id,
-                    game_type: gameType
-                }).catch(err => console.error("Error deleting incomplete team:", err));
-                
-                // Tampilkan pesan konfirmasi
-                e.preventDefault();
-                e.returnValue = "Pendaftaran anda belum selesai. Apakah anda yakin ingin keluar?";
-                return e.returnValue;
-            }
-        };
-
-        // Jika user sampai di step 2 dan memiliki ID tim, set timer untuk membersihkan tim
-        if (step === 2 && teamData.id) {
-            teamToCleanup = { id: teamData.id, gameType };
-            
-            // Buat timeout 30 menit - jika user tidak menyelesaikan pendaftaran
-            timeoutRef = window.setTimeout(() => {
-                if (teamToCleanup?.id) {
-                    // Hapus tim yang tidak selesai didaftarkan setelah 30 menit
-                    axios.post('/delete-incomplete-team', {
-                        team_id: teamToCleanup.id,
-                        game_type: teamToCleanup.gameType
-                    }).catch(err => console.error("Error deleting inactive team:", err));
-                    
-                    // Simpan ID untuk digunakan kembali
-                    localStorage.setItem("last_deleted_team_id", teamToCleanup.id.toString());
-                    localStorage.setItem("last_deleted_game_type", teamToCleanup.gameType);
-                    
-                    // Redirect ke homepage dengan pesan
-                    alert("Sesi pendaftaran Anda telah kedaluwarsa. Silakan daftar ulang.");
-                    window.location.href = "/";
-                }
-            }, 30 * 60 * 1000); // 30 menit
-        }
-
-        // Daftarkan event listener untuk beforeunload
-        window.addEventListener('beforeunload', handleBeforeUnload);
-
-        // Cleanup saat komponen unmount
-        return () => {
-            window.removeEventListener('beforeunload', handleBeforeUnload);
-            
-            // Bersihkan timeout jika ada
-            if (timeoutRef) {
-                window.clearTimeout(timeoutRef);
-            }
-        };
-    }, [step, teamData.id, gameType]);
 
     return (
         <>
-            <Head title="IT-ESEGA 2025 Official Website | Register Team" />
+            <Head title="IT-ESEGA 2026 Official Website | Register Team" />
             
             {/* Dialog informasi ID tim yang akan digunakan kembali */}
             <Dialog open={showLastDeletedTeamIdDialog} onOpenChange={setShowLastDeletedTeamIdDialog}>
@@ -437,7 +373,7 @@ window.location.reload();
                                     </h2>
                                     <div className="w-16 sm:w-20 h-1 bg-secondary mx-auto rounded-full mb-3" data-aos="fade-down" data-aos-delay="50"></div>
                                     <p className="text-gray-500 font-medium tracking-wide text-sm sm:text-base" data-aos="fade-down" data-aos-delay="100">
-                                         EPilih game untuk melanjutkan ke langkah berikutnya  E                                    </p>
+                                         Pilih game untuk melanjutkan ke langkah berikutnya                                    </p>
                                     
                                     {isLoading && (
                                         <div className="mt-4 text-sm text-gray-500 animate-pulse">

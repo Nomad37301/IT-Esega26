@@ -19,6 +19,56 @@ import type { MLPlayer, PlayerRegistrationFormProps } from "@/types/register"
 import LoadingScreen from "@/components/ui/loading-screen"
 import SuccessDialog from "@/components/ui/success-dialog"
 import axios from "axios"
+import imageCompression from "browser-image-compression"
+
+// Opsi kompresi: maksimal 300KB per file agar aman dari limit 8MB cPanel
+const compressionOptions = {
+    maxSizeMB: 0.3,          // Maksimal 300 KB per file
+    maxWidthOrHeight: 1280,  // Resolusi max 1280px
+    useWebWorker: true,      // Proses di background agar UI tidak freeze
+    fileType: 'image/jpeg',  // Output selalu JPEG
+}
+
+// Threshold: skip kompresi jika file sudah kecil
+const THRESHOLD = 400 * 1024; // 400 KB
+
+const compressImage = async (file: File): Promise<File> => {
+    if (file.size <= THRESHOLD) {
+        console.log(`Skip kompresi ${file.name} (${(file.size / 1024).toFixed(1)} KB <= threshold)`);
+        return file;
+    }
+
+    // AbortController: memastikan Web Worker benar-benar diterminasi saat timeout
+    // (bukan sekadar diabaikan seperti Promise.race biasa)
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 3000);
+
+    try {
+        const compressed = await imageCompression(file, {
+            ...compressionOptions,
+            useWebWorker: true,
+            signal: controller.signal,
+        }) as File | Blob;
+
+        return compressed instanceof File
+            ? compressed
+            : new File([compressed], file.name, { type: compressed.type || 'image/jpeg', lastModified: Date.now() });
+    } catch (err) {
+        const isAbort =
+            controller.signal.aborted ||
+            (err instanceof DOMException && err.name === 'AbortError');
+
+        if (isAbort) {
+            console.warn(`Compression timeout (3s), menggunakan file asli: ${file.name}`);
+            return file;
+        }
+
+        console.warn(`Compression gagal, menggunakan file asli: ${file.name}`, err);
+        return file;
+    } finally {
+        clearTimeout(timeoutId);
+    }
+}
 
 export default function PlayerRegistrationForm({ teamData, gameType }: PlayerRegistrationFormProps) {
     const isML = gameType === "ml"
@@ -57,6 +107,8 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
     const [successMessage, setSuccessMessage] = useState("")
     const [showLoadingScreen, setShowLoadingScreen] = useState(false)
     const [showSuccessDialog, setShowSuccessDialog] = useState(false)
+    const [loadingMessage, setLoadingMessage] = useState("Mohon Tunggu")
+    const [subLoadingMessage, setSubLoadingMessage] = useState("Sedang memproses data...")
 
     const [isBackDialogOpen, setBackDialogOpen] = useState(false)
     const [isBackButtonLoading, setIsBackButtonLoading] = useState(false)
@@ -204,6 +256,8 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
             return
         }
 
+        setLoadingMessage("Mempersiapkan Data")
+        setSubLoadingMessage("Sedang memvalidasi berkas...")
         setShowLoadingScreen(true)
         
         const progressInterval = simulateFileUploadProgress();
@@ -211,7 +265,45 @@ export default function PlayerRegistrationForm({ teamData, gameType }: PlayerReg
         try {
             const submitData = new FormData()
             submitData.append('team_id', formData.team_id.toString())
-formData.ml_players.forEach((player: MLPlayer, index: number) => {
+
+            // Pembagian kelompok (Batching): Proses 2 pemain sekaligus secara paralel untuk mempercepat
+            // namun tetap membatasi memori agar tidak crash pada peramban HP.
+            const chunkArray = <T,>(arr: T[], size: number): T[][] => {
+                const chunks: T[][] = []
+                for (let i = 0; i < arr.length; i += size) {
+                    chunks.push(arr.slice(i, i + size))
+                }
+                return chunks
+            }
+
+            const totalPlayers = formData.ml_players.length
+            const chunks = chunkArray(formData.ml_players, 2)
+            const compressedPlayers: MLPlayer[] = []
+            let processedCount = 0
+
+            for (const chunk of chunks) {
+                const chunkResults = await Promise.all(
+                    // foto & tanda_tangan tiap pemain dikompres paralel,
+                    // sehingga 1 chunk = 4 file jalan bersamaan (2 pemain × 2 file)
+                    chunk.map(async (player) => {
+                        const playerNum = formData.ml_players.indexOf(player) + 1
+                        setLoadingMessage(`Mengompresi Foto Pemain ${playerNum}`)
+                        setSubLoadingMessage(`Memproses ${playerNum} dari ${totalPlayers} pemain...`)
+                        const [foto, tanda_tangan] = await Promise.all([
+                            player.foto instanceof File ? compressImage(player.foto) : Promise.resolve(player.foto),
+                            player.tanda_tangan instanceof File ? compressImage(player.tanda_tangan) : Promise.resolve(player.tanda_tangan),
+                        ]);
+                        return { ...player, foto, tanda_tangan };
+                    })
+                )
+                processedCount += chunk.length
+                compressedPlayers.push(...chunkResults)
+            }
+
+            setLoadingMessage("Mengirim Data ke Server")
+            setSubLoadingMessage("Mohon jangan tutup halaman ini...")
+
+            compressedPlayers.forEach((player: MLPlayer, index: number) => {
                 submitData.append(`ml_players[${index}][name]`, player.name || '')
                 submitData.append(`ml_players[${index}][nickname]`, player.nickname || '')
                 submitData.append(`ml_players[${index}][id_server]`, player.id_server || '')
@@ -222,14 +314,12 @@ formData.ml_players.forEach((player: MLPlayer, index: number) => {
                 submitData.append(`ml_players[${index}][role]`, player.role || 'anggota')
                 
                 if (player.foto instanceof File) {
-submitData.append(`ml_players_${index}_foto`, player.foto)
+                    submitData.append(`ml_players[${index}][foto]`, player.foto)
                 }
                 if (player.tanda_tangan instanceof File) {
-submitData.append(`ml_players_${index}_tanda_tangan`, player.tanda_tangan)
+                    submitData.append(`ml_players[${index}][tanda_tangan]`, player.tanda_tangan)
                 }
             })
-for (const [key, value] of submitData.entries()) {
-}
 
             submitData.append('game_type', gameType)
 
@@ -241,11 +331,9 @@ for (const [key, value] of submitData.entries()) {
                     setShowSuccessAlert(true)
                     setShowLoadingScreen(false)
                     
-                    setTimeout(() => {
-                        setFormData(prev => ({ ...prev, ml_players: [] }))
-                        localStorage.removeItem("ml_players_data")
-                        setShowSuccessDialog(true)
-                    }, 3000);
+                    setFormData(prev => ({ ...prev, ml_players: [] }))
+                    localStorage.removeItem("ml_players_data")
+                    setShowSuccessDialog(true)
                 },
                 onError: (errors) => {
                     clearInterval(progressInterval);
@@ -257,6 +345,10 @@ for (const [key, value] of submitData.entries()) {
                         setShowValidationError(false)
                     }, 10000)
                 },
+                onFinish: () => {
+                    clearInterval(progressInterval);
+                    setShowLoadingScreen(false);
+                }
             })
         } catch (error) {
             clearInterval(progressInterval);
@@ -348,24 +440,31 @@ for (const [key, value] of submitData.entries()) {
                 team_id: teamData.id,
                 game_type: gameType
             })
-            .then(() => {
-// Hapus data pemain dari localStorage
+                .then(() => {
+                // Hapus data pemain dari localStorage
                 localStorage.removeItem("ml_players_data")
                 
-                // Arahkan ke halaman registrasi tim dengan parameter game_type 
-                window.location.href = route('register') + '?step=2&game_type=' + gameType;
+                // Tambahkan delay agar loading button terlihat lebih intuitif sebelum redirect
+                setTimeout(() => {
+                    // Arahkan ke halaman registrasi tim dengan parameter game_type 
+                    window.location.href = route('register') + '?step=2&game_type=' + gameType;
+                }, 1500);
             })
             .catch((error) => {
                 console.error("Error deleting team data:", error)
                 // Hapus data pemain dari localStorage
                 localStorage.removeItem("ml_players_data")
                 
-                // Tetap arahkan ke halaman registrasi tim
-                window.location.href = route('register') + '?step=2&game_type=' + gameType;
+                setTimeout(() => {
+                    // Tetap arahkan ke halaman registrasi tim
+                    window.location.href = route('register') + '?step=2&game_type=' + gameType;
+                }, 1500);
             })
             .finally(() => {
-                setShowLoadingScreen(false)
-                setIsBackButtonLoading(false)
+                // Tidak perlu false loading screen disini karena page akan berpindah (reload)
+                // Namun untuk berjaga-jaga jika setTimeout belum trigger (meski jarang):
+                // setShowLoadingScreen(false)
+                // setIsBackButtonLoading(false)
             })
         } else {
             // Jika tidak ada team_id, hanya hapus data dari localStorage
@@ -377,13 +476,13 @@ for (const [key, value] of submitData.entries()) {
     }
 
     const handleEmergencyContact = () => {
-        const phoneNumber = "6287861081640"
+        const phoneNumber = "6285785073445"
         const message = `Halo, saya butuh bantuan terkait pendaftaran pemain ${gameTitle}.`
         window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank')
     }
 
     const handleSuccessDialogClose = () => {
-        router.visit(route('register'))
+        router.visit(route('home'))
     }
 
     useEffect(() => {
@@ -704,7 +803,7 @@ for (const [key, value] of submitData.entries()) {
                                     <div className="flex items-start gap-2 p-2 sm:p-3 bg-amber-50 border border-amber-200 rounded-md mb-4 sm:mb-5">
                                         <AlertCircle className="h-4 sm:h-5 w-4 sm:w-5 text-amber-500 mt-0.5 flex-shrink-0" />
                                         <p className="text-xs sm:text-sm text-amber-700">
-                                            Data tim dan pemain yang belum selesai didaftarkan akan dihapus!
+                                            Data tim dan pemain yang belum selesai didaftarkan akan <strong>dihapus permanen</strong>. Anda harus mendaftar ulang dari awal dan <strong>link pendaftaran yang dikirim ke email akan hangus/tidak berlaku lagi</strong>.
                                         </p>
                                     </div>
                                     
@@ -756,11 +855,15 @@ for (const [key, value] of submitData.entries()) {
                 </button>
             </div>
 
-            <LoadingScreen isOpen={showLoadingScreen} />
+            <LoadingScreen
+                isOpen={showLoadingScreen}
+                message={loadingMessage}
+                subMessage={subLoadingMessage}
+            />
             
             <SuccessDialog
                 isOpen={showSuccessDialog}
-                message="Selamat! Pendaftaran tim dan pemain Mobile Legends telah berhasil. Tim Anda telah terdaftar dalam kompetisi IT-ESEGA 2025. Silahkan tunggu informasi selanjutnya dari panitia."
+                message="Selamat! Pendaftaran tim dan pemain Mobile Legends telah berhasil. Tim Anda telah terdaftar dalam kompetisi IT-ESEGA 2026. Silahkan tunggu informasi selanjutnya dari panitia."
                 title="Pendaftaran Berhasil!"
                 buttonText="Kembali ke Beranda"
                 onClose={handleSuccessDialogClose}

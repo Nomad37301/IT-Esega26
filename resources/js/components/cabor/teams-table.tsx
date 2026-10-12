@@ -101,13 +101,13 @@ export function TeamsTable({ gameType }: { gameType: "pubg-mobile" | "mobile-leg
             
             // Tentukan endpoint berdasarkan gameType
             if (gameType === "pubg-mobile") {
-                endpoint = '/api/teams/ff';
+                endpoint = '/api/teams/pubg';
             } else if (gameType === "mobile-legends") {
                 endpoint = '/api/teams/ml';
             } else {
                 // Jika all, gabungkan data dari kedua endpoint
                 const [pubgResponse, mlResponse] = await Promise.all([
-                    axios.get('/api/teams/ff'),
+                    axios.get('/api/teams/pubg'),
                     axios.get('/api/teams/ml')
                 ]);
                 

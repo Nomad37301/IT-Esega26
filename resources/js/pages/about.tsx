@@ -333,7 +333,7 @@ export default function About() {
                                             <div>
                                                 <h3 className="mb-4 text-2xl font-semibold text-primary">[POLARIX]</h3>
                                                 <p className="mb-6 leading-relaxed">
-                                                    “POLARIX Eadalah simbol kecerdasan yang tajam, ketangguhan yang tak mudah runtuh, dan presisi dalam setiap langkah di tengah dunia digital yang terus bergerak cepat. Ia mencerminkan cara berpikir yang strategis, tindakan yang terukur, serta kemampuan untuk beradaptasi di setiap perubahan. Polarix menjadi pengingat untuk terus bertumbuh, melampaui batas diri, dan menjaga standar terbaik dalam setiap proses.
+                                                    “POLARIX" adalah simbol kecerdasan yang tajam, ketangguhan yang tak mudah runtuh, dan presisi dalam setiap langkah di tengah dunia digital yang terus bergerak cepat. Ia mencerminkan cara berpikir yang strategis, tindakan yang terukur, serta kemampuan untuk beradaptasi di setiap perubahan. Polarix menjadi pengingat untuk terus bertumbuh, melampaui batas diri, dan menjaga standar terbaik dalam setiap proses.
                                                 </p>
                                             </div>
                                         </div>

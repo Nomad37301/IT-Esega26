@@ -17,7 +17,12 @@ export function usePUBGPlayers(
         [data.pubg_players, setData]
     )
 
+    const MAX_PUBG_PLAYERS = 5
+
     const addPlayer = react.useCallback(() => {
+        // Guard: jangan tambah pemain jika sudah mencapai batas maksimum
+        if (data.pubg_players.length >= MAX_PUBG_PLAYERS) return
+
         const newPlayer: PUBGPlayer = {
             name: "",
             nickname: "",
@@ -38,7 +43,7 @@ export function usePUBGPlayers(
         (index: number) => {
             const updated = data.pubg_players.filter((_, i) => i !== index)
             setData("pubg_players", updated)
-            localStorage.setItem("pubg_players_data", JSON.stringify(updated))
+            // localStorage disimpan oleh useEffect di parent component dengan sanitasi File object
         },
         [data.pubg_players, setData]
     )

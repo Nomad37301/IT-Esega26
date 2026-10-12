@@ -102,6 +102,30 @@ class TeamRegistrationController extends Controller
                 'email.max' => 'Email maksimal 255 karakter.',
             ];
 
+            // Cek manual apakah tim sudah terdaftar untuk memberikan pesan error yang lebih informatif
+            $teamName = $request->input('team_name');
+            if ($teamName && in_array($gameType, ['ml', 'pubg'])) {
+                $existingTeam = null;
+                if ($gameType === 'ml') {
+                    $existingTeam = ML_Team::where('team_name', $teamName)->first();
+                } elseif ($gameType === 'pubg') {
+                    $existingTeam = PUBG_Team::where('team_name', $teamName)->first();
+                }
+
+                if ($existingTeam) {
+                    $maskedEmail = $this->maskEmail($existingTeam->email);
+                    Log::warning('Team already registered. Redirecting user with email hint.', [
+                        'team_name' => $teamName,
+                        'game_type' => $gameType,
+                        'email' => $existingTeam->email
+                    ]);
+
+                    return back()->withErrors([
+                        'team_name' => "Tim dengan nama '{$teamName}' sudah terdaftar! Link pendaftaran pemain telah dikirim ke email: {$maskedEmail}. Silakan cek kotak masuk atau folder spam Anda. Jika tidak menerima email, silakan hubungi panitia."
+                    ])->withInput();
+                }
+            }
+
             $validated = $request->validate($rules, $messages);
 
             Log::info('Validation passed', ['validated_data' => $validated, 'teamIdToReuse' => $teamIdToReuse]);
@@ -165,7 +189,10 @@ class TeamRegistrationController extends Controller
                     $existingTeam = ML_Team::where('team_name', $validated['team_name'])->first();
                     if ($existingTeam) {
                         Log::warning('Team already exists', ['team_name' => $validated['team_name'], 'game_type' => 'ml']);
-                        return back()->withErrors(['team_name' => 'Nama tim Mobile Legends sudah digunakan. Silakan gunakan nama lain.'])->withInput();
+                        $maskedEmail = $this->maskEmail($existingTeam->email);
+                        return back()->withErrors([
+                            'team_name' => "Tim dengan nama '{$validated['team_name']}' sudah terdaftar! Link pendaftaran pemain telah dikirim ke email: {$maskedEmail}. Silakan cek kotak masuk atau folder spam Anda."
+                        ])->withInput();
                     }
 
                     // Buat tim baru
@@ -217,7 +244,10 @@ class TeamRegistrationController extends Controller
                     $existingTeam = PUBG_Team::where('team_name', $validated['team_name'])->first();
                     if ($existingTeam) {
                         Log::warning('Team already exists', ['team_name' => $validated['team_name'], 'game_type' => 'pubg']);
-                        return back()->withErrors(['team_name' => 'Nama tim PUBG Mobile sudah digunakan. Silakan gunakan nama lain.'])->withInput();
+                        $maskedEmail = $this->maskEmail($existingTeam->email);
+                        return back()->withErrors([
+                            'team_name' => "Tim dengan nama '{$validated['team_name']}' sudah terdaftar! Link pendaftaran pemain telah dikirim ke email: {$maskedEmail}. Silakan cek kotak masuk atau folder spam Anda."
+                        ])->withInput();
                     }
 
                     // Buat tim baru
@@ -403,6 +433,23 @@ class TeamRegistrationController extends Controller
 
             return back()->withErrors(['general' => 'Terjadi kesalahan dalam pendaftaran tim: ' . $e->getMessage()])->withInput();
         }
+    }
+
+    private function maskEmail($email)
+    {
+        $parts = explode('@', $email);
+        if (count($parts) === 2) {
+            $namePart = $parts[0];
+            $domainPart = $parts[1];
+            $len = strlen($namePart);
+            if ($len > 3) {
+                $maskedName = substr($namePart, 0, 2) . str_repeat('*', $len - 4) . substr($namePart, -2);
+            } else {
+                $maskedName = substr($namePart, 0, 1) . str_repeat('*', $len - 1);
+            }
+            return $maskedName . '@' . $domainPart;
+        }
+        return $email;
     }
 }
 

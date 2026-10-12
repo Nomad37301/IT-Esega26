@@ -212,7 +212,7 @@ const handleFileChange = (file: File | null, type: "team_logo" | "proof_of_payme
     // Untuk Emergency Contact hubungin panitia
     const handleEmergencyContact = () => {
         // Ganti nomor WhatsApp sesuai dengan nomor panitia yang diperlukan
-        const phoneNumber = "6287861081640" // Format: kode negara tanpa + diikuti nomor HP
+        const phoneNumber = "6285785073445" // Format: kode negara tanpa + diikuti nomor HP
         const message = `Halo, saya butuh bantuan terkait pendaftaran tim ${gameTitle}.`
         window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank')
     }

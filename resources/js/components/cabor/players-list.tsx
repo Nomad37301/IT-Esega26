@@ -175,7 +175,7 @@ export function PlayersList({ gameType }: { gameType: "pubg-mobile" | "mobile-le
             name: player.name,
             nickname: player.nickname,
             role: (player.role as "ketua" | "anggota" | "cadangan") || "anggota",
-            avatar: player.foto || "/placeholder.svg?height=40&width=40",
+            avatar: player.foto ? `/storage/${player.foto}` : "/placeholder.svg?height=40&width=40",
             status: player.status || "active",
             joinDate: player.created_at,
             team_name: player.team_name,
@@ -183,8 +183,8 @@ export function PlayersList({ gameType }: { gameType: "pubg-mobile" | "mobile-le
             no_hp: player.no_hp,
             email: player.email,
             alamat: player.alamat,
-            foto: player.foto,
-            tanda_tangan: player.tanda_tangan
+            foto: player.foto ? `/storage/${player.foto}` : undefined,
+            tanda_tangan: player.tanda_tangan ? `/storage/${player.tanda_tangan}` : undefined
         }));
     };
     

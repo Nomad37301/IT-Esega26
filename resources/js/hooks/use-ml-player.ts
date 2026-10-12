@@ -38,7 +38,7 @@ export function useMLPlayers(
         (index: number) => {
             const updated = data.ml_players.filter((_, i) => i !== index)
             setData("ml_players", updated)
-            localStorage.setItem("ml_players_data", JSON.stringify(updated))
+            // localStorage disimpan oleh useEffect di parent component dengan sanitasi File object
         },
         [data.ml_players, setData]
     )

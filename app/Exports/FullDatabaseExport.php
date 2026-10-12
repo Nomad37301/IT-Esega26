@@ -19,9 +19,7 @@ class FullDatabaseExport implements WithMultipleSheets
         // Get all table names based on driver
         if ($driver === 'mysql') {
             $tables = DB::select('SHOW TABLES');
-            $dbName = DB::getDatabaseName();
-            $key = "Tables_in_{$dbName}";
-            $tableNames = array_map(fn($t) => $t->$key, $tables);
+            $tableNames = array_map(fn($t) => array_values((array)$t)[0], $tables);
         } elseif ($driver === 'sqlite') {
             $tables = DB::select("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'");
             $tableNames = array_map(fn($t) => $t->name, $tables);
